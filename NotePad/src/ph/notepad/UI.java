@@ -8,7 +8,7 @@
  * @copyright   Copyright Pierre-Henry SORIA, All Rights Reserved.
  * @license     Apache (http://www.apache.org/licenses/LICENSE-2.0)
  * @create      2012-05-04
- * @update      2012-05-05
+ * @update      2012-05-06
  */
 
 package ph.notepad;
@@ -30,8 +30,8 @@ public class UI extends JFrame implements ActionListener {
 	private Container container;
 	private JTextArea textArea;
 	private JMenuBar menuBar;
-	private JMenu menuFile, menuFind, menuAbout;
-	private JMenuItem openFile, saveFile, close, quickFind, aboutMe, aboutSoftware;
+	private JMenu menuFile, menuEdit, menuFind, menuAbout;
+	private JMenuItem newFile, openFile, saveFile, close, clearFile, quickFind, aboutMe, aboutSoftware;
 	
 	public UI() {	 
 		container = getContentPane();
@@ -55,13 +55,16 @@ public class UI extends JFrame implements ActionListener {
 
 		// Set the Menus
 		menuFile = new JMenu("File");
-		menuFind = new JMenu("Find");
+		menuEdit = new JMenu("Edit");
+		menuFind = new JMenu("Search");
 		menuAbout = new JMenu("About");
 		
 		// Set the Items Menu
+		newFile = new JMenuItem("New");
 		openFile = new JMenuItem("Open");
 		saveFile = new JMenuItem("Save");
 		close = new JMenuItem("Close");
+		clearFile = new JMenuItem("Clear");
 		quickFind = new JMenuItem("Quick");
 		aboutMe = new JMenuItem("About Me");
 		aboutSoftware = new JMenuItem("About Software");
@@ -69,15 +72,21 @@ public class UI extends JFrame implements ActionListener {
 		// Set the Menu Bar into the our GUI
 		menuBar = new JMenuBar();
 		menuBar.add(menuFile); 
+		menuBar.add(menuEdit);
 		menuBar.add(menuFind);
 		menuBar.add(menuAbout); 
 		
 		container.add(menuBar, BorderLayout.NORTH);  
 		
+		// New File
+		newFile.addActionListener(this);  // Adding an action listener (so we know when it's been clicked).
+		newFile.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK)); // Set a keyboard shortcut
+		menuFile.add(newFile); // Adding the file menu
+		
 		// Open File
-		openFile.addActionListener(this); // Adding an action listener (so we know when it's been clicked).
-		openFile.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_MASK)); // Set a keyboard shortcut
-		menuFile.add(openFile); // Adding the file menu
+		openFile.addActionListener(this);
+		openFile.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_MASK)); 
+		menuFile.add(openFile); 
 		
 		// Save File
 		saveFile.addActionListener(this);
@@ -96,6 +105,11 @@ public class UI extends JFrame implements ActionListener {
 		close.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, InputEvent.CTRL_MASK));
 		close.addActionListener(this);
 		menuFile.add(close);
+
+		// Clear File (Code)
+		clearFile.addActionListener(this);
+		clearFile.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_K, InputEvent.CTRL_MASK)); 
+		menuEdit.add(clearFile);
 		
 		// Find Word
 		quickFind.addActionListener(this);
@@ -116,11 +130,15 @@ public class UI extends JFrame implements ActionListener {
 	
 	public void actionPerformed (ActionEvent e) {
 		// If the source of the event was our "close" option
-		if (e.getSource() == close)
+		if(e.getSource() == close)
 			this.dispose(); // dispose all resources and close the application
 		
+		// If the source was the "new" file option
+		else if(e.getSource() == newFile) {
+			FEdit.clear(textArea);
+		}
 		// If the source was the "open" option
-		else if (e.getSource() == openFile) {
+		else if(e.getSource() == openFile) {
 			JFileChooser open = new JFileChooser(); // open up a file chooser (a dialog for the user to browse files to open)
 			int option = open.showOpenDialog(this); // get the option that the user selected (approve or cancel)
 			
@@ -129,8 +147,8 @@ public class UI extends JFrame implements ActionListener {
 			 * if the user clicked OK, we have "APPROVE_OPTION"
 			 * so we want to open the file
 			 */
-			if (option == JFileChooser.APPROVE_OPTION) {
-				textArea.setText(""); // clear the TextArea before applying the file contents
+			if(option == JFileChooser.APPROVE_OPTION) {
+				FEdit.clear(textArea); // clear the TextArea before applying the file contents
 				try {
 					// create a scanner to read the file (getSelectedFile().getPath() will get the path to the file)
 					Scanner scan = new Scanner(new FileReader(open.getSelectedFile().getPath()));
@@ -143,7 +161,7 @@ public class UI extends JFrame implements ActionListener {
 			}
 		}
 		// If the source of the event was the "save" option
-		else if (e.getSource() == saveFile) {
+		else if(e.getSource() == saveFile) {
 			// Open a file chooser
 			JFileChooser fileChoose = new JFileChooser(); 
 			// Open the file, only this time we call
@@ -153,7 +171,7 @@ public class UI extends JFrame implements ActionListener {
 			 * ShowSaveDialog instead of showOpenDialog
 			 * if the user clicked OK (and not cancel)
 			 */
-			if (option == JFileChooser.APPROVE_OPTION) {
+			if(option == JFileChooser.APPROVE_OPTION) {
 				try {
 					File file = fileChoose.getSelectedFile();
 					// Set the new title of the window
@@ -171,6 +189,10 @@ public class UI extends JFrame implements ActionListener {
 			}
 		}
 		
+		// Clear File (Code)
+		if(e.getSource() == clearFile) {
+			FEdit.clear(textArea);
+		}
 		// Find 
 		if(e.getSource() == quickFind) {
 			new Find(textArea);

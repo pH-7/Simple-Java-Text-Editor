@@ -94,29 +94,6 @@ public class Find extends JFrame implements ActionListener {
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);  
     }
     
-    public void actionPerformed(ActionEvent e) {
-         if(e.getSource() == findBtn)
-         {
-            find();
-         }
-         else if(e.getSource() == findNext)
-         {
-            findNext();
-         }
-         else if(e.getSource() == replace)
-         {
-             replace();
-         }
-         else if(e.getSource() == replaceAll)
-         {
-            replaceAll();
-         }
-         else if(e.getSource() == cancel)
-         {
-            this.setVisible(false);
-         }
-    }
-    
     public void find() {
         int select_start = txt.getText().indexOf(textF.getText());        
         if(select_start == -1)
@@ -183,4 +160,28 @@ public class Find extends JFrame implements ActionListener {
     public void replaceAll() {      
         txt.setText(txt.getText().replaceAll(textF.getText(), textR.getText()));
     }
+ 
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == findBtn)
+        {
+           find();
+        }
+        else if(e.getSource() == findNext)
+        {
+           findNext();
+        }
+        else if(e.getSource() == replace)
+        {
+            replace();
+        }
+        else if(e.getSource() == replaceAll)
+        {
+           replaceAll();
+        }
+        else if(e.getSource() == cancel)
+        {
+           this.setVisible(false);
+        }
+   }
+    
 }
