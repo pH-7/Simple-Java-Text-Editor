@@ -25,7 +25,8 @@ public class Main extends JTextPane {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-        new UI().setVisible(true);
+		
+		SwingUtilities.invokeLater(() -> UI().setVisible(true);)
 	}
 
 }
