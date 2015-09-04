@@ -33,6 +33,22 @@ public class UI extends JFrame implements ActionListener {
 	private final JMenu menuFile, menuEdit, menuFind, menuAbout;
 	private final JMenuItem newFile, openFile, saveFile, close, clearFile, quickFind, aboutMe, aboutSoftware;
 	
+        //setup icons - File Menu
+        private final ImageIcon newIcon = new ImageIcon("icons/new.png");
+        private final ImageIcon openIcon = new ImageIcon("icons/open.png");
+        private final ImageIcon saveIcon = new ImageIcon("icons/save.png");
+        private final ImageIcon closeIcon = new ImageIcon("icons/close.png");
+        
+        //setup icons - Search Menu
+        private final ImageIcon clearIcon = new ImageIcon("icons/clear.png");
+        
+        //setup icons - Search Menu
+        private final ImageIcon findIcon = new ImageIcon("icons/find.png");
+        
+        //setup icons - Helo Menu
+        private final ImageIcon aboutMeIcon = new ImageIcon("icons/about_me.png");
+        private final ImageIcon aboutIcon = new ImageIcon("icons/about.png");
+        
 	public UI() {	 
 		container = getContentPane();
 		
@@ -60,14 +76,14 @@ public class UI extends JFrame implements ActionListener {
 		menuAbout = new JMenu("About");
 		
 		// Set the Items Menu
-		newFile = new JMenuItem("New");
-		openFile = new JMenuItem("Open");
-		saveFile = new JMenuItem("Save");
-		close = new JMenuItem("Close");
-		clearFile = new JMenuItem("Clear");
-		quickFind = new JMenuItem("Quick");
-		aboutMe = new JMenuItem("About Me");
-		aboutSoftware = new JMenuItem("About Software");
+		newFile = new JMenuItem("New", newIcon);
+		openFile = new JMenuItem("Open", openIcon);
+		saveFile = new JMenuItem("Save", saveIcon);
+		close = new JMenuItem("Close", closeIcon);
+		clearFile = new JMenuItem("Clear", clearIcon);
+		quickFind = new JMenuItem("Quick", findIcon);
+		aboutMe = new JMenuItem("About Me", aboutMeIcon);
+		aboutSoftware = new JMenuItem("About Software", aboutIcon);
 		
 		// Set the Menu Bar into the our GUI
 		menuBar = new JMenuBar();
