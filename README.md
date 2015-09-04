@@ -25,3 +25,7 @@ Achintha Gunasekara: contact@achinthagunasekara.com
 ##LICENSE
 
 Apache License, Version 2.0 or later; See the license.txt file in the "NotePad" folder.
+
+##Important
+
+icons directory and it's files must be present on the path when running the application
