@@ -11,35 +11,39 @@
  * @update      2012-05-05
  */
 
-package ph.notepad;
+package simplejavatexteditor;
 
 import javax.swing.*;
 import java.awt.FlowLayout;
 
 public class About {
 
-	private JFrame frame;
-    private JPanel panel;
+    private final JFrame frame;
+    private final JPanel panel;
     private String contentText;
-    private JLabel text;
+    private final JLabel text;
   
 	public About() {
 		panel = new JPanel(new FlowLayout());
 		panel.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
 		frame = new JFrame();
 		frame.setVisible(true);
-		frame.setSize(300,300);
+		frame.setSize(500,300);
 		text = new JLabel();
 	}
 	
 	public void me() {
-		frame.setTitle("About Me - " + Main.NAME);
+		frame.setTitle("About Me - " + SimpleJavaTextEditor.NAME);
 		
 		contentText = 
 		"<html><body><p>" +
 		"Author: Pierre-Henry Soria<br />" +
 		"Contact me at: " +
-		"<a href='mailto:" + Main.AUTHOR_EMAIL + "?subject=About the NotePad PH Software'>" + Main.AUTHOR_EMAIL + "</a>" +
+		"<a href='mailto:" + SimpleJavaTextEditor.AUTHOR_EMAIL + "?subject=About the NotePad PH Software'>" + SimpleJavaTextEditor.AUTHOR_EMAIL + "</a>" +
+                "<br /><br />" +
+                "Modified By: Achintha Gunasekara<br />" +
+                "Website: <a href='http://www.achinthagunasekara.com'>http://www.achinthagunasekara.com</a><br />" +
+                "Contact me at: <a href='mailto:" + SimpleJavaTextEditor.EDITOR_EMAIL + "?subject=About the NotePad PH Software'>" + SimpleJavaTextEditor.EDITOR_EMAIL + "</a>" +
 		"</p></body></html>";
 		
 		text.setText(contentText);
@@ -48,12 +52,12 @@ public class About {
 	}
     
 	public void software() {
-		frame.setTitle("About Me - " + Main.NAME);
+		frame.setTitle("About Me - " + SimpleJavaTextEditor.NAME);
 		
 		contentText = 
 		"<html><body><p>" +		
-		"Name: " + Main.NAME + "<br />" +
-		"Version: " + Main.VERSION + 
+		"Name: " + SimpleJavaTextEditor.NAME + "<br />" +
+		"Version: " + SimpleJavaTextEditor.VERSION + 
 		"</p></body></html>";
 		
 		text.setText(contentText);

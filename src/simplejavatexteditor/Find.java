@@ -11,7 +11,7 @@
  * @update      2012-05-06
  */
 
-package ph.notepad;
+package simplejavatexteditor;
 
 import javax.swing.*;
 import java.awt.GraphicsEnvironment;

@@ -11,7 +11,7 @@
  * @update      2012-05-06
  */
 
-package ph.notepad;
+package simplejavatexteditor;
 
 // GUI
 import javax.swing.*;
@@ -27,20 +27,20 @@ import java.util.Scanner;
 public class UI extends JFrame implements ActionListener {
 	
 	private static final long serialVersionUID = 1L;
-	private Container container;
-	private JTextArea textArea;
-	private JMenuBar menuBar;
-	private JMenu menuFile, menuEdit, menuFind, menuAbout;
-	private JMenuItem newFile, openFile, saveFile, close, clearFile, quickFind, aboutMe, aboutSoftware;
+	private final Container container;
+	private final JTextArea textArea;
+	private final JMenuBar menuBar;
+	private final JMenu menuFile, menuEdit, menuFind, menuAbout;
+	private final JMenuItem newFile, openFile, saveFile, close, clearFile, quickFind, aboutMe, aboutSoftware;
 	
 	public UI() {	 
 		container = getContentPane();
 		
 		// Set the initial size of the window
-		setSize(500, 300); 
+		setSize(700, 500); 
 		
 		// Set the title of the window
-		setTitle("Undefined | " + Main.NAME);
+		setTitle("Undefined | " + SimpleJavaTextEditor.NAME);
 		
 		// Set the default close operation (exit when it gets closed)
 		setDefaultCloseOperation(EXIT_ON_CLOSE); 
@@ -175,7 +175,7 @@ public class UI extends JFrame implements ActionListener {
 				try {
 					File file = fileChoose.getSelectedFile();
 					// Set the new title of the window
-					setTitle(file.getName() + " | " + Main.NAME);
+					setTitle(file.getName() + " | " + SimpleJavaTextEditor.NAME);
 					// Create a buffered writer to write to a file
 					BufferedWriter out = new BufferedWriter(new FileWriter(file.getPath()));
 					// Write the contents of the TextArea to the file
