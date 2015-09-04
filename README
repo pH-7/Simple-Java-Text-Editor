@@ -1,17 +1,25 @@
-========== INTRODUCTION ==========
+#Simple Java Text Editor
 
 This is a simple text editor (notepad) written in Java. It also features a search engine.
 
 If you use the executable file "notepad.jar" and that it does not run, you can type "java -jar /your_notepad_directory/notepad.jar" in your terminal.
 
-========== AUTHOR ==========
+##AUTHOR
+
+### Base Application
 
 Pierre-Henry SORIA
 
-========== CONTACT ==========
+### Modifications and Improvements
 
-pierrehs@hotmail.com
+Achintha Gunasekara
 
-========== LICENSE ==========
+##CONTACT
+
+Pierre-Henry SORIA: pierrehs@hotmail.com
+
+Achintha Gunasekara: contact@achinthagunasekara.com
+
+##LICENSE
 
 Apache License, Version 2.0 or later; See the license.txt file in the "NotePad" folder.
