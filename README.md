@@ -26,6 +26,12 @@ Achintha Gunasekara: contact@achinthagunasekara.com
 
 Apache License, Version 2.0 or later; See the license.txt file in the "NotePad" folder.
 
+## Demo
+
+Download the Jar file and double click to run
+
+Or run java -jar SimpleJavaTextEditor.jar from the command line
+
 ##Important
 
 icons directory and it's files must be present on the path when running the application
