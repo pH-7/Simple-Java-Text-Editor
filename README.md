@@ -4,6 +4,9 @@ This is a simple text editor (notepad) written in Java. It also features a searc
 
 If you use the executable file "notepad.jar" and that it does not run, you can type "java -jar /your_notepad_directory/notepad.jar" in your terminal.
 
+![Example Java Text Editor](Screenshots/screenshot4.png)
+
+
 ##AUTHOR
 
 ### Base Application
