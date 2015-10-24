@@ -28,10 +28,12 @@ public class Find extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	int startIndex=0;
+        int select_start=-1;
     JLabel lab1, lab2;
     JTextField textF, textR;
     JButton findBtn, findNext, replace, replaceAll, cancel;  
     private JTextArea txt;
+    
     
     public Find(JTextArea text) { 
     	this.txt = text;
@@ -100,7 +102,7 @@ public class Find extends JFrame implements ActionListener {
     }
     
     public void find() {
-        int select_start = txt.getText().toLowerCase().indexOf(textF.getText().toLowerCase());        
+        select_start = txt.getText().toLowerCase().indexOf(textF.getText().toLowerCase());        
         if(select_start == -1)
         {
             startIndex = 0;
@@ -154,6 +156,7 @@ public class Find extends JFrame implements ActionListener {
         try
         {
             find();
+            if (select_start != -1)
             txt.replaceSelection(textR.getText());
         }
         catch(NullPointerException e)
