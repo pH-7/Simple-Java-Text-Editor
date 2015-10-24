@@ -28,10 +28,12 @@ public class Find extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	int startIndex=0;
+        int select_start=-1;
     JLabel lab1, lab2;
     JTextField textF, textR;
     JButton findBtn, findNext, replace, replaceAll, cancel;  
     private JTextArea txt;
+    
     
     public Find(JTextArea text) { 
     	this.txt = text;
@@ -100,14 +102,14 @@ public class Find extends JFrame implements ActionListener {
     }
     
     public void find() {
-        int select_start = txt.getText().indexOf(textF.getText());        
+        select_start = txt.getText().toLowerCase().indexOf(textF.getText().toLowerCase());        
         if(select_start == -1)
         {
             startIndex = 0;
             JOptionPane.showMessageDialog(null, "Could not find \"" + textF.getText() + "\"!");
             return;
         }
-        if(select_start == txt.getText().lastIndexOf(textF.getText()))
+        if(select_start == txt.getText().toLowerCase().lastIndexOf(textF.getText().toLowerCase()))
         {
             startIndex = 0;
         }        
@@ -136,12 +138,12 @@ public class Find extends JFrame implements ActionListener {
         }
         try
         {
-            int select_start = txt.getText().indexOf(selection, startIndex);
+            int select_start = txt.getText().toLowerCase().indexOf(selection.toLowerCase(), startIndex);
             int select_end = select_start+selection.length();
             txt.select(select_start, select_end);
             startIndex = select_end+1;
         
-            if(select_start == txt.getText().lastIndexOf(selection))
+            if(select_start == txt.getText().toLowerCase().lastIndexOf(selection.toLowerCase()))
             {
                 startIndex = 0;
             }
@@ -154,6 +156,7 @@ public class Find extends JFrame implements ActionListener {
         try
         {
             find();
+            if (select_start != -1)
             txt.replaceSelection(textR.getText());
         }
         catch(NullPointerException e)
@@ -163,9 +166,9 @@ public class Find extends JFrame implements ActionListener {
     }
     
     public void replaceAll() {      
-        txt.setText(txt.getText().replaceAll(textF.getText(), textR.getText()));
+        txt.setText(txt.getText().toLowerCase().replaceAll(textF.getText().toLowerCase(), textR.getText()));
     }
- 
+
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == findBtn)
         {
