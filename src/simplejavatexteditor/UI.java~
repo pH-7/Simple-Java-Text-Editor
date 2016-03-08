@@ -29,7 +29,6 @@ import java.io.*;
 // Various
 import java.util.Scanner;
 import javax.swing.border.Border;
-import javax.swing.text.BadLocationException;
 
 public class UI extends JFrame implements ActionListener {
 	
@@ -292,13 +291,5 @@ public class UI extends JFrame implements ActionListener {
 		}
 		
 	}
-                  protected String getContent(int i, int j) {
-                         String content = "";
-                         try {
-                         content = textArea.getText(i, j);
-                         } catch(BadLocationException e) {
-                             e.printStackTrace();
-                         }
-                         return content;
-                 }	
+		
 }
