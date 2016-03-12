@@ -15,6 +15,11 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
 
+/*
+This class determines if the word 
+being typed matches the keywords that will be 
+suggested to the user.
+*/
 public class JavaAutocomplete
         implements DocumentListener {
 
@@ -28,26 +33,22 @@ public class JavaAutocomplete
         "synchronized", "this", "throw", "throws", "transient", "true",
         "try", "void", "volatile", "while", "String"};
 
-    static final String[] specialChars = {"{", "("};
+    static final String[] bracketChars = {"{", "("};
 
     UI ui;
 
     private ArrayList<String> words = new ArrayList<>();
-    private ArrayList<String> chars = new ArrayList<>();
+    private ArrayList<String> brackets = new ArrayList<>();
 
     private enum Mode {
-
         INSERT, COMPLETION
     };
 
     private Mode mode = Mode.INSERT;
-
     private final JTextArea textArea;
-
     private static final String COMMIT_ACTION = "commit";
-
+    
     private boolean isKeyword;
-
     private int pos;
     private String content;
 
@@ -55,21 +56,20 @@ public class JavaAutocomplete
 
         this.ui = ui;
         textArea = ui.getEditor();
-
+        
         InputMap im = textArea.getInputMap();
         ActionMap am = textArea.getActionMap();
         im.put(KeyStroke.getKeyStroke("ENTER "), COMMIT_ACTION);
         am.put(COMMIT_ACTION, new CommitAction());
 
-        //set the keywords
         for (String keyList : keywords) {
             words.add(keyList);
         }
-        for (String character : specialChars) {
-            chars.add(character);
+        for (String bracket : bracketChars) {
+            brackets.add(bracket);
         }
         Collections.sort(words, null);
-        Collections.sort(chars, null);
+        Collections.sort(brackets, null);
     }
 
     @Override
@@ -98,8 +98,8 @@ public class JavaAutocomplete
             }
         }
 
-        if (chars.contains(s)) {
-            for (String str : chars) {
+        if (brackets.contains(s)) {
+            for (String str : brackets) {
                 if (s.equals(str)) {
                     switch (str) {
                         case "{":
@@ -123,7 +123,6 @@ public class JavaAutocomplete
         }
 
         String prefix = content.substring(start + 1);
-
         int n = Collections.binarySearch(words, prefix);
 
         if (n < 0 && -n < words.size()) {
@@ -142,6 +141,11 @@ public class JavaAutocomplete
         }
     }
 
+    /*
+    This class handles the autocomplete
+    suggestion generated when the user 
+    is typing a word that matches a keyword.
+    */
     private class CompletionTask
             implements Runnable {
 
@@ -159,7 +163,6 @@ public class JavaAutocomplete
 
         @Override
         public void run() {
-            System.out.println(isKeyword);
 
             textArea.insert(completion, position);
 
@@ -178,7 +181,11 @@ public class JavaAutocomplete
             }
         }
     }
-
+    
+    /*
+    Handle when the enter button is pressed,
+    particularly when it is in response to a keyword.
+    */
     private class CommitAction
             extends AbstractAction {
 
@@ -204,20 +211,15 @@ public class JavaAutocomplete
         }
     }
 
-    @Override
-    public void removeUpdate(DocumentEvent e) {
-    }
-
-    @Override
-    public void changedUpdate(DocumentEvent e) {
-    }
-
+    /*
+    User responses to autocomplete for brackets 
+    or parentheses will need extra attention.
+    */
     private class HandleBracketEvent
             implements KeyListener {
 
         @Override
         public void keyTyped(KeyEvent e) {
-            System.out.println("Activated");
 
             switch (e.getKeyChar()) {
                 case '}':
@@ -246,12 +248,15 @@ public class JavaAutocomplete
         }
 
         @Override
-        public void keyPressed(KeyEvent e) {
-        }
+        public void keyPressed(KeyEvent e) {}
 
         @Override
-        public void keyReleased(KeyEvent e) {
-        }
+        public void keyReleased(KeyEvent e) {}
+	}
+    @Override
+    public void removeUpdate(DocumentEvent e) {}
 
-    }
+    @Override
+    public void changedUpdate(DocumentEvent e) {}
+
 }
