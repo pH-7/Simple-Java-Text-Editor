@@ -29,7 +29,6 @@ import java.io.*;
 // Various
 import java.util.Scanner;
 import javax.swing.border.Border;
-import javax.swing.text.BadLocationException;
 
 public class UI extends JFrame implements ActionListener {
 	
@@ -58,6 +57,9 @@ public class UI extends JFrame implements ActionListener {
         private final ImageIcon aboutMeIcon = new ImageIcon("icons/about_me.png");
         private final ImageIcon aboutIcon = new ImageIcon("icons/about.png");
         
+        //setup Autocomplete for Java keywords
+        private final JavaAutoComplete autocomplete;
+        
 	public UI() {	 
 		container = getContentPane();
 		
@@ -73,6 +75,8 @@ public class UI extends JFrame implements ActionListener {
 		// Set a default font for the TextArea
 		textArea = new JTextArea("", 0,0);
 		textArea.setFont(new Font("Century Gothic", Font.BOLD, 12)); 
+                                    textArea.setTabSize(2);
+
 		
 		// This is why we didn't have to worry about the size of the TextArea!
 		getContentPane().setLayout(new BorderLayout()); // the BorderLayout bit makes it fill it automatically
@@ -210,7 +214,16 @@ public class UI extends JFrame implements ActionListener {
                 closeButton.setToolTipText("Close");
                 closeButton.addActionListener(this);
                 mainToolbar.add(closeButton);
+                
+                //auto complete startup
+                autocomplete = new JavaAutoComplete(this);
+                textArea.getDocument().addDocumentListener(autocomplete);
 	}
+        
+        //make the TextArea available to the autocomplete handler
+        protected JTextArea getEditor() {
+                           return textArea;
+                  }
 	
 	public void actionPerformed (ActionEvent e) {
 		// If the source of the event was our "close" option
@@ -291,14 +304,5 @@ public class UI extends JFrame implements ActionListener {
 			new About().software();
 		}
 		
-	}
-                  protected String getContent(int i, int j) {
-                         String content = "";
-                         try {
-                         content = textArea.getText(i, j);
-                         } catch(BadLocationException e) {
-                             e.printStackTrace();
-                         }
-                         return content;
-                 }	
+	}   
 }

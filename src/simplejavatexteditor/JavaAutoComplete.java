@@ -15,61 +15,85 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
 
-/*
-This class determines if the word 
-being typed matches the keywords that will be 
-suggested to the user.
-*/
-public class JavaAutocomplete
+/**
+ * <h1>Auto complete functionality for java keywords, brackets and
+ * parentheses</h1>
+ *
+ * <p>
+ * An ArrayList is created for the keywords and the brackets. If the word
+ * currently being typed matches a word in the list, a Runnable inner class is
+ * implemented to handle the word completion.
+ *
+ * Two other inner classes are also used. The second one handles when the enter
+ * key is pressed in response to an auto complete suggestion. The third one
+ * performs additional logic on brackets.
+ * </p>
+ *
+ *
+ * @author Patrick Slagle
+ * @since 2016-12-03
+ */
+public class JavaAutoComplete
         implements DocumentListener {
 
-    static final String[] keywords = {"abstract", "assert", "boolean",
+    private static String[] keywords = {"abstract", "assert", "boolean",
         "break", "byte", "case", "catch", "char", "class", "const",
         "continue", "default", "do", "double", "else", "extends", "false",
         "final", "finally", "float", "for", "goto", "if", "implements",
-        "import", "instanceof", "int", "System", "out", "print", "println",
+        "import", "instanceof", "int", "System", "out", "print()", "println()",
         "new", "null", "package", "private", "protected", "public", "interface",
         "long", "native", "return", "short", "static", "strictfp", "super", "switch",
         "synchronized", "this", "throw", "throws", "transient", "true",
         "try", "void", "volatile", "while", "String"};
 
-    static final String[] bracketChars = {"{", "("};
-
+    private static String[] bracketChars = {"{", "("};
+    private static String[] bCompletions = {"}", ")"};
     UI ui;
 
     private ArrayList<String> words = new ArrayList<>();
     private ArrayList<String> brackets = new ArrayList<>();
+    private ArrayList<String> bracketCompletions = new ArrayList<>();
 
+    //Signal if we are in completion mode or not
     private enum Mode {
+
         INSERT, COMPLETION
     };
 
     private Mode mode = Mode.INSERT;
     private final JTextArea textArea;
     private static final String COMMIT_ACTION = "commit";
-    
+
+    //To determine if the the type 
+    //of autocomplete is a keyword or bracket
     private boolean isKeyword;
+    //index of the last action
     private int pos;
+    //The text entered so far
     private String content;
 
-    public JavaAutocomplete(UI ui) {
-
+    public JavaAutoComplete(UI ui) {
+        //Access the editor
         this.ui = ui;
         textArea = ui.getEditor();
-        
+
+        //Set the handler for the enter key
         InputMap im = textArea.getInputMap();
         ActionMap am = textArea.getActionMap();
         im.put(KeyStroke.getKeyStroke("ENTER "), COMMIT_ACTION);
         am.put(COMMIT_ACTION, new CommitAction());
 
+        //Set up the keywords
         for (String keyList : keywords) {
             words.add(keyList);
         }
         for (String bracket : bracketChars) {
             brackets.add(bracket);
         }
+        for (String comp : bCompletions) {
+            bracketCompletions.add(comp);
+        }
         Collections.sort(words, null);
-        Collections.sort(brackets, null);
     }
 
     @Override
@@ -83,56 +107,38 @@ public class JavaAutocomplete
             ex.printStackTrace();
         }
 
-        char c = content.charAt(pos);
-        String s = String.valueOf(c);
-
         if (e.getLength() != 1) {
             return;
         }
 
+        //Before checking for a keyword
+        checkForBracket();
+
+        //Get the beginning of the word being typed 
         int start;
         for (start = pos; start >= 0; start--) {
-
             if (!Character.isLetter(content.charAt(start))) {
                 break;
             }
         }
 
-        if (brackets.contains(s)) {
-            for (String str : brackets) {
-                if (s.equals(str)) {
-                    switch (str) {
-                        case "{":
-                            isKeyword = false;
-                            SwingUtilities.invokeLater(
-                                    new CompletionTask("}", pos + 1));
-                            break;
-                        case "(":
-                            isKeyword = false;
-                            SwingUtilities.invokeLater(
-                                    new CompletionTask(")", pos + 1));
-
-                            break;
-                    }
-                }
-            }
-        }
-
+        //Auto complete will start 
+        //after two characters are typed
         if (pos - start < 2) {
             return;
         }
 
+        //Search for a match on the word being typed 
+        //in the keywords ArrayList
         String prefix = content.substring(start + 1);
         int n = Collections.binarySearch(words, prefix);
 
         if (n < 0 && -n < words.size()) {
-            isKeyword = true;
             String match = words.get(-n - 1);
 
             if (match.startsWith(prefix)) {
-
                 String completion = match.substring(pos - start);
-
+                isKeyword = true;
                 SwingUtilities.invokeLater(
                         new CompletionTask(completion, pos + 1));
             } else {
@@ -141,68 +147,88 @@ public class JavaAutocomplete
         }
     }
 
+    /**
+     * Performs a check to see if the last key typed was one of the supported
+     * bracket characters
+     */
+    private void checkForBracket() {
+        //String of the last typed character
+        char c = content.charAt(pos);
+        String s = String.valueOf(c);
+
+        for (int i = 0; i < brackets.size(); i++) {
+            if (brackets.get(i).equals(s)) {
+                isKeyword = false;
+                SwingUtilities.invokeLater(
+                        new CompletionTask(bracketCompletions.get(i), pos + 1));
+            }
+        }
+    }
+
+    /**
+     * So that future classes can view the keyword list in the future.
+     *
+     * @return the keywords
+     */
+    protected ArrayList<String> getKeywords() {
+        return words;
+    }
+
+    /**
+     * So that these keywords can be modified or added to in the future.
+     *
+     * @param keyword the keyword to set
+     */
+    protected void setKeywords(String keyword) {
+        words.add(keyword);
+    }
+
     /*
-    This class handles the autocomplete
-    suggestion generated when the user 
-    is typing a word that matches a keyword.
-    */
+     * Handles the auto complete suggestion generated when the user is typing a
+     * word that matches a keyword.
+     */
     private class CompletionTask
             implements Runnable {
 
         private final String completion;
-        private int position;
+        private final int position;
 
         public CompletionTask(String completion, int position) {
             this.completion = completion;
             this.position = position;
         }
 
-        public String getCompletion() {
-            return completion;
-        }
-
         @Override
         public void run() {
-
             textArea.insert(completion, position);
 
-            if (isKeyword) {
-
-                textArea.setCaretPosition(position + completion.length());
-                textArea.moveCaretPosition(position);
-
-                mode = Mode.COMPLETION;
-            } else {
-                textArea.setCaretPosition(position + completion.length());
-                textArea.moveCaretPosition(position);
-                mode = Mode.COMPLETION;
+            textArea.setCaretPosition(position + completion.length());
+            textArea.moveCaretPosition(position);
+            mode = Mode.COMPLETION;
+            if (!isKeyword) {
                 textArea.addKeyListener(new HandleBracketEvent());
-
             }
         }
     }
-    
-    /*
-    Handle when the enter button is pressed,
-    particularly when it is in response to a keyword.
-    */
+
+    /**
+     * Enter key is pressed in response to an auto complete suggestion. Respond
+     * appropriately.
+     */
     private class CommitAction
             extends AbstractAction {
 
+        @Override
         public void actionPerformed(ActionEvent e) {
 
             if (mode == Mode.COMPLETION) {
-
                 int pos = textArea.getSelectionEnd();
 
                 if (isKeyword) {
-
                     textArea.insert(" ", pos);
                     textArea.setCaretPosition(pos + 1);
                     mode = Mode.INSERT;
                 } else {
-
-                    textArea.setCaretPosition(pos);
                     mode = Mode.INSERT;
                 }
             } else {
@@ -211,31 +237,32 @@ public class JavaAutocomplete
         }
     }
 
-    /*
-    User responses to autocomplete for brackets 
-    or parentheses will need extra attention.
-    */
+    /**
+     * Additional logic for bracket auto complete
+     *
+     */
     private class HandleBracketEvent
             implements KeyListener {
 
         @Override
         public void keyTyped(KeyEvent e) {
-
+            //Bracket auto complete needs special attention.
+            //Multiple possible responses are needed.
+            String keyEvent = String.valueOf(e.getKeyChar());
+            for (int i = 0; i < bracketCompletions.size(); i++) {
+                System.out.println(bracketCompletions.get(i));
+                if (keyEvent.equals(bracketCompletions.get(i))) {
+                    System.out.println("Activated");
+                    textArea.replaceRange("", pos, pos + 1);
+                    mode = Mode.INSERT;
+                    textArea.removeKeyListener(this);
+                }
+            }
+            int currentPosition = textArea.getCaretPosition();
             switch (e.getKeyChar()) {
-                case '}':
-                    textArea.replaceRange("", pos, pos);
-                    mode = Mode.INSERT;
-                    textArea.removeKeyListener(this);
-
-                    break;
-                case ')':
-                    textArea.replaceRange("", pos, pos);
-                    mode = Mode.INSERT;
-                    textArea.removeKeyListener(this);
-                    break;
                 case '\n':
-                    textArea.setCaretPosition(pos);
-                    textArea.replaceSelection("\n");
+                    textArea.insert("\n\n", currentPosition);
+                    textArea.setCaretPosition(currentPosition + 1);
                     mode = Mode.INSERT;
                     textArea.removeKeyListener(this);
                     break;
@@ -248,15 +275,20 @@ public class JavaAutocomplete
         }
 
         @Override
-        public void keyPressed(KeyEvent e) {}
+        public void keyPressed(KeyEvent e) {
+        }
 
         @Override
-        public void keyReleased(KeyEvent e) {}
-	}
-    @Override
-    public void removeUpdate(DocumentEvent e) {}
+        public void keyReleased(KeyEvent e) {
+        }
+    }
 
     @Override
-    public void changedUpdate(DocumentEvent e) {}
+    public void removeUpdate(DocumentEvent e) {
+    }
+
+    @Override
+    public void changedUpdate(DocumentEvent e) {
+    }
 
 }
