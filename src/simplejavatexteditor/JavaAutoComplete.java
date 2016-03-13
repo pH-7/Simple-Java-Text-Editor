@@ -48,28 +48,23 @@ public class JavaAutoComplete
 
     private static String[] bracketChars = {"{", "("};
     private static String[] bCompletions = {"}", ")"};
-    UI ui;
-
     private ArrayList<String> words = new ArrayList<>();
     private ArrayList<String> brackets = new ArrayList<>();
     private ArrayList<String> bracketCompletions = new ArrayList<>();
 
-    //Signal if we are in completion mode or not
+    //Keep track of when code completion
+    //has been activated
     private enum Mode {
 
         INSERT, COMPLETION
     };
 
+    private final UI ui;
     private Mode mode = Mode.INSERT;
     private final JTextArea textArea;
     private static final String COMMIT_ACTION = "commit";
-
-    //To determine if the the type 
-    //of autocomplete is a keyword or bracket
     private boolean isKeyword;
-    //index of the last action
     private int pos;
-    //The text entered so far
     private String content;
 
     public JavaAutoComplete(UI ui) {
@@ -148,7 +143,8 @@ public class JavaAutoComplete
     }
 
     /**
-     * Performs a check to see if the last key typed was one of the supported
+     * Performs a check to see if the last 
+     * key typed was one of the supported
      * bracket characters
      */
     private void checkForBracket() {
@@ -170,7 +166,7 @@ public class JavaAutoComplete
      *
      * @return the keywords
      */
-    protected ArrayList<String> getKeywords() {
+    private ArrayList<String> getKeywords() {
         return words;
     }
 
@@ -179,12 +175,13 @@ public class JavaAutoComplete
      *
      * @param keyword the keyword to set
      */
-    protected void setKeywords(String keyword) {
+    private void setKeywords(String keyword) {
         words.add(keyword);
     }
 
-    /*
-     * Handles the auto complete suggestion generated when the user is typing a
+    /**
+     * Handles the auto complete suggestion 
+     * generated when the user is typing a
      * word that matches a keyword.
      */
     private class CompletionTask
@@ -239,7 +236,6 @@ public class JavaAutoComplete
 
     /**
      * Additional logic for bracket auto complete
-     *
      */
     private class HandleBracketEvent
             implements KeyListener {
@@ -249,10 +245,8 @@ public class JavaAutoComplete
             //Bracket auto complete needs special attention.
             //Multiple possible responses are needed.
             String keyEvent = String.valueOf(e.getKeyChar());
-            for (int i = 0; i < bracketCompletions.size(); i++) {
-                System.out.println(bracketCompletions.get(i));
-                if (keyEvent.equals(bracketCompletions.get(i))) {
-                    System.out.println("Activated");
+            for (String bracketCompletion : bracketCompletions) {
+                if (keyEvent.equals(bracketCompletion)) {
                     textArea.replaceRange("", pos, pos + 1);
                     mode = Mode.INSERT;
                     textArea.removeKeyListener(this);
