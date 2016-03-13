@@ -225,10 +225,9 @@ public class JavaAutoComplete
                     textArea.insert(" ", pos);
                     textArea.setCaretPosition(pos + 1);
                     mode = Mode.INSERT;
-                } else {
-                    mode = Mode.INSERT;
                 }
             } else {
+                mode = Mode.INSERT;
                 textArea.replaceSelection("\n");
             }
         }
