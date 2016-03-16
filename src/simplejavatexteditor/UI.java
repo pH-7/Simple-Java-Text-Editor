@@ -57,9 +57,6 @@ public class UI extends JFrame implements ActionListener {
         private final ImageIcon aboutMeIcon = new ImageIcon("icons/about_me.png");
         private final ImageIcon aboutIcon = new ImageIcon("icons/about.png");
         
-        //setup Autocomplete for Java keywords
-        private final JavaAutoComplete autocomplete;
-        
 	public UI() {	 
 		container = getContentPane();
 		
@@ -214,10 +211,6 @@ public class UI extends JFrame implements ActionListener {
                 closeButton.setToolTipText("Close");
                 closeButton.addActionListener(this);
                 mainToolbar.add(closeButton);
-                
-                //auto complete startup
-                autocomplete = new JavaAutoComplete(this);
-                textArea.getDocument().addDocumentListener(autocomplete);
 	}
         
         //make the TextArea available to the autocomplete handler
@@ -279,6 +272,13 @@ public class UI extends JFrame implements ActionListener {
 					out.write(textArea.getText()); 
 					// Close the file stream
 					out.close(); 
+                                        
+                                                                                        if(file.getName().endsWith(".java")) {
+                                                                                            //setup Autocomplete for Java keywords
+                                                                                            JavaAutoComplete autocomplete = new JavaAutoComplete(this);
+                                                                                            textArea.getDocument().addDocumentListener(autocomplete);
+                                                                                        }
+
 				} catch (Exception ex) { // again, catch any exceptions and...
 					// ...write to the debug console
 					System.out.println(ex.getMessage());
