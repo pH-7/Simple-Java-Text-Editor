@@ -72,7 +72,7 @@ public class UI extends JFrame implements ActionListener {
 		// Set a default font for the TextArea
 		textArea = new JTextArea("", 0,0);
 		textArea.setFont(new Font("Century Gothic", Font.BOLD, 12)); 
-                                    textArea.setTabSize(2);
+    		textArea.setTabSize(2);
 
 		
 		// This is why we didn't have to worry about the size of the TextArea!
