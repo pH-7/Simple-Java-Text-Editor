@@ -273,11 +273,11 @@ public class UI extends JFrame implements ActionListener {
 					// Close the file stream
 					out.close(); 
                                         
-                                                                                        if(file.getName().endsWith(".java")) {
-                                                                                            //setup Autocomplete for Java keywords
-                                                                                            JavaAutoComplete autocomplete = new JavaAutoComplete(this);
-                                                                                            textArea.getDocument().addDocumentListener(autocomplete);
-                                                                                        }
+                                        if(file.getName().endsWith(".java")) {
+                                            //setup Autocomplete for Java keywords
+                                            JavaAutoComplete autocomplete = new JavaAutoComplete(this);
+                                            textArea.getDocument().addDocumentListener(autocomplete);
+                                        }
 
 				} catch (Exception ex) { // again, catch any exceptions and...
 					// ...write to the debug console
