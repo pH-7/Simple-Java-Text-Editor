@@ -135,12 +135,12 @@ public class UI extends JFrame implements ActionListener {
 		menuFile.add(saveFile);
 
 		// Close File
-
 		/*
 		 * Along with our "CTRL+F4" shortcut to close the window, we also have
 		 * the default closer, as stated at the beginning of this tutorial. this
-		 * means that we actually have TWO shortcuts to close: 1) the default
-		 * close operation (example, Alt+F4 on Windows) 2) CTRL+F4, which we are
+		 * means that we actually have TWO shortcuts to close: 
+		 * 1) the default close operation (example, Alt+F4 on Windows)
+		 * 2) CTRL+F4, which we are
 		 * about to define now: (this one will appear in the label).
 		 */
 		close.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_MASK));
