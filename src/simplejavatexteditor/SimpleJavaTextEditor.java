@@ -8,7 +8,7 @@
  * @copyright   Copyright Pierre-Henry SORIA, All Rights Reserved.
  * @license     Apache (http://www.apache.org/licenses/LICENSE-2.0)
  * @create      2012-05-04
- * @update      2015-09-4
+ * @update      2016-21-03
  * 
  * 
  * @modifiedby  Achintha Gunasekara
@@ -23,7 +23,7 @@ import javax.swing.JTextPane;
 public class SimpleJavaTextEditor extends JTextPane {
 	
 	private static final long serialVersionUID = 1L;
-	public final static String AUTHOR_EMAIL = "pierrehs@hotmail.com";
+	public final static String AUTHOR_EMAIL = "pierrehenrysoria@gmail.com";
 	public final static String NAME = "NotePad PH";
         public final static String EDITOR_EMAIL = "contact@achinthagunasekara.com";
 	public final static double VERSION = 2.0;
