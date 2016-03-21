@@ -72,6 +72,8 @@ public class UI extends JFrame implements ActionListener {
 		// Set a default font for the TextArea
 		textArea = new JTextArea("", 0,0);
 		textArea.setFont(new Font("Century Gothic", Font.BOLD, 12)); 
+    		textArea.setTabSize(2);
+
 		
 		// This is why we didn't have to worry about the size of the TextArea!
 		getContentPane().setLayout(new BorderLayout()); // the BorderLayout bit makes it fill it automatically
@@ -210,6 +212,11 @@ public class UI extends JFrame implements ActionListener {
                 closeButton.addActionListener(this);
                 mainToolbar.add(closeButton);
 	}
+        
+        //make the TextArea available to the autocomplete handler
+        protected JTextArea getEditor() {
+                           return textArea;
+                  }
 	
 	public void actionPerformed (ActionEvent e) {
 		// If the source of the event was our "close" option
@@ -265,6 +272,13 @@ public class UI extends JFrame implements ActionListener {
 					out.write(textArea.getText()); 
 					// Close the file stream
 					out.close(); 
+                                        
+                                        if(file.getName().endsWith(".java")) {
+                                            //setup Autocomplete for Java keywords
+                                            JavaAutoComplete autocomplete = new JavaAutoComplete(this);
+                                            textArea.getDocument().addDocumentListener(autocomplete);
+                                        }
+
 				} catch (Exception ex) { // again, catch any exceptions and...
 					// ...write to the debug console
 					System.out.println(ex.getMessage());
@@ -290,6 +304,5 @@ public class UI extends JFrame implements ActionListener {
 			new About().software();
 		}
 		
-	}
-		
+	}   
 }
