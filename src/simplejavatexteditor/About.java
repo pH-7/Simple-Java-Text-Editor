@@ -47,7 +47,6 @@ public class About {
 		"<a href='mailto:" + SimpleJavaTextEditor.AUTHOR_EMAIL + "?subject=About the NotePad PH Software'>" + SimpleJavaTextEditor.AUTHOR_EMAIL + "</a>" +
                 "<br /><br />" +
                 "Modified By: Achintha Gunasekara<br />" +
-                "Website: <a href='http://www.achinthagunasekara.com'>http://www.achinthagunasekara.com</a><br />" +
                 "Contact me at: <a href='mailto:" + SimpleJavaTextEditor.EDITOR_EMAIL + "?subject=About the NotePad PH Software'>" + SimpleJavaTextEditor.EDITOR_EMAIL + "</a>" +
 		"</p></body></html>";
 		
