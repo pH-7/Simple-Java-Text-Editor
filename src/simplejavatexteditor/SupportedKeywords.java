@@ -2,6 +2,14 @@ package simplejavatexteditor;
 
 import java.util.ArrayList;
 
+/**
+ * <h1>A class to store the programming language keywords and
+ * provide access to them.</h1>
+ *
+ * <p>Makes multiple language support possible and makes adding new language
+ * support convenient. To add more keywords, add a string array and getters
+ * to this class. Then, update the switch statement in UI.java.</p>
+ */
 public class SupportedKeywords {
     private String[] java = {"abstract", "assert", "boolean",
             "break", "byte", "case", "catch", "char", "class", "const",
@@ -19,8 +27,8 @@ public class SupportedKeywords {
                 "typedef", "volatile", "char", "do", "extern", "if", "return", "static",
                 "union", "while", "asm", "dynamic_cast", "namespace", "reinterpret_cast", "try",
                 "bool", "explicit", "new", "static_cast", "typeid", "catch", "false", "operator",
-                "template", "typename", "class", "friend", "private", "this", "using", "const_cast", "inline",
-                "public", "throw", "virtual", "delete", "mutable", "protected", "true", "wchar_t", };
+                "template", "typename", "class", "friend", "private", "this", "using", "const_cast",
+                "inline", "public", "throw", "virtual", "delete", "mutable", "protected", "true", "wchar_t" };
 
     private String[] brackets = { "{", "(" };
     private String[] bCompletions = { "}", ")" };
@@ -31,18 +39,18 @@ public class SupportedKeywords {
         return cpp;
     }
     public ArrayList<String> getbracketCompletions() {
-        ArrayList<String> alist = new ArrayList<>();
+        ArrayList<String> al = new ArrayList<>();
         for(String completion : bCompletions) {
-            alist.add(completion);
+            al.add(completion);
         }
-        return alist;
+        return al;
     }
     public ArrayList<String> getbrackets() {
-        ArrayList<String> alist = new ArrayList<>();
+        ArrayList<String> al = new ArrayList<>();
         for(String completion : brackets) {
-            alist.add(completion);
+            al.add(completion);
         }
-        return alist;
+        return al;
     }
     public ArrayList<String> setKeywords(String[] arr) {
         ArrayList<String> al = new ArrayList<>();

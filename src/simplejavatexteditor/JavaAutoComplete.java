@@ -16,12 +16,14 @@ import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
 
 /**
- * <h1>Auto complete functionality for java keywords, brackets and
+ * <h1>Auto complete functionality multiple programming languages, including brackets and
  * parentheses</h1>
  *
  * <p>
- * An ArrayList is created for the keywords and the brackets. If the word
- * currently being typed matches a word in the list, a Runnable inner class is
+ * An ArrayList is created for the keywords and the brackets.
+ * Logic for setting the content of the ArrayList is
+ * found in UI.java. If the word currently being typed
+ * matches a word in the list, a Runnable inner class is
  * implemented to handle the word completion.
  *
  * Two other inner classes are also used. The second one handles when the enter
@@ -42,6 +44,7 @@ public class JavaAutoComplete
     private ArrayList<String> words = new ArrayList<>();
 
     SupportedKeywords kw;
+
     //Keep track of when code completion
     //has been activated
     private enum Mode {
@@ -57,12 +60,8 @@ public class JavaAutoComplete
     private int pos;
     private String content;
 
-    public JavaAutoComplete(UI ui) {
-        this.ui = ui;
-        textArea = ui.getEditor();
-    }
-
     public JavaAutoComplete(UI ui, ArrayList<String> al) {
+        //Set the keywords
         words = al;
         kw = new SupportedKeywords();
         brackets = kw.getbrackets();
@@ -280,9 +279,5 @@ public class JavaAutoComplete
 
     @Override
     public void changedUpdate(DocumentEvent e) {
-    }
-
-    public void removeListener() {
-        textArea.getDocument().removeDocumentListener(this);
     }
 }

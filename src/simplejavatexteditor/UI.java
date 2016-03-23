@@ -19,20 +19,23 @@
 package simplejavatexteditor;
 
 // GUI
+
 import javax.swing.*;
-import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.Font;
-import java.awt.event.*;
-// Input Stream
-import java.io.*;
-// Various
-import java.util.ArrayList;
-import java.util.EventListener;
-import java.util.Scanner;
 import javax.swing.border.Border;
-import javax.swing.event.DocumentListener;
-import javax.xml.bind.Marshaller;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+// Input Stream
+// Various
 
 public class UI extends JFrame implements ActionListener {
 
@@ -43,7 +46,11 @@ public class UI extends JFrame implements ActionListener {
 	private final JMenu menuFile, menuEdit, menuFind, menuAbout;
 	private final JMenuItem newFile, openFile, saveFile, close, clearFile, quickFind, aboutMe, aboutSoftware;
 	private final JToolBar mainToolbar;
-        JButton newButton, openButton, saveButton, clearButton, quickButton, aboutMeButton, aboutButton, closeButton, spaceButton1, spaceButton2;
+        JButton newButton, openButton,
+				saveButton, clearButton,
+				quickButton, aboutMeButton,
+				aboutButton, closeButton,
+				spaceButton1, spaceButton2;
 
         //setup icons - File Menu
         private final ImageIcon newIcon = new ImageIcon("icons/new.png");
@@ -61,8 +68,8 @@ public class UI extends JFrame implements ActionListener {
         private final ImageIcon aboutMeIcon = new ImageIcon("icons/about_me.png");
         private final ImageIcon aboutIcon = new ImageIcon("icons/about.png");
 
-		private boolean hasListener = false;
-		JavaAutoComplete autocomplete;
+	JavaAutoComplete autocomplete;
+	private boolean hasListener = false;
 
 	public UI() {
 		container = getContentPane();
@@ -78,14 +85,10 @@ public class UI extends JFrame implements ActionListener {
 
 		// Set a default font for the TextArea
 		textArea = new JTextArea("", 0,0);
-<<<<<<< Updated upstream
-		textArea.setFont(new Font("Century Gothic", Font.BOLD, 12)); 
-    		textArea.setTabSize(2);
-=======
 		textArea.setFont(new Font("Century Gothic", Font.BOLD, 12));
 		textArea.setTabSize(2);
-
->>>>>>> Stashed changes
+		textArea.setFont(new Font("Century Gothic", Font.BOLD, 12));
+		textArea.setTabSize(2);
 
 		// This is why we didn't have to worry about the size of the TextArea!
 		getContentPane().setLayout(new BorderLayout()); // the BorderLayout bit makes it fill it automatically
@@ -285,15 +288,24 @@ public class UI extends JFrame implements ActionListener {
 					// Close the file stream
 					out.close();
 
+					//If the user saves files with supported
+					//file types more than once, we need to remove
+					//previous listeners to avoid bugs.
 					if(hasListener) {
 						textArea.getDocument().removeDocumentListener(autocomplete);
 						hasListener = false;
 					}
 
+					//With the keywords located in a separate class,
+					//we can support multiple languages and not have to do
+					//much to add new ones.
 					SupportedKeywords kw = new SupportedKeywords();
 					ArrayList<String> arrayList;
 					String[] list = { ".java", ".cpp" };
 
+					//Iterate through the list, find the supported
+					//file extension, apply the appropriate getter method from
+					//the keyword class
 					for(int i = 0; i < list.length; i++) {
 						if(file.getName().endsWith(list[i])) {
 							switch(i) {
@@ -340,16 +352,4 @@ public class UI extends JFrame implements ActionListener {
 		}
 
 	}
-
-	/*
-	bool hasListener = false
-
-	for..
-	if..
-	if(hasListener) {
-		removeListener
-	}
-	switch..
-//It has a
-	 */
 }
