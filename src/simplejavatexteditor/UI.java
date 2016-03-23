@@ -68,7 +68,7 @@ public class UI extends JFrame implements ActionListener {
         private final ImageIcon aboutMeIcon = new ImageIcon("icons/about_me.png");
         private final ImageIcon aboutIcon = new ImageIcon("icons/about.png");
 
-	JavaAutoComplete autocomplete;
+	AutoComplete autocomplete;
 	private boolean hasListener = false;
 
 	public UI() {
@@ -312,14 +312,14 @@ public class UI extends JFrame implements ActionListener {
 								case 0:
 									String[] jk = kw.getJavaKeywords();
 									arrayList = kw.setKeywords(jk);
-									autocomplete = new JavaAutoComplete(this, arrayList);
+									autocomplete = new AutoComplete(this, arrayList);
 									textArea.getDocument().addDocumentListener(autocomplete);
 									hasListener = true;
 									break;
 								case 1:
 									String[] ck = kw.getCppKeywords();
 									arrayList = kw.setKeywords(ck);
-									autocomplete = new JavaAutoComplete(this, arrayList);
+									autocomplete = new AutoComplete(this, arrayList);
 									textArea.getDocument().addDocumentListener(autocomplete);
 									hasListener = true;
 									break;

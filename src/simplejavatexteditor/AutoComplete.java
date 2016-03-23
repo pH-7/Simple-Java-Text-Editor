@@ -35,7 +35,7 @@ import javax.swing.text.BadLocationException;
  * @author Patrick Slagle
  * @since 2016-12-03
  */
-public class JavaAutoComplete
+public class AutoComplete
         implements DocumentListener {
 
     private ArrayList<String> brackets = new ArrayList<>();
@@ -60,7 +60,7 @@ public class JavaAutoComplete
     private int pos;
     private String content;
 
-    public JavaAutoComplete(UI ui, ArrayList<String> al) {
+    public AutoComplete(UI ui, ArrayList<String> al) {
         //Set the keywords
         words = al;
         kw = new SupportedKeywords();
