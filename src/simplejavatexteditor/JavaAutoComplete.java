@@ -36,22 +36,12 @@ import javax.swing.text.BadLocationException;
 public class JavaAutoComplete
         implements DocumentListener {
 
-    private static String[] keywords = {"abstract", "assert", "boolean",
-        "break", "byte", "case", "catch", "char", "class", "const",
-        "continue", "default", "do", "double", "else", "extends", "false",
-        "final", "finally", "float", "for", "goto", "if", "implements",
-        "import", "instanceof", "int", "System", "out", "print()", "println()",
-        "new", "null", "package", "private", "protected", "public", "interface",
-        "long", "native", "return", "short", "static", "strictfp", "super", "switch",
-        "synchronized", "this", "throw", "throws", "transient", "true",
-        "try", "void", "volatile", "while", "String"};
-
-    private static String[] bracketChars = {"{", "("};
-    private static String[] bCompletions = {"}", ")"};
-    private ArrayList<String> words = new ArrayList<>();
     private ArrayList<String> brackets = new ArrayList<>();
     private ArrayList<String> bracketCompletions = new ArrayList<>();
 
+    private ArrayList<String> words = new ArrayList<>();
+
+    SupportedKeywords kw;
     //Keep track of when code completion
     //has been activated
     private enum Mode {
@@ -68,6 +58,16 @@ public class JavaAutoComplete
     private String content;
 
     public JavaAutoComplete(UI ui) {
+        this.ui = ui;
+        textArea = ui.getEditor();
+    }
+
+    public JavaAutoComplete(UI ui, ArrayList<String> al) {
+        words = al;
+        kw = new SupportedKeywords();
+        brackets = kw.getbrackets();
+        bracketCompletions = kw.getbracketCompletions();
+
         //Access the editor
         this.ui = ui;
         textArea = ui.getEditor();
@@ -78,19 +78,16 @@ public class JavaAutoComplete
         im.put(KeyStroke.getKeyStroke("ENTER "), COMMIT_ACTION);
         am.put(COMMIT_ACTION, new CommitAction());
 
-        //Set up the keywords
-        for (String keyList : keywords) {
-            words.add(keyList);
-        }
-        for (String bracket : bracketChars) {
-            brackets.add(bracket);
-        }
-        for (String comp : bCompletions) {
-            bracketCompletions.add(comp);
-        }
-        Collections.sort(words, null);
+        Collections.sort(words);
     }
 
+    /**
+     * A character has been typed into the document.
+     * This method performs the primary
+     * check to find a keyword completion.
+     *
+     * @param e
+     */
     @Override
     public void insertUpdate(DocumentEvent e) {
         pos = e.getOffset();
@@ -209,7 +206,8 @@ public class JavaAutoComplete
     }
 
     /**
-     * Enter key is pressed in response to an auto complete suggestion. Respond
+     * Enter key is pressed in response to an
+     * auto complete suggestion. Respond
      * appropriately.
      */
     private class CommitAction
@@ -284,4 +282,7 @@ public class JavaAutoComplete
     public void changedUpdate(DocumentEvent e) {
     }
 
+    public void removeListener() {
+        textArea.getDocument().removeDocumentListener(this);
+    }
 }
