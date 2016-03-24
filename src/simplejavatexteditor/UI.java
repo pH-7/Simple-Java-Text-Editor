@@ -2,32 +2,38 @@
  * @name        Simple Java NotePad
  * @package     ph.notepad
  * @file        UI.java
- * @author      SORIA Pierre-Henry
- * @email       pierrehs@hotmail.com
+ *
+ * @author      Pierre-Henry Soria
+ * @email       pierrehenrysoria@gmail.com
  * @link        http://github.com/pH-7
+ *
  * @copyright   Copyright Pierre-Henry SORIA, All Rights Reserved.
  * @license     Apache (http://www.apache.org/licenses/LICENSE-2.0)
  * @create      2012-05-04
- * @update      2016-30-1
- * 
- * 
+ * @update      2016-24-3
+ *
+ * @modifiedby  Achintha Gunasekara
+ * @modemail    contact@achinthagunasekara.com
+*
  * @modifiedby  Marcus Redgrave-Close
  * @modemail   	marcusrc1@hotmail.co.uk
  */
 
 package simplejavatexteditor;
 
-// GUI
 import javax.swing.*;
-import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.Font;
-import java.awt.event.*;
-// Input Stream
-import java.io.*;
-// Various
-import java.util.Scanner;
 import javax.swing.border.Border;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.util.ArrayList;
+import java.util.Scanner;
 import javax.swing.text.DefaultEditorKit;
 
 public class UI extends JFrame implements ActionListener {
@@ -64,6 +70,9 @@ public class UI extends JFrame implements ActionListener {
 	private final ImageIcon aboutMeIcon = new ImageIcon("icons/about_me.png");
 	private final ImageIcon aboutIcon = new ImageIcon("icons/about.png");
 
+	AutoComplete autocomplete;
+	private boolean hasListener = false;
+
 	public UI() {
 		container = getContentPane();
 
@@ -77,13 +86,14 @@ public class UI extends JFrame implements ActionListener {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 		// Set a default font for the TextArea
-		textArea = new JTextArea("", 0, 0);
+		textArea = new JTextArea("", 0,0);
 		textArea.setFont(new Font("Century Gothic", Font.BOLD, 12));
+		textArea.setTabSize(2);
+		textArea.setFont(new Font("Century Gothic", Font.BOLD, 12));
+		textArea.setTabSize(2);
 
 		// This is why we didn't have to worry about the size of the TextArea!
-		getContentPane().setLayout(new BorderLayout()); // the BorderLayout bit
-														// makes it fill it
-														// automatically
+		getContentPane().setLayout(new BorderLayout()); // the BorderLayout bit makes it fill it automatically
 		getContentPane().add(textArea);
 
 		// Set the Menus
@@ -115,13 +125,11 @@ public class UI extends JFrame implements ActionListener {
 		selectAllAction = new SelectAllAction("Select All", clearIcon, "Select all text", new Integer(KeyEvent.VK_A),
 				textArea);
 
+        this.setJMenuBar(menuBar);
+
 		// New File
-		newFile.addActionListener(this); // Adding an action listener (so we
-											// know when it's been clicked).
-		newFile.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK)); // Set
-																								// a
-																								// keyboard
-																								// shortcut
+		newFile.addActionListener(this);  // Adding an action listener (so we know when it's been clicked).
+		newFile.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK)); // Set a keyboard shortcut
 		menuFile.add(newFile); // Adding the file menu
 
 		// Open File
@@ -260,7 +268,12 @@ public class UI extends JFrame implements ActionListener {
 		mainToolbar.add(closeButton);
 	}
 
-	public void actionPerformed(ActionEvent e) {
+	// Make the TextArea available to the autocomplete handler
+	protected JTextArea getEditor() {
+		return textArea;
+	}
+
+	public void actionPerformed (ActionEvent e) {
 		// If the source of the event was our "close" option
 		if (e.getSource() == close || e.getSource() == closeButton)
 			this.dispose(); // dispose all resources and close the application
@@ -271,12 +284,8 @@ public class UI extends JFrame implements ActionListener {
 		}
 		// If the source was the "open" option
 		else if (e.getSource() == openFile || e.getSource() == openButton) {
-			JFileChooser open = new JFileChooser(); // open up a file chooser (a
-													// dialog for the user to
-													// browse files to open)
-			int option = open.showOpenDialog(this); // get the option that the
-													// user selected (approve or
-													// cancel)
+			JFileChooser open = new JFileChooser(); // open up a file chooser (a dialog for the user to  browse files to open)
+			int option = open.showOpenDialog(this); // get the option that the user selected (approve or cancel)
 
 			/*
 			 * NOTE: because we are OPENing a file, we call showOpenDialog~ if
@@ -284,19 +293,13 @@ public class UI extends JFrame implements ActionListener {
 			 * the file
 			 */
 			if (option == JFileChooser.APPROVE_OPTION) {
-				FEdit.clear(textArea); // clear the TextArea before applying the
-										// file contents
+				FEdit.clear(textArea); // clear the TextArea before applying the file contents
 				try {
-					// create a scanner to read the file
-					// (getSelectedFile().getPath() will get the path to the
-					// file)
+					// create a scanner to read the file (getSelectedFile().getPath() will get the path to the file)
 					Scanner scan = new Scanner(new FileReader(open.getSelectedFile().getPath()));
 					while (scan.hasNext()) // while there's still something to
 											// read
-						textArea.append(scan.nextLine() + "\n"); // append the
-																	// line to
-																	// the
-																	// TextArea
+						textArea.append(scan.nextLine() + "\n"); // append the line to the TextArea
 				} catch (Exception ex) { // catch any exceptions, and...
 					// ...write to the debug console
 					System.out.println(ex.getMessage());
@@ -325,6 +328,45 @@ public class UI extends JFrame implements ActionListener {
 					out.write(textArea.getText());
 					// Close the file stream
 					out.close();
+
+					//If the user saves files with supported
+					//file types more than once, we need to remove
+					//previous listeners to avoid bugs.
+					if(hasListener) {
+						textArea.getDocument().removeDocumentListener(autocomplete);
+						hasListener = false;
+					}
+
+					//With the keywords located in a separate class,
+					//we can support multiple languages and not have to do
+					//much to add new ones.
+					SupportedKeywords kw = new SupportedKeywords();
+					ArrayList<String> arrayList;
+					String[] list = { ".java", ".cpp" };
+
+					//Iterate through the list, find the supported
+					//file extension, apply the appropriate getter method from
+					//the keyword class
+					for(int i = 0; i < list.length; i++) {
+						if(file.getName().endsWith(list[i])) {
+							switch(i) {
+								case 0:
+									String[] jk = kw.getJavaKeywords();
+									arrayList = kw.setKeywords(jk);
+									autocomplete = new AutoComplete(this, arrayList);
+									textArea.getDocument().addDocumentListener(autocomplete);
+									hasListener = true;
+									break;
+								case 1:
+									String[] ck = kw.getCppKeywords();
+									arrayList = kw.setKeywords(ck);
+									autocomplete = new AutoComplete(this, arrayList);
+									textArea.getDocument().addDocumentListener(autocomplete);
+									hasListener = true;
+									break;
+							}
+						}
+					}
 				} catch (Exception ex) { // again, catch any exceptions and...
 					// ...write to the debug console
 					System.out.println(ex.getMessage());
