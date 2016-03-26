@@ -28,7 +28,7 @@ Achintha Gunasekara: contact@achinthagunasekara.com
 
 ## Important
 
-**Icons directory and it's files must be present on the path when running the application**
+**Icons directory and its files must be present on the path when running the application**
 
 
 ## Demo
