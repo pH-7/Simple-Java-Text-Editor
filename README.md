@@ -39,7 +39,7 @@ Achintha Gunasekara: contact@achinthagunasekara.com
 
 ## Important
 
-**Icons directory and its files must be present on the path when running the application (so you will have to move "*icons/*" into "*src/*" folder)**
+**Icons directory and its files must be present on the path when running the application (so you will have to move "*icons/*" into "*src/*" directory)**
 
 
 ## Demo
@@ -48,7 +48,7 @@ Download the Jar file and double click to run
 
 Or run `java -jar SimpleJavaTextEditor.jar` from the command line
 
-You can also generate easily a new jar file with the following command in *src/* folder `jar cmvf META-INF/MANIFEST.MF SimpleJavaTextEditor.jar simplejavatexteditor/*.class`
+You can also generate easily a new jar file with the following command when you are in *src/* directory `jar cmvf ../manifest.mf ../SimpleJavaTextEditor.jar simplejavatexteditor/*.class`
 
 
 ## LICENSE
