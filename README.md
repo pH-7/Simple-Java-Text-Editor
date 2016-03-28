@@ -1,22 +1,35 @@
 # Simple Java Text Editor
 
-This is a simple text editor (notepad) written in Java. It also features a search engine.
+**PH NotePad** is a simple and light **text editor** (notepad) written in Java.
 
-If you use the executable file "notepad.jar" and that it does not run, you can type "java -jar /your_notepad_directory/notepad.jar" in your terminal.
+- Search tool (to search code easily in the code) + highlighting the code found
 
-![Example Java Text Editor](Screenshots/screenshot4.png)
+- Find/Replace code feature
+
+- Auto completion for Java and C++ keywords (files need to be saved as *.java*/*.cpp*). It can be easily expanded to support pretty much any number of languages. 
+
+- Nice Image Buttons for better UX
+
+
+If you use the executable file "notepad.jar" and that it does't run, you can type "java -jar /your_notepad_directory/notepad.jar" in your terminal.
+
+![Example Java Text Editor](Screenshots/find-replace-word-in-java-text-editor.png)
 
 
 ## AUTHOR
 
-### Base Application
-
-Pierre-Henry Soria
+[Pierre-Henry Soria](https://github.com/pH-7)
 
 
-### Modifications and Improvements
+### Contributors
 
-Achintha Gunasekara
+- [Achintha Gunasekara](https://github.com/achinthagunasekara)
+
+- [Patrick Slagle](https://github.com/patrick-slagle)
+
+- [Marcus Redgrave-Close](https://github.com/marcusjrc)
+
+- [Ossi Laukkanen](https://github.com/Fitoh)
 
 
 ## CONTACT
@@ -28,7 +41,7 @@ Achintha Gunasekara: contact@achinthagunasekara.com
 
 ## Important
 
-**Icons directory and its files must be present on the path when running the application**
+**Icons directory and its files must be present on the path when running the application (so you will have to move "*icons/*" into "*src/*" folder)**
 
 
 ## Demo
