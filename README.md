@@ -2,16 +2,14 @@
 
 **PH NotePad** is a simple and light **text editor** (notepad) written in Java.
 
-- Search tool (to search code easily in the code) + highlighting the code found
+- Search tool (to search text/keywords easily in the code) + highlighting the code found
 
-- Find/Replace code feature
+- Find/Replace text/code
 
 - Auto completion for Java and C++ keywords (files need to be saved as *.java*/*.cpp*). It can be easily expanded to support pretty much any number of languages. 
 
 - Nice Image Buttons for better UX
 
-
-If you use the executable file "notepad.jar" and that it does't run, you can type "java -jar /your_notepad_directory/notepad.jar" in your terminal.
 
 ![Example Java Text Editor](Screenshots/find-replace-word-in-java-text-editor.png)
 
@@ -48,7 +46,9 @@ Achintha Gunasekara: contact@achinthagunasekara.com
 
 Download the Jar file and double click to run
 
-Or run java -jar SimpleJavaTextEditor.jar from the command line
+Or run `java -jar SimpleJavaTextEditor.jar` from the command line
+
+You can also generate easily a new jar file with the following command in *src/* folder `jar cmvf META-INF/MANIFEST.MF SimpleJavaTextEditor.jar simplejavatexteditor/*.class`
 
 
 ## LICENSE
