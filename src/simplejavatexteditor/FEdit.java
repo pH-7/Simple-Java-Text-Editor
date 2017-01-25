@@ -9,8 +9,8 @@
  * @license     Apache (http://www.apache.org/licenses/LICENSE-2.0)
  * @create      2012-05-04
  * @update      2015-09-4
- * 
- * 
+ *
+ *
  * @modifiedby  Achintha Gunasekara
  * @modweb      http://www.achinthagunasekara.com
  * @modemail    contact@achinthagunasekara.com
@@ -22,8 +22,8 @@ import javax.swing.JTextArea;
 
 public class FEdit {
 
-	public static void clear(JTextArea textArea) {
-		textArea.setText("");
-	}
-	
+    public static void clear(JTextArea textArea) {
+        textArea.setText("");
+    }
+
 }
