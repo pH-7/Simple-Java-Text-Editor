@@ -36,10 +36,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import javax.swing.text.DefaultEditorKit;
 
-public class UI extends JFrame implements ActionListener 
-{
-    
-
+public class UI extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private final Container container;
 	private final JTextArea textArea;
@@ -94,10 +91,9 @@ public class UI extends JFrame implements ActionListener
 		textArea.setTabSize(2);
 		textArea.setFont(new Font("Century Gothic", Font.BOLD, 12));
 		textArea.setTabSize(2);
-                
-                
-                /* SETTING BY DEFAULT WORD WRAP ENABLED OR TRUE*/
-                textArea.setLineWrap(true);
+
+        /* SETTING BY DEFAULT WORD WRAP ENABLED OR TRUE */
+        textArea.setLineWrap(true);
 
 		// This is why we didn't have to worry about the size of the TextArea!
 		getContentPane().setLayout(new BorderLayout()); // the BorderLayout bit makes it fill it automatically
@@ -153,7 +149,7 @@ public class UI extends JFrame implements ActionListener
 		/*
 		 * Along with our "CTRL+F4" shortcut to close the window, we also have
 		 * the default closer, as stated at the beginning of this tutorial. this
-		 * means that we actually have TWO shortcuts to close: 
+		 * means that we actually have TWO shortcuts to close:
 		 * 1) the default close operation (example, Alt+F4 on Windows)
 		 * 2) CTRL+F4, which we are
 		 * about to define now: (this one will appear in the label).
@@ -161,7 +157,7 @@ public class UI extends JFrame implements ActionListener
 		close.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_MASK));
 		close.addActionListener(this);
 		menuFile.add(close);
-		
+
 		// Select All Text
 		selectAll = new JMenuItem(selectAllAction);
 		selectAll.setText("Select All");
@@ -182,53 +178,34 @@ public class UI extends JFrame implements ActionListener
 		cut.setToolTipText("Cut");
 		cut.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.CTRL_MASK));
 		menuEdit.add(cut);
-                
-                //WordWrap
-                
+
+        // WordWrap
 		wordWrap = new JMenuItem();
-                wordWrap.setText("Word Wrap");
+        wordWrap.setText("Word Wrap");
 		wordWrap.setIcon(wordwrapIcon);
 		wordWrap.setToolTipText("Word Wrap");
-                
-                //Short cut key or key stroke
+
+        //Short cut key or key stroke
 		wordWrap.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W, InputEvent.CTRL_MASK));
 		menuEdit.add(wordWrap);
-                
-             
-                
-            /* CODE FOR WORD WRAP OPERATION
-                
-                START WORDWRAP OPERATION
-                
-                BY DEFAULT WORD WRAPPING IS ENABLED. 
-                
-                */
-                
-                wordWrap.addActionListener(new ActionListener()
-                {
-                        public void actionPerformed(ActionEvent ev) 
-                        {
-                            // If wrapping is false then after clicking on menuitem the word wrapping will be enabled 
-                            if(textArea.getLineWrap()==false)
-                            {
-                                
-                                /*Setting word wrapping to true*/
-                                textArea.setLineWrap(true);
-                                
-                            } 
-                            
-                            // else  if wrapping is true then after clicking on menuitem the word wrapping will be disabled 
-                            else 
-                            {
-                                /*Setting word wrapping to false*/
-                                textArea.setLineWrap(false);
-                            }
-                        }
-                });
-                
-               
-             //END OF THE WORDWRAP OPERATION   
-                
+
+        /* CODE FOR WORD WRAP OPERATION
+         * BY DEFAULT WORD WRAPPING IS ENABLED.
+        */
+        wordWrap.addActionListener(new ActionListener()
+        {
+                public void actionPerformed(ActionEvent ev) {
+                    // If wrapping is false then after clicking on menuitem the word wrapping will be enabled
+                    if(textArea.getLineWrap()==false) {
+                        /* Setting word wrapping to true */
+                        textArea.setLineWrap(true);
+                    } else {
+                        // else  if wrapping is true then after clicking on menuitem the word wrapping will be disabled
+                        /* Setting word wrapping to false */
+                        textArea.setLineWrap(false);
+                }
+            }
+        });
 
 		// Copy Text
 		copy = new JMenuItem(new DefaultEditorKit.CopyAction());
@@ -334,16 +311,9 @@ public class UI extends JFrame implements ActionListener
 
 		// If the source was the "new" file option
 		else if (e.getSource() == newFile || e.getSource() == newButton) {
-                    FEdit.clear(textArea);
-
+            FEdit.clear(textArea);
 		}
-                
-               
-                
-                
-                
-                
-                
+
 		// If the source was the "open" option
 		else if (e.getSource() == openFile || e.getSource() == openButton) {
 			JFileChooser open = new JFileChooser(); // open up a file chooser (a dialog for the user to  browse files to open)
@@ -472,5 +442,4 @@ public class UI extends JFrame implements ActionListener
 			textArea.selectAll();
 		}
 	}
-
 }
