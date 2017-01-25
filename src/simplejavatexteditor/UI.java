@@ -43,7 +43,7 @@ public class UI extends JFrame implements ActionListener {
     private final JMenuBar menuBar;
     private final JMenu menuFile, menuEdit, menuFind, menuAbout;
     private final JMenuItem newFile, openFile, saveFile, close, cut, copy, paste, clearFile, selectAll, quickFind,
-            aboutMe, aboutSoftware,wordWrap;
+            aboutMe, aboutSoftware, wordWrap;
     private final JToolBar mainToolbar;
     JButton newButton, openButton, saveButton, clearButton, quickButton, aboutMeButton, aboutButton, closeButton,
             spaceButton1, spaceButton2;
