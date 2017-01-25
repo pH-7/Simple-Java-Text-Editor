@@ -29,6 +29,8 @@
 
 - [Ossi Laukkanen](https://github.com/Fitoh)
 
+- [Akashdeep Singh](https://github.com/akashdeepsingh9988)
+
 
 ## CONTACT
 
