@@ -16,7 +16,7 @@
  * @modemail    contact@achinthagunasekara.com
 *
  * @modifiedby  Marcus Redgrave-Close
- * @modemail       marcusrc1@hotmail.co.uk
+ * @modemail    marcusrc1@hotmail.co.uk
  */
 
 package simplejavatexteditor;
@@ -37,16 +37,17 @@ import java.util.Scanner;
 import javax.swing.text.DefaultEditorKit;
 
 public class UI extends JFrame implements ActionListener {
+
     private static final long serialVersionUID = 1L;
     private final Container container;
     private final JTextArea textArea;
     private final JMenuBar menuBar;
     private final JMenu menuFile, menuEdit, menuFind, menuAbout;
     private final JMenuItem newFile, openFile, saveFile, close, cut, copy, paste, clearFile, selectAll, quickFind,
-            aboutMe, aboutSoftware, wordWrap;
+        aboutMe, aboutSoftware, wordWrap;
     private final JToolBar mainToolbar;
     JButton newButton, openButton, saveButton, clearButton, quickButton, aboutMeButton, aboutButton, closeButton,
-            spaceButton1, spaceButton2;
+        spaceButton1, spaceButton2;
     private final Action selectAllAction;
 
     // setup icons - File Menu
@@ -126,7 +127,7 @@ public class UI extends JFrame implements ActionListener {
 
         // Set Actions:
         selectAllAction = new SelectAllAction("Select All", clearIcon, "Select all text", new Integer(KeyEvent.VK_A),
-                textArea);
+            textArea);
 
         this.setJMenuBar(menuBar);
 
@@ -194,15 +195,15 @@ public class UI extends JFrame implements ActionListener {
         */
         wordWrap.addActionListener(new ActionListener()
         {
-                public void actionPerformed(ActionEvent ev) {
-                    // If wrapping is false then after clicking on menuitem the word wrapping will be enabled
-                    if(textArea.getLineWrap()==false) {
-                        /* Setting word wrapping to true */
-                        textArea.setLineWrap(true);
-                    } else {
-                        // else  if wrapping is true then after clicking on menuitem the word wrapping will be disabled
-                        /* Setting word wrapping to false */
-                        textArea.setLineWrap(false);
+            public void actionPerformed(ActionEvent ev) {
+                // If wrapping is false then after clicking on menuitem the word wrapping will be enabled
+                if(textArea.getLineWrap()==false) {
+                    /* Setting word wrapping to true */
+                    textArea.setLineWrap(true);
+                } else {
+                    // else  if wrapping is true then after clicking on menuitem the word wrapping will be disabled
+                    /* Setting word wrapping to false */
+                    textArea.setLineWrap(false);
                 }
             }
         });
@@ -306,8 +307,9 @@ public class UI extends JFrame implements ActionListener {
 
     public void actionPerformed (ActionEvent e) {
         // If the source of the event was our "close" option
-        if (e.getSource() == close || e.getSource() == closeButton)
+        if (e.getSource() == close || e.getSource() == closeButton) {
             this.dispose(); // dispose all resources and close the application
+        }
 
         // If the source was the "new" file option
         else if (e.getSource() == newFile || e.getSource() == newButton) {
@@ -442,4 +444,5 @@ public class UI extends JFrame implements ActionListener {
             textArea.selectAll();
         }
     }
+
 }

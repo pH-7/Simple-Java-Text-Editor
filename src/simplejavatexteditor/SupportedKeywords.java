@@ -11,6 +11,7 @@ import java.util.ArrayList;
  * to this class. Then, update the switch statement in UI.java.</p>
  */
 public class SupportedKeywords {
+
     private String[] java = {"abstract", "assert", "boolean",
             "break", "byte", "case", "catch", "char", "class", "const",
             "continue", "default", "do", "double", "else", "extends", "false",
@@ -59,4 +60,5 @@ public class SupportedKeywords {
         }
         return al;
     }
+
 }
