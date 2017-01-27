@@ -322,6 +322,7 @@ public class UI extends JFrame implements ActionListener {
         mainToolbar.addSeparator();
         
         //Adding Action Listener on fontType JComboBox 
+        
         fontType.addActionListener(new ActionListener()
         {
                 public void actionPerformed(ActionEvent ev) 
