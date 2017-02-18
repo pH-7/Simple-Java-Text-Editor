@@ -16,7 +16,7 @@
  * @modemail    contact@achinthagunasekara.com
 *
  * @modifiedby  Marcus Redgrave-Close
- * @modemail    marcusrc1@hotmail.co.uk
+ * @modemail       marcusrc1@hotmail.co.uk
  */
 
 package simplejavatexteditor;
@@ -37,18 +37,20 @@ import java.util.Scanner;
 import javax.swing.text.DefaultEditorKit;
 
 public class UI extends JFrame implements ActionListener {
-
     private static final long serialVersionUID = 1L;
     private final Container container;
     private final JTextArea textArea;
     private final JMenuBar menuBar;
+    private final JComboBox fontSize, fontType;
     private final JMenu menuFile, menuEdit, menuFind, menuAbout;
     private final JMenuItem newFile, openFile, saveFile, close, cut, copy, paste, clearFile, selectAll, quickFind,
-        aboutMe, aboutSoftware, wordWrap;
+            aboutMe, aboutSoftware, wordWrap;
     private final JToolBar mainToolbar;
     JButton newButton, openButton, saveButton, clearButton, quickButton, aboutMeButton, aboutButton, closeButton,
-        spaceButton1, spaceButton2;
+            spaceButton1, spaceButton2;
     private final Action selectAllAction;
+    
+    
 
     // setup icons - File Menu
     private final ImageIcon newIcon = new ImageIcon("icons/new.png");
@@ -73,8 +75,10 @@ public class UI extends JFrame implements ActionListener {
 
     AutoComplete autocomplete;
     private boolean hasListener = false;
+    
 
-    public UI() {
+    public UI()
+    {
         container = getContentPane();
 
         // Set the initial size of the window
@@ -105,6 +109,7 @@ public class UI extends JFrame implements ActionListener {
         menuEdit = new JMenu("Edit");
         menuFind = new JMenu("Search");
         menuAbout = new JMenu("About");
+        //Font Settings menu
 
         // Set the Items Menu
         newFile = new JMenuItem("New", newIcon);
@@ -115,19 +120,22 @@ public class UI extends JFrame implements ActionListener {
         quickFind = new JMenuItem("Quick", searchIcon);
         aboutMe = new JMenuItem("About Me", aboutMeIcon);
         aboutSoftware = new JMenuItem("About Software", aboutIcon);
-
-        // Set the Menu Bar into the our GUI
+        
+       
         menuBar = new JMenuBar();
         menuBar.add(menuFile);
         menuBar.add(menuEdit);
         menuBar.add(menuFind);
+                   
         menuBar.add(menuAbout);
+        
+      
 
         this.setJMenuBar(menuBar);
 
         // Set Actions:
         selectAllAction = new SelectAllAction("Select All", clearIcon, "Select all text", new Integer(KeyEvent.VK_A),
-            textArea);
+                textArea);
 
         this.setJMenuBar(menuBar);
 
@@ -195,15 +203,15 @@ public class UI extends JFrame implements ActionListener {
         */
         wordWrap.addActionListener(new ActionListener()
         {
-            public void actionPerformed(ActionEvent ev) {
-                // If wrapping is false then after clicking on menuitem the word wrapping will be enabled
-                if(textArea.getLineWrap()==false) {
-                    /* Setting word wrapping to true */
-                    textArea.setLineWrap(true);
-                } else {
-                    // else  if wrapping is true then after clicking on menuitem the word wrapping will be disabled
-                    /* Setting word wrapping to false */
-                    textArea.setLineWrap(false);
+                public void actionPerformed(ActionEvent ev) {
+                    // If wrapping is false then after clicking on menuitem the word wrapping will be enabled
+                    if(textArea.getLineWrap()==false) {
+                        /* Setting word wrapping to true */
+                        textArea.setLineWrap(true);
+                    } else {
+                        // else  if wrapping is true then after clicking on menuitem the word wrapping will be disabled
+                        /* Setting word wrapping to false */
+                        textArea.setLineWrap(false);
                 }
             }
         });
@@ -272,12 +280,9 @@ public class UI extends JFrame implements ActionListener {
         quickButton.setToolTipText("Quick Search");
         quickButton.addActionListener(this);
         mainToolbar.add(quickButton);
+        mainToolbar.addSeparator();
 
-        // create space between button groups
-        spaceButton1 = new JButton();
-        spaceButton1.setBorder(emptyBorder);
-        mainToolbar.add(spaceButton1);
-
+      
         aboutMeButton = new JButton(aboutMeIcon);
         aboutMeButton.setToolTipText("About Me");
         aboutMeButton.addActionListener(this);
@@ -288,17 +293,79 @@ public class UI extends JFrame implements ActionListener {
         aboutButton.setToolTipText("About NotePad PH");
         aboutButton.addActionListener(this);
         mainToolbar.add(aboutButton);
+        mainToolbar.addSeparator();
 
-        // create space between button groups
-        spaceButton2 = new JButton();
-        spaceButton2.setBorder(emptyBorder);
-        mainToolbar.add(spaceButton2);
 
         closeButton = new JButton(closeIcon);
         closeButton.setToolTipText("Quit");
         closeButton.addActionListener(this);
         mainToolbar.add(closeButton);
+        mainToolbar.addSeparator();
+        
+  /****************** FONT SETTINGS SECTION ***********************/
+        
+        //FONT FAMILY SETTINGS SECTION START
+        
+        fontType = new JComboBox();
+        
+          //GETTING ALL AVAILABLE FONT FOMILY NAMES    
+        String [] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
+
+        for (int i = 0; i < fonts.length; i++) 
+        {
+            //Adding font family names to font[] array
+             fontType.addItem ( fonts [i] );
+        }
+        //Setting maximize size of the fontType ComboBox
+        fontType.setMaximumSize( new Dimension ( 170, 30 ));
+        mainToolbar.add( fontType );
+        mainToolbar.addSeparator();
+        
+        //Adding Action Listener on fontType JComboBox 
+        
+        fontType.addActionListener(new ActionListener()
+        {
+                public void actionPerformed(ActionEvent ev) 
+                {
+                    //Getting the selected fontType value from ComboBox
+                    String p = fontType.getSelectedItem().toString();
+                    //Getting size of the current font or text
+                    int s = textArea.getFont().getSize();
+                    textArea.setFont( new Font( p, Font.PLAIN, s)); 
+                }
+        });
+              
+        //FONT FAMILY SETTINGS SECTION END
+        
+        
+        //FONT SIZE SETTINGS START
+        
+        fontSize = new JComboBox();
+        
+            for( int i = 5 ; i <= 100 ; i++)
+            {
+                fontSize.addItem( i );
+            }
+        fontSize.setMaximumSize( new Dimension( 70,30 ));
+        mainToolbar.add( fontSize );
+        
+        fontSize.addActionListener(new ActionListener()
+        {
+                public void actionPerformed(ActionEvent ev) 
+                {
+                   String sizeValue = fontSize.getSelectedItem().toString();
+                    int sizeOfFont = Integer.parseInt( sizeValue );
+                    String fontFamily = textArea.getFont().getFamily();
+                                       
+                    Font font1 = new Font( fontFamily , Font.PLAIN , sizeOfFont );
+                    textArea.setFont( font1 );
+                    
+                }
+        });  
+        //FONT SIZE SETTINGS SECTION END
     }
+    
+    
 
     // Make the TextArea available to the autocomplete handler
     protected JTextArea getEditor() {
@@ -307,9 +374,8 @@ public class UI extends JFrame implements ActionListener {
 
     public void actionPerformed (ActionEvent e) {
         // If the source of the event was our "close" option
-        if (e.getSource() == close || e.getSource() == closeButton) {
+        if (e.getSource() == close || e.getSource() == closeButton)
             this.dispose(); // dispose all resources and close the application
-        }
 
         // If the source was the "new" file option
         else if (e.getSource() == newFile || e.getSource() == newButton) {
@@ -444,5 +510,4 @@ public class UI extends JFrame implements ActionListener {
             textArea.selectAll();
         }
     }
-
 }
