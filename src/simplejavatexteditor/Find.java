@@ -9,8 +9,8 @@
  * @license     Apache (http://www.apache.org/licenses/LICENSE-2.0)
  * @create      2012-05-04
  * @update      2015-09-4
- * 
- * 
+ *
+ *
  * @modifiedby  Achintha Gunasekara
  * @modweb      http://www.achinthagunasekara.com
  * @modemail    contact@achinthagunasekara.com
@@ -26,18 +26,18 @@ import java.awt.event.ActionEvent;
 
 public class Find extends JFrame implements ActionListener {
 
-	private static final long serialVersionUID = 1L;
-	int startIndex=0;
+    private static final long serialVersionUID = 1L;
+    int startIndex=0;
         int select_start=-1;
     JLabel lab1, lab2;
     JTextField textF, textR;
-    JButton findBtn, findNext, replace, replaceAll, cancel;  
+    JButton findBtn, findNext, replace, replaceAll, cancel;
     private JTextArea txt;
-    
-    
-    public Find(JTextArea text) { 
-    	this.txt = text;
-    	
+
+
+    public Find(JTextArea text) {
+        this.txt = text;
+
         lab1 = new JLabel("Find:");
         lab2 = new JLabel("Replace:");
         textF = new JTextField(30);
@@ -47,14 +47,14 @@ public class Find extends JFrame implements ActionListener {
         replace = new JButton("Replace");
         replaceAll = new JButton("Replace All");
         cancel = new JButton("Cancel");
-        
+
         // Set Layout NULL
         setLayout(null);
-        
+
         // Set the width and height of the label
         int labWidth = 80;
         int labHeight = 20;
-        
+
         // Adding labels
         lab1.setBounds(10,10, labWidth, labHeight);
         add(lab1);
@@ -64,45 +64,45 @@ public class Find extends JFrame implements ActionListener {
         add(lab2);
         textR.setBounds(10+labWidth, 10+labHeight+10, 120, 20);
         add(textR);
-         
+
         // Adding buttons
         findBtn.setBounds(225, 6, 115, 20);
         add(findBtn);
         findBtn.addActionListener(this);
-        
+
         findNext.setBounds(225, 28, 115, 20);
         add(findNext);
         findNext.addActionListener(this);
-        
+
         replace.setBounds(225, 50, 115, 20);
         add(replace);
         replace.addActionListener(this);
-        
+
         replaceAll.setBounds(225, 72, 115, 20);
         add(replaceAll);
         replaceAll.addActionListener(this);
-        
+
         cancel.setBounds(225, 94, 115, 20);
         add(cancel);
         cancel.addActionListener(this);
-        
-        
+
+
         // Set the width and height of the window
         int width = 360;
         int height = 160;
-        
+
         // Set size window
         setSize(width,height);
-        
+
         // Set window position
         Point center = GraphicsEnvironment.getLocalGraphicsEnvironment().getCenterPoint();
         setLocation(center.x-width/2, center.y-height/2);
         setVisible(true);
-        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);  
+        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
     }
-    
+
     public void find() {
-        select_start = txt.getText().toLowerCase().indexOf(textF.getText().toLowerCase());        
+        select_start = txt.getText().toLowerCase().indexOf(textF.getText().toLowerCase());
         if(select_start == -1)
         {
             startIndex = 0;
@@ -112,11 +112,11 @@ public class Find extends JFrame implements ActionListener {
         if(select_start == txt.getText().toLowerCase().lastIndexOf(textF.getText().toLowerCase()))
         {
             startIndex = 0;
-        }        
+        }
         int select_end = select_start + textF.getText().length();
         txt.select(select_start, select_end);
     }
-    
+
     public void findNext() {
         String selection = txt.getSelectedText();
         try
@@ -142,7 +142,7 @@ public class Find extends JFrame implements ActionListener {
             int select_end = select_start+selection.length();
             txt.select(select_start, select_end);
             startIndex = select_end+1;
-        
+
             if(select_start == txt.getText().toLowerCase().lastIndexOf(selection.toLowerCase()))
             {
                 startIndex = 0;
@@ -151,7 +151,7 @@ public class Find extends JFrame implements ActionListener {
         catch(NullPointerException e)
         {}
     }
-    
+
     public void replace() {
         try
         {
@@ -162,10 +162,10 @@ public class Find extends JFrame implements ActionListener {
         catch(NullPointerException e)
         {
             System.out.print("Null Pointer Exception: "+e);
-        }        
+        }
     }
-    
-    public void replaceAll() {      
+
+    public void replaceAll() {
         txt.setText(txt.getText().toLowerCase().replaceAll(textF.getText().toLowerCase(), textR.getText()));
     }
 
@@ -191,5 +191,5 @@ public class Find extends JFrame implements ActionListener {
            this.setVisible(false);
         }
    }
-    
+
 }

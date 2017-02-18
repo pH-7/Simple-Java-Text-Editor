@@ -105,7 +105,7 @@ public class AutoComplete
         //Before checking for a keyword
         checkForBracket();
 
-        //Get the beginning of the word being typed 
+        //Get the beginning of the word being typed
         int start;
         for (start = pos; start >= 0; start--) {
             if (!Character.isLetter(content.charAt(start))) {
@@ -113,13 +113,13 @@ public class AutoComplete
             }
         }
 
-        //Auto complete will start 
+        //Auto complete will start
         //after two characters are typed
         if (pos - start < 2) {
             return;
         }
 
-        //Search for a match on the word being typed 
+        //Search for a match on the word being typed
         //in the keywords ArrayList
         String prefix = content.substring(start + 1);
         int n = Collections.binarySearch(words, prefix);
@@ -139,7 +139,7 @@ public class AutoComplete
     }
 
     /**
-     * Performs a check to see if the last 
+     * Performs a check to see if the last
      * key typed was one of the supported
      * bracket characters
      */
@@ -176,7 +176,7 @@ public class AutoComplete
     }
 
     /**
-     * Handles the auto complete suggestion 
+     * Handles the auto complete suggestion
      * generated when the user is typing a
      * word that matches a keyword.
      */
@@ -280,4 +280,5 @@ public class AutoComplete
     @Override
     public void changedUpdate(DocumentEvent e) {
     }
+
 }
