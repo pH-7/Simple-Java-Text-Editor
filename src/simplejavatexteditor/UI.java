@@ -9,14 +9,14 @@
  *
  * @copyright   Copyright Pierre-Henry SORIA, All Rights Reserved.
  * @license     Apache (http://www.apache.org/licenses/LICENSE-2.0)
- * @create      2012-05-04
- * @update      2016-24-3
+ * @create      2012-04-05
+ * @update      2017-02-18
  *
  * @modifiedby  Achintha Gunasekara
  * @modemail    contact@achinthagunasekara.com
 *
  * @modifiedby  Marcus Redgrave-Close
- * @modemail       marcusrc1@hotmail.co.uk
+ * @modemail    marcusrc1@hotmail.co.uk
  */
 
 package simplejavatexteditor;
@@ -46,11 +46,10 @@ public class UI extends JFrame implements ActionListener {
     private final JMenuItem newFile, openFile, saveFile, close, cut, copy, paste, clearFile, selectAll, quickFind,
             aboutMe, aboutSoftware, wordWrap;
     private final JToolBar mainToolbar;
-    JButton newButton, openButton, saveButton, clearButton, quickButton, aboutMeButton, aboutButton, closeButton,
-            spaceButton1, spaceButton2;
+    JButton newButton, openButton, saveButton, clearButton, quickButton, aboutMeButton, aboutButton, closeButton;
     private final Action selectAllAction;
-    
-    
+
+
 
     // setup icons - File Menu
     private final ImageIcon newIcon = new ImageIcon("icons/new.png");
@@ -75,7 +74,7 @@ public class UI extends JFrame implements ActionListener {
 
     AutoComplete autocomplete;
     private boolean hasListener = false;
-    
+
 
     public UI()
     {
@@ -120,16 +119,16 @@ public class UI extends JFrame implements ActionListener {
         quickFind = new JMenuItem("Quick", searchIcon);
         aboutMe = new JMenuItem("About Me", aboutMeIcon);
         aboutSoftware = new JMenuItem("About Software", aboutIcon);
-        
-       
+
+
         menuBar = new JMenuBar();
         menuBar.add(menuFile);
         menuBar.add(menuEdit);
         menuBar.add(menuFind);
-                   
+
         menuBar.add(menuAbout);
-        
-      
+
+
 
         this.setJMenuBar(menuBar);
 
@@ -282,7 +281,7 @@ public class UI extends JFrame implements ActionListener {
         mainToolbar.add(quickButton);
         mainToolbar.addSeparator();
 
-      
+
         aboutMeButton = new JButton(aboutMeIcon);
         aboutMeButton.setToolTipText("About Me");
         aboutMeButton.addActionListener(this);
@@ -301,17 +300,17 @@ public class UI extends JFrame implements ActionListener {
         closeButton.addActionListener(this);
         mainToolbar.add(closeButton);
         mainToolbar.addSeparator();
-        
+
   /****************** FONT SETTINGS SECTION ***********************/
-        
+
         //FONT FAMILY SETTINGS SECTION START
-        
+
         fontType = new JComboBox();
-        
-          //GETTING ALL AVAILABLE FONT FOMILY NAMES    
+
+          //GETTING ALL AVAILABLE FONT FOMILY NAMES
         String [] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
 
-        for (int i = 0; i < fonts.length; i++) 
+        for (int i = 0; i < fonts.length; i++)
         {
             //Adding font family names to font[] array
              fontType.addItem ( fonts [i] );
@@ -320,52 +319,52 @@ public class UI extends JFrame implements ActionListener {
         fontType.setMaximumSize( new Dimension ( 170, 30 ));
         mainToolbar.add( fontType );
         mainToolbar.addSeparator();
-        
-        //Adding Action Listener on fontType JComboBox 
-        
+
+        //Adding Action Listener on fontType JComboBox
+
         fontType.addActionListener(new ActionListener()
         {
-                public void actionPerformed(ActionEvent ev) 
+                public void actionPerformed(ActionEvent ev)
                 {
                     //Getting the selected fontType value from ComboBox
                     String p = fontType.getSelectedItem().toString();
                     //Getting size of the current font or text
                     int s = textArea.getFont().getSize();
-                    textArea.setFont( new Font( p, Font.PLAIN, s)); 
+                    textArea.setFont( new Font( p, Font.PLAIN, s));
                 }
         });
-              
+
         //FONT FAMILY SETTINGS SECTION END
-        
-        
+
+
         //FONT SIZE SETTINGS START
-        
+
         fontSize = new JComboBox();
-        
+
             for( int i = 5 ; i <= 100 ; i++)
             {
                 fontSize.addItem( i );
             }
         fontSize.setMaximumSize( new Dimension( 70,30 ));
         mainToolbar.add( fontSize );
-        
+
         fontSize.addActionListener(new ActionListener()
         {
-                public void actionPerformed(ActionEvent ev) 
+                public void actionPerformed(ActionEvent ev)
                 {
                    String sizeValue = fontSize.getSelectedItem().toString();
                     int sizeOfFont = Integer.parseInt( sizeValue );
                     String fontFamily = textArea.getFont().getFamily();
-                                       
+
                     Font font1 = new Font( fontFamily , Font.PLAIN , sizeOfFont );
                     textArea.setFont( font1 );
-                    
+
                 }
-        });  
+        });
         //FONT SIZE SETTINGS SECTION END
     }
-    
-    
+
+
 
     // Make the TextArea available to the autocomplete handler
     protected JTextArea getEditor() {
@@ -374,9 +373,9 @@ public class UI extends JFrame implements ActionListener {
 
     public void actionPerformed (ActionEvent e) {
         // If the source of the event was our "close" option
-        if (e.getSource() == close || e.getSource() == closeButton)
+        if (e.getSource() == close || e.getSource() == closeButton) {
             this.dispose(); // dispose all resources and close the application
-
+        }
         // If the source was the "new" file option
         else if (e.getSource() == newFile || e.getSource() == newButton) {
             FEdit.clear(textArea);
