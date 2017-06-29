@@ -48,7 +48,6 @@ public class AutoComplete
     //Keep track of when code completion
     //has been activated
     private enum Mode {
-
         INSERT, COMPLETION
     };
 
