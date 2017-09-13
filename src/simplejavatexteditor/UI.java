@@ -24,10 +24,7 @@ package simplejavatexteditor;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
@@ -48,8 +45,6 @@ public class UI extends JFrame implements ActionListener {
     private final JToolBar mainToolbar;
     JButton newButton, openButton, saveButton, clearButton, quickButton, aboutMeButton, aboutButton, closeButton;
     private final Action selectAllAction;
-
-
 
     // setup icons - File Menu
     private final ImageIcon newIcon = new ImageIcon("icons/new.png");
@@ -72,6 +67,8 @@ public class UI extends JFrame implements ActionListener {
     private final ImageIcon aboutMeIcon = new ImageIcon("icons/about_me.png");
     private final ImageIcon aboutIcon = new ImageIcon("icons/about.png");
 
+    private SupportedKeywords kw = new SupportedKeywords();
+    private HighlightText languageHighlighter = new HighlightText(Color.GRAY);
     AutoComplete autocomplete;
     private boolean hasListener = false;
 
@@ -98,6 +95,14 @@ public class UI extends JFrame implements ActionListener {
 
         /* SETTING BY DEFAULT WORD WRAP ENABLED OR TRUE */
         textArea.setLineWrap(true);
+
+        // Set an higlighter to the JTextArea
+        textArea.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent ke) {
+                languageHighlighter.highLight(textArea, kw.getCppKeywords());
+                languageHighlighter.highLight(textArea, kw.getJavaKeywords());
+            }
+        });
 
         // This is why we didn't have to worry about the size of the TextArea!
         getContentPane().setLayout(new BorderLayout()); // the BorderLayout bit makes it fill it automatically
@@ -127,8 +132,6 @@ public class UI extends JFrame implements ActionListener {
         menuBar.add(menuFind);
 
         menuBar.add(menuAbout);
-
-
 
         this.setJMenuBar(menuBar);
 
@@ -364,11 +367,41 @@ public class UI extends JFrame implements ActionListener {
         //FONT SIZE SETTINGS SECTION END
     }
 
-
-
     // Make the TextArea available to the autocomplete handler
     protected JTextArea getEditor() {
         return textArea;
+    }
+
+    // Enable autocomplete option
+    public void enableAutoComplete(File file) {
+        if (hasListener) {
+            textArea.getDocument().removeDocumentListener(autocomplete);
+            hasListener = false;
+        }
+
+        ArrayList<String> arrayList;
+        String[] list = kw.getSupportedLangage();
+
+        for (int i = 0; i < list.length; i++) {
+            if (file.getName().endsWith(list[i])) {
+                switch (i) {
+                    case 0:
+                        String[] jk = kw.getJavaKeywords();
+                        arrayList = kw.setKeywords(jk);
+                        autocomplete = new AutoComplete(this, arrayList);
+                        textArea.getDocument().addDocumentListener(autocomplete);
+                        hasListener = true;
+                        break;
+                    case 1:
+                        String[] ck = kw.getCppKeywords();
+                        arrayList = kw.setKeywords(ck);
+                        autocomplete = new AutoComplete(this, arrayList);
+                        textArea.getDocument().addDocumentListener(autocomplete);
+                        hasListener = true;
+                        break;
+                }
+            }
+        }
     }
 
     public void actionPerformed (ActionEvent e) {
@@ -394,11 +427,13 @@ public class UI extends JFrame implements ActionListener {
             if (option == JFileChooser.APPROVE_OPTION) {
                 FEdit.clear(textArea); // clear the TextArea before applying the file contents
                 try {
-                    // create a scanner to read the file (getSelectedFile().getPath() will get the path to the file)
-                    Scanner scan = new Scanner(new FileReader(open.getSelectedFile().getPath()));
-                    while (scan.hasNext()) // while there's still something to
-                                            // read
-                        textArea.append(scan.nextLine() + "\n"); // append the line to the TextArea
+                    File openFile = open.getSelectedFile();
+                    setTitle(openFile.getName() + " | " + SimpleJavaTextEditor.NAME);
+                    Scanner scan = new Scanner(new FileReader(openFile.getPath()));
+                    while (scan.hasNext())
+                        textArea.append(scan.nextLine() + "\n");
+
+                    enableAutoComplete(openFile);
                 } catch (Exception ex) { // catch any exceptions, and...
                     // ...write to the debug console
                     System.out.println(ex.getMessage());
@@ -418,54 +453,15 @@ public class UI extends JFrame implements ActionListener {
              */
             if (option == JFileChooser.APPROVE_OPTION) {
                 try {
-                    File file = fileChoose.getSelectedFile();
-                    // Set the new title of the window
-                    setTitle(file.getName() + " | " + SimpleJavaTextEditor.NAME);
-                    // Create a buffered writer to write to a file
-                    BufferedWriter out = new BufferedWriter(new FileWriter(file.getPath()));
-                    // Write the contents of the TextArea to the file
+                    File openFile = fileChoose.getSelectedFile();
+                    setTitle(openFile.getName() + " | " + SimpleJavaTextEditor.NAME);
+
+                    BufferedWriter out = new BufferedWriter(new FileWriter(openFile.getPath()));
                     out.write(textArea.getText());
-                    // Close the file stream
                     out.close();
 
-                    //If the user saves files with supported
-                    //file types more than once, we need to remove
-                    //previous listeners to avoid bugs.
-                    if(hasListener) {
-                        textArea.getDocument().removeDocumentListener(autocomplete);
-                        hasListener = false;
-                    }
+                    enableAutoComplete(openFile);
 
-                    //With the keywords located in a separate class,
-                    //we can support multiple languages and not have to do
-                    //much to add new ones.
-                    SupportedKeywords kw = new SupportedKeywords();
-                    ArrayList<String> arrayList;
-                    String[] list = { ".java", ".cpp" };
-
-                    //Iterate through the list, find the supported
-                    //file extension, apply the appropriate getter method from
-                    //the keyword class
-                    for(int i = 0; i < list.length; i++) {
-                        if(file.getName().endsWith(list[i])) {
-                            switch(i) {
-                                case 0:
-                                    String[] jk = kw.getJavaKeywords();
-                                    arrayList = kw.setKeywords(jk);
-                                    autocomplete = new AutoComplete(this, arrayList);
-                                    textArea.getDocument().addDocumentListener(autocomplete);
-                                    hasListener = true;
-                                    break;
-                                case 1:
-                                    String[] ck = kw.getCppKeywords();
-                                    arrayList = kw.setKeywords(ck);
-                                    autocomplete = new AutoComplete(this, arrayList);
-                                    textArea.getDocument().addDocumentListener(autocomplete);
-                                    hasListener = true;
-                                    break;
-                            }
-                        }
-                    }
                 } catch (Exception ex) { // again, catch any exceptions and...
                     // ...write to the debug console
                     System.out.println(ex.getMessage());

@@ -12,6 +12,8 @@ import java.util.ArrayList;
  */
 public class SupportedKeywords {
 
+    private String[] supportedLangage = {".cpp",".java"};
+
     private String[] java = {"abstract", "assert", "boolean",
             "break", "byte", "case", "catch", "char", "class", "const",
             "continue", "default", "do", "double", "else", "extends", "false",
@@ -30,6 +32,10 @@ public class SupportedKeywords {
                 "bool", "explicit", "new", "static_cast", "typeid", "catch", "false", "operator",
                 "template", "typename", "class", "friend", "private", "this", "using", "const_cast",
                 "inline", "public", "throw", "virtual", "delete", "mutable", "protected", "true", "wchar_t" };
+
+    public String[] getSupportedLangage() {
+        return supportedLangage;
+    }
 
     private String[] brackets = { "{", "(" };
     private String[] bCompletions = { "}", ")" };
