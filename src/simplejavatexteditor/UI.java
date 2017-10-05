@@ -86,6 +86,9 @@ public class UI extends JFrame implements ActionListener {
         // Set the default close operation (exit when it gets closed)
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
+        // center the frame on the monitor
+        setLocationRelativeTo(null);
+
         // Set a default font for the TextArea
         textArea = new JTextArea("", 0,0);
         textArea.setFont(new Font("Century Gothic", Font.BOLD, 12));
@@ -480,11 +483,11 @@ public class UI extends JFrame implements ActionListener {
 
         // About Me
         else if (e.getSource() == aboutMe || e.getSource() == aboutMeButton) {
-            new About().me();
+            new About(this).me();
         }
         // About Software
         else if (e.getSource() == aboutSoftware || e.getSource() == aboutButton) {
-            new About().software();
+            new About(this).software();
         }
 
     }
