@@ -28,12 +28,13 @@ public class About {
     private String contentText;
     private final JLabel text;
 
-    public About() {
+    public About(UI ui) {
         panel = new JPanel(new FlowLayout());
         panel.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
         frame = new JFrame();
         frame.setVisible(true);
         frame.setSize(500,300);
+        frame.setLocationRelativeTo(ui);
         text = new JLabel();
     }
 
