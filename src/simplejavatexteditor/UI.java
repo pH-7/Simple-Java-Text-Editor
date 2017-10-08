@@ -383,7 +383,7 @@ public class UI extends JFrame implements ActionListener {
         }
 
         ArrayList<String> arrayList;
-        String[] list = kw.getSupportedLangage();
+        String[] list = kw.getsupportedLanguage();
 
         for (int i = 0; i < list.length; i++) {
             if (file.getName().endsWith(list[i])) {
