@@ -1,10 +1,10 @@
 /**
  * @name        Simple Java NotePad
- * @package     ph.notepad
- * @file        UI.java
+ * @package ph.notepad
+ * @file UI.java
  *
- * @author      Pierre-Henry Soria
- * @email       pierrehenrysoria@gmail.com
+ * @author Pierre-Henry Soria
+ * @email pierrehenrysoria@gmail.com
  * @link        http://github.com/pH-7
  *
  * @copyright   Copyright Pierre-Henry SORIA, All Rights Reserved.
@@ -14,11 +14,20 @@
  *
  * @modifiedby  Achintha Gunasekara
  * @modemail    contact@achinthagunasekara.com
-*
+ *
  * @modifiedby  Marcus Redgrave-Close
  * @modemail    marcusrc1@hotmail.co.uk
+ *
+ * @Modifiedby SidaDan
+ * @modemail Fschultz@sinf.de
+ * Added Tooltip Combobox Font type and Font size
+ * Overwrite method processWindowEvent to detect window closing event.
+ * Added safety query to save the file before exit
+ * or the user select "newfile"
+ * Only available if the user has pressed a key
+ * Added safety query if user pressed the clearButton
+ *
  */
-
 package simplejavatexteditor;
 
 import javax.swing.*;
@@ -34,6 +43,7 @@ import java.util.Scanner;
 import javax.swing.text.DefaultEditorKit;
 
 public class UI extends JFrame implements ActionListener {
+
     private static final long serialVersionUID = 1L;
     private final Container container;
     private final JTextArea textArea;
@@ -71,10 +81,9 @@ public class UI extends JFrame implements ActionListener {
     private HighlightText languageHighlighter = new HighlightText(Color.GRAY);
     AutoComplete autocomplete;
     private boolean hasListener = false;
+    private boolean edit = false;
 
-
-    public UI()
-    {
+    public UI() {
         container = getContentPane();
 
         // Set the initial size of the window
@@ -90,7 +99,7 @@ public class UI extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
 
         // Set a default font for the TextArea
-        textArea = new JTextArea("", 0,0);
+        textArea = new JTextArea("", 0, 0);
         textArea.setFont(new Font("Century Gothic", Font.BOLD, 12));
         textArea.setTabSize(2);
         textArea.setFont(new Font("Century Gothic", Font.BOLD, 12));
@@ -102,6 +111,7 @@ public class UI extends JFrame implements ActionListener {
         // Set an higlighter to the JTextArea
         textArea.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent ke) {
+                edit = true;
                 languageHighlighter.highLight(textArea, kw.getCppKeywords());
                 languageHighlighter.highLight(textArea, kw.getJavaKeywords());
             }
@@ -127,7 +137,6 @@ public class UI extends JFrame implements ActionListener {
         quickFind = new JMenuItem("Quick", searchIcon);
         aboutMe = new JMenuItem("About Me", aboutMeIcon);
         aboutSoftware = new JMenuItem("About Software", aboutIcon);
-
 
         menuBar = new JMenuBar();
         menuBar.add(menuFile);
@@ -205,18 +214,17 @@ public class UI extends JFrame implements ActionListener {
 
         /* CODE FOR WORD WRAP OPERATION
          * BY DEFAULT WORD WRAPPING IS ENABLED.
-        */
-        wordWrap.addActionListener(new ActionListener()
-        {
-                public void actionPerformed(ActionEvent ev) {
-                    // If wrapping is false then after clicking on menuitem the word wrapping will be enabled
-                    if(textArea.getLineWrap()==false) {
-                        /* Setting word wrapping to true */
-                        textArea.setLineWrap(true);
-                    } else {
-                        // else  if wrapping is true then after clicking on menuitem the word wrapping will be disabled
-                        /* Setting word wrapping to false */
-                        textArea.setLineWrap(false);
+         */
+        wordWrap.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
+                // If wrapping is false then after clicking on menuitem the word wrapping will be enabled
+                if (textArea.getLineWrap() == false) {
+                    /* Setting word wrapping to true */
+                    textArea.setLineWrap(true);
+                } else {
+                    // else  if wrapping is true then after clicking on menuitem the word wrapping will be disabled
+                    /* Setting word wrapping to false */
+                    textArea.setLineWrap(false);
                 }
             }
         });
@@ -287,7 +295,6 @@ public class UI extends JFrame implements ActionListener {
         mainToolbar.add(quickButton);
         mainToolbar.addSeparator();
 
-
         aboutMeButton = new JButton(aboutMeIcon);
         aboutMeButton.setToolTipText("About Me");
         aboutMeButton.addActionListener(this);
@@ -300,74 +307,84 @@ public class UI extends JFrame implements ActionListener {
         mainToolbar.add(aboutButton);
         mainToolbar.addSeparator();
 
-
         closeButton = new JButton(closeIcon);
         closeButton.setToolTipText("Quit");
         closeButton.addActionListener(this);
         mainToolbar.add(closeButton);
         mainToolbar.addSeparator();
 
-  /****************** FONT SETTINGS SECTION ***********************/
-
+        /**
+         * **************** FONT SETTINGS SECTION **********************
+         */
         //FONT FAMILY SETTINGS SECTION START
-
         fontType = new JComboBox();
 
-          //GETTING ALL AVAILABLE FONT FOMILY NAMES
-        String [] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
+        //GETTING ALL AVAILABLE FONT FOMILY NAMES
+        String[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
 
-        for (int i = 0; i < fonts.length; i++)
-        {
+        for (int i = 0; i < fonts.length; i++) {
             //Adding font family names to font[] array
-             fontType.addItem ( fonts [i] );
+            fontType.addItem(fonts[i]);
         }
         //Setting maximize size of the fontType ComboBox
-        fontType.setMaximumSize( new Dimension ( 170, 30 ));
-        mainToolbar.add( fontType );
+        fontType.setMaximumSize(new Dimension(170, 30));
+        fontType.setToolTipText("Font Type");
+        mainToolbar.add(fontType);
         mainToolbar.addSeparator();
 
         //Adding Action Listener on fontType JComboBox
-
-        fontType.addActionListener(new ActionListener()
-        {
-                public void actionPerformed(ActionEvent ev)
-                {
-                    //Getting the selected fontType value from ComboBox
-                    String p = fontType.getSelectedItem().toString();
-                    //Getting size of the current font or text
-                    int s = textArea.getFont().getSize();
-                    textArea.setFont( new Font( p, Font.PLAIN, s));
-                }
+        fontType.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
+                //Getting the selected fontType value from ComboBox
+                String p = fontType.getSelectedItem().toString();
+                //Getting size of the current font or text
+                int s = textArea.getFont().getSize();
+                textArea.setFont(new Font(p, Font.PLAIN, s));
+            }
         });
 
         //FONT FAMILY SETTINGS SECTION END
-
-
         //FONT SIZE SETTINGS START
-
         fontSize = new JComboBox();
 
-            for( int i = 5 ; i <= 100 ; i++)
-            {
-                fontSize.addItem( i );
+        for (int i = 5; i <= 100; i++) {
+            fontSize.addItem(i);
+        }
+        fontSize.setMaximumSize(new Dimension(70, 30));
+        fontSize.setToolTipText("Font Size");
+        mainToolbar.add(fontSize);
+
+        fontSize.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
+                String sizeValue = fontSize.getSelectedItem().toString();
+                int sizeOfFont = Integer.parseInt(sizeValue);
+                String fontFamily = textArea.getFont().getFamily();
+
+                Font font1 = new Font(fontFamily, Font.PLAIN, sizeOfFont);
+                textArea.setFont(font1);
+
             }
-        fontSize.setMaximumSize( new Dimension( 70,30 ));
-        mainToolbar.add( fontSize );
-
-        fontSize.addActionListener(new ActionListener()
-        {
-                public void actionPerformed(ActionEvent ev)
-                {
-                   String sizeValue = fontSize.getSelectedItem().toString();
-                    int sizeOfFont = Integer.parseInt( sizeValue );
-                    String fontFamily = textArea.getFont().getFamily();
-
-                    Font font1 = new Font( fontFamily , Font.PLAIN , sizeOfFont );
-                    textArea.setFont( font1 );
-
-                }
         });
         //FONT SIZE SETTINGS SECTION END
+    }
+
+    @Override
+    protected void processWindowEvent(WindowEvent e) {
+        if (e.getID() == WindowEvent.WINDOW_CLOSING) {
+            if (edit) {
+                Object[] options = {"Save and exit", "No Save and exit", "Return"};
+                int n = JOptionPane.showOptionDialog(this, "Do you want to save the file ?", "Question",
+                        JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+                if (n == 0) {// save and exit
+                    saveFile();
+                    this.dispose();// dispose all resources and close the application
+                } else if (n == 1) {// no save and exit
+                    this.dispose();// dispose all resources and close the application
+                }
+            } else {
+                System.exit(99);
+            }
+        }
     }
 
     // Make the TextArea available to the autocomplete handler
@@ -407,17 +424,40 @@ public class UI extends JFrame implements ActionListener {
         }
     }
 
-    public void actionPerformed (ActionEvent e) {
+    public void actionPerformed(ActionEvent e) {
         // If the source of the event was our "close" option
         if (e.getSource() == close || e.getSource() == closeButton) {
-            this.dispose(); // dispose all resources and close the application
-        }
-        // If the source was the "new" file option
+            if (edit) {
+                Object[] options = {"Save and exit", "No Save and exit", "Return"};
+                int n = JOptionPane.showOptionDialog(this, "Do you want to save the file ?", "Question",
+                        JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
+                if (n == 0) {// save and exit
+                    saveFile();
+                    this.dispose();// dispose all resources and close the application
+                } else if (n == 1) {// no save and exit
+                    this.dispose();// dispose all resources and close the application
+                }
+            } else {
+                this.dispose();// dispose all resources and close the application
+            }
+        } // If the source was the "new" file option
         else if (e.getSource() == newFile || e.getSource() == newButton) {
-            FEdit.clear(textArea);
-        }
+            if (edit) {
+                Object[] options = {"Save", "No Save", "Return"};
+                int n = JOptionPane.showOptionDialog(this, "Do you want to save the file at first ?", "Question",
+                        JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
+                if (n == 0) {// save 
+                    saveFile();
+                    edit = false;
+                } else if (n == 1) {
+                    edit = false;
+                    FEdit.clear(textArea);
+                }
+            } else {
+                FEdit.clear(textArea);
+            }
 
-        // If the source was the "open" option
+        } // If the source was the "open" option
         else if (e.getSource() == openFile || e.getSource() == openButton) {
             JFileChooser open = new JFileChooser(); // open up a file chooser (a dialog for the user to  browse files to open)
             int option = open.showOpenDialog(this); // get the option that the user selected (approve or cancel)
@@ -433,59 +473,38 @@ public class UI extends JFrame implements ActionListener {
                     File openFile = open.getSelectedFile();
                     setTitle(openFile.getName() + " | " + SimpleJavaTextEditor.NAME);
                     Scanner scan = new Scanner(new FileReader(openFile.getPath()));
-                    while (scan.hasNext())
+                    while (scan.hasNext()) {
                         textArea.append(scan.nextLine() + "\n");
+                    }
 
                     enableAutoComplete(openFile);
                 } catch (Exception ex) { // catch any exceptions, and...
                     // ...write to the debug console
-                    System.out.println(ex.getMessage());
+                    System.err.println(ex.getMessage());
                 }
             }
-        }
-        // If the source of the event was the "save" option
+        } // If the source of the event was the "save" option
         else if (e.getSource() == saveFile || e.getSource() == saveButton) {
-            // Open a file chooser
-            JFileChooser fileChoose = new JFileChooser();
-            // Open the file, only this time we call
-            int option = fileChoose.showSaveDialog(this);
-
-            /*
-             * ShowSaveDialog instead of showOpenDialog if the user clicked OK
-             * (and not cancel)
-             */
-            if (option == JFileChooser.APPROVE_OPTION) {
-                try {
-                    File openFile = fileChoose.getSelectedFile();
-                    setTitle(openFile.getName() + " | " + SimpleJavaTextEditor.NAME);
-
-                    BufferedWriter out = new BufferedWriter(new FileWriter(openFile.getPath()));
-                    out.write(textArea.getText());
-                    out.close();
-
-                    enableAutoComplete(openFile);
-
-                } catch (Exception ex) { // again, catch any exceptions and...
-                    // ...write to the debug console
-                    System.out.println(ex.getMessage());
-                }
-            }
+            saveFile();
         }
 
         // Clear File (Code)
         if (e.getSource() == clearFile || e.getSource() == clearButton) {
-            FEdit.clear(textArea);
+
+            Object[] options = {"Yes", "No"};
+            int n = JOptionPane.showOptionDialog(this, "Are you sure to clear the text Area ?", "Question",
+                    JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+            if (n == 0) {// clear
+                FEdit.clear(textArea);
+            }
         }
         // Find
         if (e.getSource() == quickFind || e.getSource() == quickButton) {
             new Find(textArea);
-        }
-
-        // About Me
+        } // About Me
         else if (e.getSource() == aboutMe || e.getSource() == aboutMeButton) {
             new About(this).me();
-        }
-        // About Software
+        } // About Software
         else if (e.getSource() == aboutSoftware || e.getSource() == aboutButton) {
             new About(this).software();
         }
@@ -493,6 +512,7 @@ public class UI extends JFrame implements ActionListener {
     }
 
     class SelectAllAction extends AbstractAction {
+
         /**
          * Used for Select All function
          */
@@ -506,6 +526,34 @@ public class UI extends JFrame implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
             textArea.selectAll();
+        }
+    }
+
+    private void saveFile() {
+        // Open a file chooser
+        JFileChooser fileChoose = new JFileChooser();
+        // Open the file, only this time we call
+        int option = fileChoose.showSaveDialog(this);
+
+        /*
+             * ShowSaveDialog instead of showOpenDialog if the user clicked OK
+             * (and not cancel)
+         */
+        if (option == JFileChooser.APPROVE_OPTION) {
+            try {
+                File openFile = fileChoose.getSelectedFile();
+                setTitle(openFile.getName() + " | " + SimpleJavaTextEditor.NAME);
+
+                BufferedWriter out = new BufferedWriter(new FileWriter(openFile.getPath()));
+                out.write(textArea.getText());
+                out.close();
+
+                enableAutoComplete(openFile);
+                edit = false;
+            } catch (Exception ex) { // again, catch any exceptions and...
+                // ...write to the debug console
+                System.err.println(ex.getMessage());
+            }
         }
     }
 }
