@@ -14,6 +14,15 @@
  * @modifiedby  Achintha Gunasekara
  * @modweb      http://www.achinthagunasekara.com
  * @modemail    contact@achinthagunasekara.com
+ * 
+ * @Modifiedby SidaDan
+ * @modemail Fschultz@sinf.de
+ * Center this JFrame to the JTextArea
+ * Bug fixed. If JTextArea txt not empty and the user will
+ * shutdown the Simple Java NotePad, then the Simple Java NotePad
+ * is only hidden (still running). We need DISPOSE_ON_CLOSE for
+ * this JFrame.
+ * Tested with java 8.
  */
 
 package simplejavatexteditor;
@@ -94,11 +103,10 @@ public class Find extends JFrame implements ActionListener {
         // Set size window
         setSize(width,height);
 
-        // Set window position
-        Point center = GraphicsEnvironment.getLocalGraphicsEnvironment().getCenterPoint();
-        setLocation(center.x-width/2, center.y-height/2);
+        // center the frame on the frame
+        setLocationRelativeTo(txt);
         setVisible(true);
-        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
     public void find() {

@@ -14,12 +14,22 @@
  * @modifiedby  Achintha Gunasekara
  * @modweb      http://www.achinthagunasekara.com
  * @modemail    contact@achinthagunasekara.com
+ * 
+ * @Modifiedby SidaDan
+ * @modemail Fschultz@sinf.de
+ * Bug fixed. If JTextArea txt not empty and the user will
+ * shutdown the Simple Java NotePad, then the Simple Java NotePad
+ * is only hidden (still running). So I added a WindowListener
+ * an call method dispose() for this frame.
+ * Tested with java 8.
  */
 
 package simplejavatexteditor;
 
 import javax.swing.*;
 import java.awt.FlowLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class About {
 
@@ -32,6 +42,15 @@ public class About {
         panel = new JPanel(new FlowLayout());
         panel.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
         frame = new JFrame();
+        
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                frame.dispose();
+            }
+        });
+
+        
         frame.setVisible(true);
         frame.setSize(500,300);
         frame.setLocationRelativeTo(ui);
