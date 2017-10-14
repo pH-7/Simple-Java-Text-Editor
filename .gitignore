@@ -3,6 +3,12 @@
 /dist/
 /bin/
 *.class
+/.idea
+.classpath
+.project
+manifest.mf
+
+notepad.iml
 
 # Mac OS System
 .DS_Store*
