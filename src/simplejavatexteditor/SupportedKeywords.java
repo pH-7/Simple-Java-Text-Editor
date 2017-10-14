@@ -12,8 +12,6 @@ import java.util.ArrayList;
  */
 public class SupportedKeywords {
 
-    private String[] supportedLangage = {".cpp",".java"};
-
     private String[] java = {"abstract", "assert", "boolean",
             "break", "byte", "case", "catch", "char", "class", "const",
             "continue", "default", "do", "double", "else", "extends", "false",
