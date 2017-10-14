@@ -40,6 +40,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.text.DefaultEditorKit;
 
 public class UI extends JFrame implements ActionListener {
@@ -109,11 +111,20 @@ public class UI extends JFrame implements ActionListener {
         textArea.setLineWrap(true);
 
         // Set an higlighter to the JTextArea
-        textArea.addKeyListener(new KeyAdapter() {
-            public void keyPressed(KeyEvent ke) {
-                edit = true;
-                languageHighlighter.highLight(textArea, kw.getCppKeywords());
-                languageHighlighter.highLight(textArea, kw.getJavaKeywords());
+        textArea.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                highlight(textArea);
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                highlight(textArea);
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+
             }
         });
 
@@ -366,6 +377,12 @@ public class UI extends JFrame implements ActionListener {
             }
         });
         //FONT SIZE SETTINGS SECTION END
+    }
+
+    public void highlight(JTextArea textArea) {
+        edit = true;
+        languageHighlighter.highLight(textArea, kw.getCppKeywords());
+        languageHighlighter.highLight(textArea, kw.getJavaKeywords());
     }
 
     @Override
