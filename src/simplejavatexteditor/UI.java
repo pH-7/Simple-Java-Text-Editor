@@ -39,6 +39,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -80,7 +81,7 @@ public class UI extends JFrame implements ActionListener {
     private final ImageIcon aboutIcon = new ImageIcon("icons/about.png");
 
     private SupportedKeywords kw = new SupportedKeywords();
-    private HighlightText languageHighlighter = new HighlightText(Color.GRAY);
+    private HighlightText languageHighlighter = new HighlightText(Color.lightGray);
     AutoComplete autocomplete;
     private boolean hasListener = false;
     private boolean edit = false;
@@ -381,8 +382,11 @@ public class UI extends JFrame implements ActionListener {
 
     public void highlight(JTextArea textArea) {
         edit = true;
-        languageHighlighter.highLight(textArea, kw.getCppKeywords());
-        languageHighlighter.highLight(textArea, kw.getJavaKeywords());
+        for (Language lang : kw.getSupportedLanguages()) {
+            languageHighlighter.highLight(textArea, lang.getSupportedKeywords());
+        }
+        //languageHighlighter.highLight(textArea, kw.getCppKeywords());
+        //languageHighlighter.highLight(textArea, kw.getJavaKeywords());
     }
 
     @Override
@@ -416,28 +420,10 @@ public class UI extends JFrame implements ActionListener {
             hasListener = false;
         }
 
-        ArrayList<String> arrayList;
-        String[] list = kw.getSupportedLangage();
-
-        for (int i = 0; i < list.length; i++) {
-            if (file.getName().endsWith(list[i])) {
-                switch (i) {
-                    case 0:
-                        String[] jk = kw.getJavaKeywords();
-                        arrayList = kw.setKeywords(jk);
-                        autocomplete = new AutoComplete(this, arrayList);
-                        textArea.getDocument().addDocumentListener(autocomplete);
-                        hasListener = true;
-                        break;
-                    case 1:
-                        String[] ck = kw.getCppKeywords();
-                        arrayList = kw.setKeywords(ck);
-                        autocomplete = new AutoComplete(this, arrayList);
-                        textArea.getDocument().addDocumentListener(autocomplete);
-                        hasListener = true;
-                        break;
-                }
-            }
+        for (Language lang : kw.getSupportedLanguages()) {
+            autocomplete = new AutoComplete(this, new ArrayList<>(Arrays.asList(lang.getSupportedKeywords())));
+            textArea.getDocument().addDocumentListener(autocomplete);
+            hasListener = true;
         }
     }
 

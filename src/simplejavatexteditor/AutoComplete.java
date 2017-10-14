@@ -63,8 +63,8 @@ public class AutoComplete
         //Set the keywords
         words = al;
         kw = new SupportedKeywords();
-        brackets = kw.getbrackets();
-        bracketCompletions = kw.getbracketCompletions();
+        brackets = kw.getBrackets();
+        bracketCompletions = kw.getBracketCompletions();
 
         //Access the editor
         this.ui = ui;

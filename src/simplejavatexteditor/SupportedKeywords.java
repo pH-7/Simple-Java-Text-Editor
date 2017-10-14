@@ -33,36 +33,23 @@ public class SupportedKeywords {
                 "template", "typename", "class", "friend", "private", "this", "using", "const_cast",
                 "inline", "public", "throw", "virtual", "delete", "mutable", "protected", "true", "wchar_t" };
 
-    public String[] getSupportedLangage() {
-        return supportedLangage;
+    public Language[] getSupportedLanguages() {
+        return new Language[] {new Language("java", java), new Language("cpp", cpp)};
     }
 
     private String[] brackets = { "{", "(" };
     private String[] bCompletions = { "}", ")" };
-    public String[] getJavaKeywords() {
-        return java;
-    }
-    public String[] getCppKeywords() {
-        return cpp;
-    }
-    public ArrayList<String> getbracketCompletions() {
+    public ArrayList<String> getBracketCompletions() {
         ArrayList<String> al = new ArrayList<>();
         for(String completion : bCompletions) {
             al.add(completion);
         }
         return al;
     }
-    public ArrayList<String> getbrackets() {
+    public ArrayList<String> getBrackets() {
         ArrayList<String> al = new ArrayList<>();
         for(String completion : brackets) {
             al.add(completion);
-        }
-        return al;
-    }
-    public ArrayList<String> setKeywords(String[] arr) {
-        ArrayList<String> al = new ArrayList<>();
-        for(String words : arr) {
-            al.add(words);
         }
         return al;
     }
