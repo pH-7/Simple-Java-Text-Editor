@@ -87,7 +87,7 @@ public class UI extends JFrame implements ActionListener {
         container = getContentPane();
 
         // Set the initial size of the window
-        setSize(700, 500);
+        setSize(800, 600);
 
         // Set the title of the window
         setTitle("Untitled | " + SimpleJavaTextEditor.NAME);
@@ -400,7 +400,7 @@ public class UI extends JFrame implements ActionListener {
         }
 
         ArrayList<String> arrayList;
-        String[] list = kw.getSupportedLangage();
+        String[] list = kw.getsupportedLanguage();
 
         for (int i = 0; i < list.length; i++) {
             if (file.getName().endsWith(list[i])) {
