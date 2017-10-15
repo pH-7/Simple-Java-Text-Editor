@@ -12,7 +12,7 @@ import java.util.ArrayList;
  */
 public class SupportedKeywords {
 
-    private String[] java = {"abstract", "assert", "boolean",
+    public static final String[] java = {"abstract", "assert", "boolean",
             "break", "byte", "case", "catch", "char", "class", "const",
             "continue", "default", "do", "double", "else", "extends", "false",
             "final", "finally", "float", "for", "goto", "if", "implements",
@@ -22,7 +22,7 @@ public class SupportedKeywords {
             "synchronized", "this", "throw", "throws", "transient", "true",
             "try", "void", "volatile", "while", "String"};
 
-    private String[] cpp = { "auto", "const", "double", "float", "int", "short",
+    public static final String[] cpp = { "auto", "const", "double", "float", "int", "short",
                 "struct", "unsigned", "break", "continue", "else", "for", "long", "signed",
                 "switch", "void", "case", "default", "enum", "goto", "register", "sizeof",
                 "typedef", "volatile", "char", "do", "extern", "if", "return", "static",

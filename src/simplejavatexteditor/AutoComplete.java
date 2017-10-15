@@ -35,6 +35,7 @@ import javax.swing.text.BadLocationException;
  * @author Patrick Slagle
  * @since 2016-12-03
  */
+
 public class AutoComplete
         implements DocumentListener {
 
@@ -213,7 +214,6 @@ public class AutoComplete
 
         @Override
         public void actionPerformed(ActionEvent e) {
-
             if (mode == Mode.COMPLETION) {
                 int pos = textArea.getSelectionEnd();
 

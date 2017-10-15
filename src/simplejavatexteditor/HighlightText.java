@@ -9,16 +9,16 @@ public class HighlightText extends DefaultHighlighter.DefaultHighlightPainter{
         super(color);
     }
 
-    public void highLight(JTextComponent textComp, String[] pattern) {
+    public void highlight(JTextComponent textComp, String[] pattern) {
         try {
-            Highlighter hilite = textComp.getHighlighter();
+            Highlighter highlighter = textComp.getHighlighter();
             Document doc = textComp.getDocument();
             String text = doc.getText(0, doc.getLength());
             for (int i = 0; i < pattern.length; i++) {
                 int pos = 0;
 
                 while ((pos = text.indexOf(pattern[i], pos)) >= 0) {
-                    hilite.addHighlight(pos, pos + pattern[i].length(), this);
+                    highlighter.addHighlight(pos, pos + pattern[i].length(), this);
                     pos += pattern[i].length();
                 }
             }

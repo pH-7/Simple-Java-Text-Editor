@@ -4,8 +4,7 @@ package simplejavatexteditor;
  * Created by Victor Forsgren on 2017-10-14.
  */
 public class Language {
-    // Dont use dots ahead of language name
-    private String name = "languagename";
+    private String name;
     private String[] supportedKeywords;
 
     public Language(String name, String[] supportedKeywords) {
