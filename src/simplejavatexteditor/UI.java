@@ -382,11 +382,10 @@ public class UI extends JFrame implements ActionListener {
 
     public void highlight(JTextArea textArea) {
         edit = true;
+        languageHighlighter.removeHighlights(textArea);
         for (Language lang : kw.getSupportedLanguages()) {
             languageHighlighter.highLight(textArea, lang.getSupportedKeywords());
         }
-        //languageHighlighter.highLight(textArea, kw.getCppKeywords());
-        //languageHighlighter.highLight(textArea, kw.getJavaKeywords());
     }
 
     @Override

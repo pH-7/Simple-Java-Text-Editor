@@ -10,8 +10,6 @@ public class HighlightText extends DefaultHighlighter.DefaultHighlightPainter{
     }
 
     public void highLight(JTextComponent textComp, String[] pattern) {
-        removeHighlights(textComp);
-
         try {
             Highlighter hilite = textComp.getHighlighter();
             Document doc = textComp.getDocument();
