@@ -400,7 +400,7 @@ public class UI extends JFrame implements ActionListener {
         }
 
         ArrayList<String> arrayList;
-        String[] list = kw.getSupportedLangage();
+        String[] list = kw.getSupportedLanguages();
 
         for (int i = 0; i < list.length; i++) {
             if (file.getName().endsWith(list[i])) {
@@ -446,7 +446,7 @@ public class UI extends JFrame implements ActionListener {
                 Object[] options = {"Save", "No Save", "Return"};
                 int n = JOptionPane.showOptionDialog(this, "Do you want to save the file at first ?", "Question",
                         JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
-                if (n == 0) {// save 
+                if (n == 0) {// save
                     saveFile();
                     edit = false;
                 } else if (n == 1) {
