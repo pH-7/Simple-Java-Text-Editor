@@ -23,13 +23,15 @@
  * is only hidden (still running). We need DISPOSE_ON_CLOSE for
  * this JFrame.
  * Tested with java 8.
+ * 
+ * @Modifiedby SidaDan
+ * @modemail Fschultz@sinf.de
+ * Removed unsused imports
  */
 
 package simplejavatexteditor;
 
 import javax.swing.*;
-import java.awt.GraphicsEnvironment;
-import java.awt.Point;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
