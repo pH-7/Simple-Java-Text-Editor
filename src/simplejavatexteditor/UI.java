@@ -27,11 +27,14 @@
  * Only available if the user has pressed a key
  * Added safety query if user pressed the clearButton
  *
+ * @Modifiedby SidaDan
+ * @modemail Fschultz@sinf.de
+ * Removed unuse objects like container,  Border emptyBorder
+ * Removed unsused imports
  */
 package simplejavatexteditor;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.BufferedWriter;
@@ -45,7 +48,6 @@ import javax.swing.text.DefaultEditorKit;
 public class UI extends JFrame implements ActionListener {
 
     private static final long serialVersionUID = 1L;
-    private final Container container;
     private final JTextArea textArea;
     private final JMenuBar menuBar;
     private final JComboBox fontSize, fontType;
@@ -84,7 +86,6 @@ public class UI extends JFrame implements ActionListener {
     private boolean edit = false;
 
     public UI() {
-        container = getContentPane();
 
         // Set the initial size of the window
         setSize(700, 500);
@@ -263,8 +264,6 @@ public class UI extends JFrame implements ActionListener {
         mainToolbar = new JToolBar();
         this.add(mainToolbar, BorderLayout.NORTH);
         // used to create space between button groups
-        Border emptyBorder = BorderFactory.createEmptyBorder(0, 0, 0, 50);
-
         newButton = new JButton(newIcon);
         newButton.setToolTipText("New");
         newButton.addActionListener(this);
