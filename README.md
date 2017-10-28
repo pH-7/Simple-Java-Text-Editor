@@ -8,7 +8,7 @@
 
 - Auto completion for Java and C++ keywords (files need to be saved as *.java*/*.cpp*). It can be easily expanded to support pretty much any number of languages.
 
-- Nice Image Buttons for better UX
+- Nice image buttons for better UX
 
 
 ![Example Java Text Editor](Screenshots/find-replace-word-in-java-text-editor.png)
