@@ -1,36 +1,30 @@
-package simplejavatexteditor;
+package com.wire.collab;
 
+import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.BadLocationException;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Collections;
-import javax.swing.AbstractAction;
-import javax.swing.ActionMap;
-import javax.swing.InputMap;
-import javax.swing.JTextArea;
-import javax.swing.KeyStroke;
-import javax.swing.SwingUtilities;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.text.BadLocationException;
 
 /**
  * <h1>Auto complete functionality multiple programming languages, including brackets and
  * parentheses</h1>
- *
+ * <p>
  * <p>
  * An ArrayList is created for the keywords and the brackets.
  * Logic for setting the content of the ArrayList is
  * found in UI.java. If the word currently being typed
  * matches a word in the list, a Runnable inner class is
  * implemented to handle the word completion.
- *
+ * <p>
  * Two other inner classes are also used. The second one handles when the enter
  * key is pressed in response to an auto complete suggestion. The third one
  * performs additional logic on brackets.
  * </p>
- *
  *
  * @author Patrick Slagle
  * @since 2016-12-03
@@ -38,23 +32,15 @@ import javax.swing.text.BadLocationException;
 public class AutoComplete
         implements DocumentListener {
 
-    private ArrayList<String> brackets = new ArrayList<>();
-    private ArrayList<String> bracketCompletions = new ArrayList<>();
-
-    private ArrayList<String> words = new ArrayList<>();
-
-    SupportedKeywords kw;
-
-    //Keep track of when code completion
-    //has been activated
-    private enum Mode {
-        INSERT, COMPLETION
-    };
-
-    private final UI ui;
-    private Mode mode = Mode.INSERT;
-    private final JTextArea textArea;
     private static final String COMMIT_ACTION = "commit";
+    private final UI ui;
+    private final JTextArea textArea;
+    SupportedKeywords kw;
+    private ArrayList<String> brackets = new ArrayList<>();
+    ;
+    private ArrayList<String> bracketCompletions = new ArrayList<>();
+    private ArrayList<String> words = new ArrayList<>();
+    private Mode mode = Mode.INSERT;
     private boolean isKeyword;
     private int pos;
     private String content;
@@ -174,6 +160,20 @@ public class AutoComplete
         words.add(keyword);
     }
 
+    @Override
+    public void removeUpdate(DocumentEvent e) {
+    }
+
+    @Override
+    public void changedUpdate(DocumentEvent e) {
+    }
+
+    //Keep track of when code completion
+    //has been activated
+    private enum Mode {
+        INSERT, COMPLETION
+    }
+
     /**
      * Handles the auto complete suggestion
      * generated when the user is typing a
@@ -270,14 +270,6 @@ public class AutoComplete
         @Override
         public void keyReleased(KeyEvent e) {
         }
-    }
-
-    @Override
-    public void removeUpdate(DocumentEvent e) {
-    }
-
-    @Override
-    public void changedUpdate(DocumentEvent e) {
     }
 
 }

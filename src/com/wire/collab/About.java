@@ -24,10 +24,10 @@
  * Tested with java 8.
  */
 
-package simplejavatexteditor;
+package com.wire.collab;
 
 import javax.swing.*;
-import java.awt.FlowLayout;
+import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -35,8 +35,8 @@ public class About {
 
     private final JFrame frame;
     private final JPanel panel;
-    private String contentText;
     private final JLabel text;
+    private String contentText;
 
     public About(UI ui) {
         panel = new JPanel(new FlowLayout());
@@ -58,16 +58,16 @@ public class About {
     }
 
     public void me() {
-        frame.setTitle("About Me - " + SimpleJavaTextEditor.NAME);
+        frame.setTitle("About Me - " + Editor.NAME);
 
         contentText =
         "<html><body><p>" +
         "Author: Pierre-Henry Soria<br />" +
         "Contact me at: " +
-        "<a href='mailto:" + SimpleJavaTextEditor.AUTHOR_EMAIL + "?subject=About the NotePad PH Software'>" + SimpleJavaTextEditor.AUTHOR_EMAIL + "</a>" +
+                "<a href='mailto:" + Editor.AUTHOR_EMAIL + "?subject=About the NotePad PH Software'>" + Editor.AUTHOR_EMAIL + "</a>" +
                 "<br /><br />" +
                 "Modified By: Achintha Gunasekara<br />" +
-                "Contact me at: <a href='mailto:" + SimpleJavaTextEditor.EDITOR_EMAIL + "?subject=About the NotePad PH Software'>" + SimpleJavaTextEditor.EDITOR_EMAIL + "</a>" +
+                "Contact me at: <a href='mailto:" + Editor.EDITOR_EMAIL + "?subject=About the NotePad PH Software'>" + Editor.EDITOR_EMAIL + "</a>" +
         "</p></body></html>";
 
         text.setText(contentText);
@@ -76,12 +76,12 @@ public class About {
     }
 
     public void software() {
-        frame.setTitle("About Me - " + SimpleJavaTextEditor.NAME);
+        frame.setTitle("About Me - " + Editor.NAME);
 
         contentText =
         "<html><body><p>" +
-        "Name: " + SimpleJavaTextEditor.NAME + "<br />" +
-        "Version: " + SimpleJavaTextEditor.VERSION +
+                "Name: " + Editor.NAME + "<br />" +
+                "Version: " + Editor.VERSION +
         "</p></body></html>";
 
         text.setText(contentText);

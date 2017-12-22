@@ -1,23 +1,18 @@
 /**
- * @name        Simple Java NotePad
+ * @name Simple Java NotePad
  * @package ph.notepad
  * @file UI.java
- *
  * @author Pierre-Henry Soria
  * @email pierrehenrysoria@gmail.com
- * @link        http://github.com/pH-7
- *
- * @copyright   Copyright Pierre-Henry SORIA, All Rights Reserved.
- * @license     Apache (http://www.apache.org/licenses/LICENSE-2.0)
- * @create      2012-04-05
- * @update      2017-02-18
- *
- * @modifiedby  Achintha Gunasekara
- * @modemail    contact@achinthagunasekara.com
- *
- * @modifiedby  Marcus Redgrave-Close
- * @modemail    marcusrc1@hotmail.co.uk
- *
+ * @link http://github.com/pH-7
+ * @copyright Copyright Pierre-Henry SORIA, All Rights Reserved.
+ * @license Apache (http://www.apache.org/licenses/LICENSE-2.0)
+ * @create 2012-04-05
+ * @update 2017-02-18
+ * @modifiedby Achintha Gunasekara
+ * @modemail contact@achinthagunasekara.com
+ * @modifiedby Marcus Redgrave-Close
+ * @modemail marcusrc1@hotmail.co.uk
  * @Modifiedby SidaDan
  * @modemail Fschultz@sinf.de
  * Added Tooltip Combobox Font type and Font size
@@ -26,15 +21,16 @@
  * or the user select "newfile"
  * Only available if the user has pressed a key
  * Added safety query if user pressed the clearButton
- *
  * @Modifiedby SidaDan
  * @modemail Fschultz@sinf.de
  * Removed unuse objects like container,  Border emptyBorder
  * Removed unsused imports
  */
-package simplejavatexteditor;
+package com.wire.collab;
 
 import javax.swing.*;
+import javax.swing.text.DefaultEditorKit;
+import javax.swing.text.Document;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.BufferedWriter;
@@ -43,27 +39,23 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
-import javax.swing.text.DefaultEditorKit;
 
 public class UI extends JFrame implements ActionListener {
 
     private static final long serialVersionUID = 1L;
-    private final JTextArea textArea;
+    final JTextArea textArea;
     private final JMenuBar menuBar;
     private final JComboBox fontSize, fontType;
     private final JMenu menuFile, menuEdit, menuFind, menuAbout;
     private final JMenuItem newFile, openFile, saveFile, close, cut, copy, paste, clearFile, selectAll, quickFind,
             aboutMe, aboutSoftware, wordWrap;
     private final JToolBar mainToolbar;
-    JButton newButton, openButton, saveButton, clearButton, quickButton, aboutMeButton, aboutButton, closeButton;
     private final Action selectAllAction;
-
     // setup icons - File Menu
     private final ImageIcon newIcon = new ImageIcon("icons/new.png");
     private final ImageIcon openIcon = new ImageIcon("icons/open.png");
     private final ImageIcon saveIcon = new ImageIcon("icons/save.png");
     private final ImageIcon closeIcon = new ImageIcon("icons/close.png");
-
     // setup icons - Edit Menu
     private final ImageIcon clearIcon = new ImageIcon("icons/clear.png");
     private final ImageIcon cutIcon = new ImageIcon("icons/cut.png");
@@ -71,30 +63,28 @@ public class UI extends JFrame implements ActionListener {
     private final ImageIcon pasteIcon = new ImageIcon("icons/paste.png");
     private final ImageIcon selectAllIcon = new ImageIcon("icons/selectall.png");
     private final ImageIcon wordwrapIcon = new ImageIcon("icons/wordwrap.png");
-
     // setup icons - Search Menu
     private final ImageIcon searchIcon = new ImageIcon("icons/search.png");
-
     // setup icons - Help Menu
     private final ImageIcon aboutMeIcon = new ImageIcon("icons/about_me.png");
     private final ImageIcon aboutIcon = new ImageIcon("icons/about.png");
-
+    JButton newButton, openButton, saveButton, clearButton, quickButton, aboutMeButton, aboutButton, closeButton;
+    AutoComplete autocomplete;
     private SupportedKeywords kw = new SupportedKeywords();
     private HighlightText languageHighlighter = new HighlightText(Color.GRAY);
-    AutoComplete autocomplete;
     private boolean hasListener = false;
     private boolean edit = false;
 
-    public UI() {
+    UI(String name) {
 
         // Set the initial size of the window
         setSize(700, 500);
 
         // Set the title of the window
-        setTitle("Untitled | " + SimpleJavaTextEditor.NAME);
+        setTitle(name);
 
         // Set the default close operation (exit when it gets closed)
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         // center the frame on the monitor
         setLocationRelativeTo(null);
@@ -470,7 +460,7 @@ public class UI extends JFrame implements ActionListener {
                 FEdit.clear(textArea); // clear the TextArea before applying the file contents
                 try {
                     File openFile = open.getSelectedFile();
-                    setTitle(openFile.getName() + " | " + SimpleJavaTextEditor.NAME);
+                    setTitle(openFile.getName() + " | " + Editor.NAME);
                     Scanner scan = new Scanner(new FileReader(openFile.getPath()));
                     while (scan.hasNext()) {
                         textArea.append(scan.nextLine() + "\n");
@@ -510,22 +500,8 @@ public class UI extends JFrame implements ActionListener {
 
     }
 
-    class SelectAllAction extends AbstractAction {
-
-        /**
-         * Used for Select All function
-         */
-        private static final long serialVersionUID = 1L;
-
-        public SelectAllAction(String text, ImageIcon icon, String desc, Integer mnemonic, final JTextArea textArea) {
-            super(text, icon);
-            putValue(SHORT_DESCRIPTION, desc);
-            putValue(MNEMONIC_KEY, mnemonic);
-        }
-
-        public void actionPerformed(ActionEvent e) {
-            textArea.selectAll();
-        }
+    Document getDocument() {
+        return textArea.getDocument();
     }
 
     private void saveFile() {
@@ -541,7 +517,7 @@ public class UI extends JFrame implements ActionListener {
         if (option == JFileChooser.APPROVE_OPTION) {
             try {
                 File openFile = fileChoose.getSelectedFile();
-                setTitle(openFile.getName() + " | " + SimpleJavaTextEditor.NAME);
+                setTitle(openFile.getName() + " | " + Editor.NAME);
 
                 BufferedWriter out = new BufferedWriter(new FileWriter(openFile.getPath()));
                 out.write(textArea.getText());
@@ -553,6 +529,26 @@ public class UI extends JFrame implements ActionListener {
                 // ...write to the debug console
                 System.err.println(ex.getMessage());
             }
+        }
+
+
+    }
+
+    class SelectAllAction extends AbstractAction {
+
+        /**
+         * Used for Select All function
+         */
+        private static final long serialVersionUID = 1L;
+
+        public SelectAllAction(String text, ImageIcon icon, String desc, Integer mnemonic, final JTextArea textArea) {
+            super(text, icon);
+            putValue(SHORT_DESCRIPTION, desc);
+            putValue(MNEMONIC_KEY, mnemonic);
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            textArea.selectAll();
         }
     }
 }

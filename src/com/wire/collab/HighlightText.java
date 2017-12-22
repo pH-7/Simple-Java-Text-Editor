@@ -1,9 +1,9 @@
-package simplejavatexteditor;
+package com.wire.collab;
 
 import javax.swing.text.*;
 import java.awt.*;
 
-public class HighlightText extends DefaultHighlighter.DefaultHighlightPainter{
+public class HighlightText extends DefaultHighlighter.DefaultHighlightPainter {
 
     public HighlightText(Color color) {
         super(color);
@@ -24,7 +24,8 @@ public class HighlightText extends DefaultHighlighter.DefaultHighlightPainter{
                     pos += pattern[i].length();
                 }
             }
-        } catch (BadLocationException e) {}
+        } catch (BadLocationException e) {
+        }
 
     }
 
