@@ -2,3 +2,5 @@ target/
 .idea/
 data/
 current.log
+current.log.1
+*.iml

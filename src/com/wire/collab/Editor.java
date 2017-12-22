@@ -78,7 +78,7 @@ public class Editor extends JTextPane {
 
         DocumentListener listener = new MyDocumentListener(wireClient);
 
-        UI ui = new UI(String.format("%s sharing with %s", user.name, sharing.name));
+        MyFrame ui = new MyFrame(String.format("%s sharing with %s", user.name, sharing.name));
 
         Document document = ui.getDocument();
         document.addDocumentListener(listener);
