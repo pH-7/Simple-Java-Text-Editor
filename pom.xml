@@ -63,6 +63,12 @@
             <artifactId>lithium</artifactId>
             <version>1.0.6</version>
         </dependency>
+        <!---->
+        <!--<dependency>-->
+        <!--<groupId>com.wire.bots</groupId>-->
+        <!--<artifactId>bot-sdk</artifactId>-->
+        <!--<version>1.0.5</version>-->
+        <!--</dependency>-->
     </dependencies>
 
     <build>
