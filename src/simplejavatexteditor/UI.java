@@ -506,7 +506,7 @@ public class UI extends JFrame implements ActionListener {
             saveFile();
         }// If the source of the event was the "Bold" button
         else if (e.getSource() == boldButton) {
-            if(textArea.getFont().getStyle() == Font.BOLD){
+            if (textArea.getFont().getStyle() == Font.BOLD){
                 textArea.setFont(textArea.getFont().deriveFont(Font.PLAIN));
                 
             }
@@ -517,7 +517,7 @@ public class UI extends JFrame implements ActionListener {
             
         }// If the source of the event was the "Italic" button
         else if (e.getSource() == italicButton) {
-            if(textArea.getFont().getStyle() == Font.ITALIC){
+            if (textArea.getFont().getStyle() == Font.ITALIC){
                 textArea.setFont(textArea.getFont().deriveFont(Font.PLAIN));
                 
             }
