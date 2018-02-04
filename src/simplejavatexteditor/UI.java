@@ -511,10 +511,8 @@ public class UI extends JFrame implements ActionListener {
                 
             }
             else{
-                
                 textArea.setFont(textArea.getFont().deriveFont(Font.BOLD));
             }
-            
         }// If the source of the event was the "Italic" button
         else if (e.getSource() == italicButton) {
             if (textArea.getFont().getStyle() == Font.ITALIC){
@@ -522,12 +520,9 @@ public class UI extends JFrame implements ActionListener {
                 
             }
             else{
-                
                 textArea.setFont(textArea.getFont().deriveFont(Font.ITALIC));
             }
-            
         }
-        
         // Clear File (Code)
         if (e.getSource() == clearFile || e.getSource() == clearButton) {
 
