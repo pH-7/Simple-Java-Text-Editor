@@ -14,7 +14,7 @@
  * @modifiedby  Achintha Gunasekara
  * @modweb      http://www.achinthagunasekara.com
  * @modemail    contact@achinthagunasekara.com
- * 
+ *
  * @Modifiedby SidaDan
  * @modemail Fschultz@sinf.de
  * Bug fixed. If JTextArea txt not empty and the user will
@@ -42,7 +42,7 @@ public class About {
         panel = new JPanel(new FlowLayout());
         panel.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
         frame = new JFrame();
-        
+
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -50,7 +50,7 @@ public class About {
             }
         });
 
-        
+
         frame.setVisible(true);
         frame.setSize(500,300);
         frame.setLocationRelativeTo(ui);

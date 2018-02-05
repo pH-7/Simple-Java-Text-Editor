@@ -31,7 +31,7 @@
  * @modemail Fschultz@sinf.de
  * Removed unuse objects like container,  Border emptyBorder
  * Removed unsused imports
- * 
+ *
  * @Modifiedby Giorgos Pasentsis
  * @modemail gpasents@gmail.com
  */
@@ -61,11 +61,10 @@ public class UI extends JFrame implements ActionListener {
     JButton newButton, openButton, saveButton, clearButton, quickButton, aboutMeButton, aboutButton, closeButton, boldButton, italicButton;
     private final Action selectAllAction;
 
-    
     //setup icons - Bold and Italic
      private final ImageIcon boldIcon = new ImageIcon("icons/bold.png");
      private final ImageIcon italicIcon = new ImageIcon("icons/italic.png");
-    
+
     // setup icons - File Menu
     private final ImageIcon newIcon = new ImageIcon("icons/new.png");
     private final ImageIcon openIcon = new ImageIcon("icons/open.png");
@@ -94,7 +93,6 @@ public class UI extends JFrame implements ActionListener {
     private boolean edit = false;
 
     public UI() {
-
         // Set the initial size of the window
         setSize(800, 500);
 
@@ -319,13 +317,13 @@ public class UI extends JFrame implements ActionListener {
         closeButton.addActionListener(this);
         mainToolbar.add(closeButton);
         mainToolbar.addSeparator();
-        
+
         boldButton = new JButton(boldIcon);
         boldButton.setToolTipText("Bold");
         boldButton.addActionListener(this);
         mainToolbar.add(boldButton);
         mainToolbar.addSeparator();
-        
+
         italicButton = new JButton(italicIcon);
         italicButton.setToolTipText("Italic");
         italicButton.addActionListener(this);
@@ -380,7 +378,6 @@ public class UI extends JFrame implements ActionListener {
 
                 Font font1 = new Font(fontFamily, Font.PLAIN, sizeOfFont);
                 textArea.setFont(font1);
-
             }
         });
         //FONT SIZE SETTINGS SECTION END
@@ -508,18 +505,14 @@ public class UI extends JFrame implements ActionListener {
         else if (e.getSource() == boldButton) {
             if (textArea.getFont().getStyle() == Font.BOLD){
                 textArea.setFont(textArea.getFont().deriveFont(Font.PLAIN));
-                
-            }
-            else{
+            } else {
                 textArea.setFont(textArea.getFont().deriveFont(Font.BOLD));
             }
         }// If the source of the event was the "Italic" button
         else if (e.getSource() == italicButton) {
             if (textArea.getFont().getStyle() == Font.ITALIC){
                 textArea.setFont(textArea.getFont().deriveFont(Font.PLAIN));
-                
-            }
-            else{
+            } else {
                 textArea.setFont(textArea.getFont().deriveFont(Font.ITALIC));
             }
         }
@@ -543,7 +536,6 @@ public class UI extends JFrame implements ActionListener {
         else if (e.getSource() == aboutSoftware || e.getSource() == aboutButton) {
             new About(this).software();
         }
-
     }
 
     class SelectAllAction extends AbstractAction {
@@ -591,4 +583,5 @@ public class UI extends JFrame implements ActionListener {
             }
         }
     }
+
 }
