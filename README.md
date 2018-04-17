@@ -2,13 +2,13 @@
 
 **PH NotePad** is a simple and light **text editor** (notepad) written in Java.
 
-- Search tool (to search text/keywords easily in the code) + highlighting the code found
+* Search tool (to search text/keywords easily in the code) + highlighting the code found.
 
-- Find/Replace text/code
+* Find/Replace text/code.
 
-- Auto completion for Java and C++ keywords (files need to be saved as *.java*/*.cpp*). It can be easily expanded to support pretty much any number of languages.
+* Auto completion for Java and C++ keywords (files need to be saved as *.java*/*.cpp*). It can be easily expanded to support pretty much any number of languages.
 
-- Nice image buttons for better UX
+* Nice image buttons for better UX.
 
 
 ![Example Java Text Editor](Screenshots/find-replace-word-in-java-text-editor.png)
@@ -16,27 +16,27 @@
 
 ## AUTHOR
 
-[Pierre-Henry Soria](https://github.com/pH-7)
+**[Pierre-Henry Soria](http://pierrehenry.be)**
 
 
-### Contributors
+### Contributors 🏅
 
-- [Achintha Gunasekara](https://github.com/achinthagunasekara)
+* [Achintha Gunasekara](https://github.com/achinthagunasekara)
 
-- [Patrick Slagle](https://github.com/patrick-slagle)
+* [Patrick Slagle](https://github.com/patrick-slagle)
 
-- [Marcus Redgrave-Close](https://github.com/marcusjrc)
+* [Marcus Redgrave-Close](https://github.com/marcusjrc)
 
-- [Ossi Laukkanen](https://github.com/Fitoh)
+* [Ossi Laukkanen](https://github.com/Fitoh)
 
-- [Akashdeep Singh](https://github.com/akashdeepsingh9988)
+* [Akashdeep Singh](https://github.com/akashdeepsingh9988)
 
 
 ## CONTACT
 
-Pierre-Henry SORIA: pierrehenrysoria [AT] gmail [D0T] com
+* Pierre-Henry Soria: hi [AT] ph7 [D0T] me
 
-Achintha Gunasekara: contact [AT] achinthagunasekara [D0T] com
+* Achintha Gunasekara: contact [AT] achinthagunasekara [D0T] com
 
 
 ## DEMO
