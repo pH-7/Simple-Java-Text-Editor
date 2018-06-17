@@ -14,7 +14,7 @@
  * @modifiedby  Achintha Gunasekara
  * @modweb      http://www.achinthagunasekara.com
  * @modemail    contact@achinthagunasekara.com
- * 
+ *
  * @Modifiedby SidaDan
  * @modemail Fschultz@sinf.de
  * Center this JFrame to the JTextArea
@@ -23,7 +23,7 @@
  * is only hidden (still running). We need DISPOSE_ON_CLOSE for
  * this JFrame.
  * Tested with java 8.
- * 
+ *
  * @Modifiedby SidaDan
  * @modemail Fschultz@sinf.de
  * Removed unsused imports
@@ -44,7 +44,6 @@ public class Find extends JFrame implements ActionListener {
     JTextField textF, textR;
     JButton findBtn, findNext, replace, replaceAll, cancel;
     private JTextArea txt;
-
 
     public Find(JTextArea text) {
         this.txt = text;

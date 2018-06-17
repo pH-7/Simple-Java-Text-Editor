@@ -31,6 +31,9 @@
  * @modemail Fschultz@sinf.de
  * Removed unuse objects like container,  Border emptyBorder
  * Removed unsused imports
+ *
+ * @Modifiedby Giorgos Pasentsis
+ * @modemail gpasents@gmail.com
  */
 package simplejavatexteditor;
 
@@ -55,8 +58,12 @@ public class UI extends JFrame implements ActionListener {
     private final JMenuItem newFile, openFile, saveFile, close, cut, copy, paste, clearFile, selectAll, quickFind,
             aboutMe, aboutSoftware, wordWrap;
     private final JToolBar mainToolbar;
-    JButton newButton, openButton, saveButton, clearButton, quickButton, aboutMeButton, aboutButton, closeButton;
+    JButton newButton, openButton, saveButton, clearButton, quickButton, aboutMeButton, aboutButton, closeButton, boldButton, italicButton;
     private final Action selectAllAction;
+
+    //setup icons - Bold and Italic
+     private final ImageIcon boldIcon = new ImageIcon("icons/bold.png");
+     private final ImageIcon italicIcon = new ImageIcon("icons/italic.png");
 
     // setup icons - File Menu
     private final ImageIcon newIcon = new ImageIcon("icons/new.png");
@@ -86,9 +93,8 @@ public class UI extends JFrame implements ActionListener {
     private boolean edit = false;
 
     public UI() {
-
         // Set the initial size of the window
-        setSize(700, 500);
+        setSize(800, 500);
 
         // Set the title of the window
         setTitle("Untitled | " + SimpleJavaTextEditor.NAME);
@@ -101,9 +107,9 @@ public class UI extends JFrame implements ActionListener {
 
         // Set a default font for the TextArea
         textArea = new JTextArea("", 0, 0);
-        textArea.setFont(new Font("Century Gothic", Font.BOLD, 12));
+        textArea.setFont(new Font("Century Gothic", Font.PLAIN, 12));
         textArea.setTabSize(2);
-        textArea.setFont(new Font("Century Gothic", Font.BOLD, 12));
+        textArea.setFont(new Font("Century Gothic", Font.PLAIN, 12));
         textArea.setTabSize(2);
 
         /* SETTING BY DEFAULT WORD WRAP ENABLED OR TRUE */
@@ -312,6 +318,17 @@ public class UI extends JFrame implements ActionListener {
         mainToolbar.add(closeButton);
         mainToolbar.addSeparator();
 
+        boldButton = new JButton(boldIcon);
+        boldButton.setToolTipText("Bold");
+        boldButton.addActionListener(this);
+        mainToolbar.add(boldButton);
+        mainToolbar.addSeparator();
+
+        italicButton = new JButton(italicIcon);
+        italicButton.setToolTipText("Italic");
+        italicButton.addActionListener(this);
+        mainToolbar.add(italicButton);
+        mainToolbar.addSeparator();
         /**
          * **************** FONT SETTINGS SECTION **********************
          */
@@ -361,7 +378,6 @@ public class UI extends JFrame implements ActionListener {
 
                 Font font1 = new Font(fontFamily, Font.PLAIN, sizeOfFont);
                 textArea.setFont(font1);
-
             }
         });
         //FONT SIZE SETTINGS SECTION END
@@ -485,8 +501,21 @@ public class UI extends JFrame implements ActionListener {
         } // If the source of the event was the "save" option
         else if (e.getSource() == saveFile || e.getSource() == saveButton) {
             saveFile();
+        }// If the source of the event was the "Bold" button
+        else if (e.getSource() == boldButton) {
+            if (textArea.getFont().getStyle() == Font.BOLD){
+                textArea.setFont(textArea.getFont().deriveFont(Font.PLAIN));
+            } else {
+                textArea.setFont(textArea.getFont().deriveFont(Font.BOLD));
+            }
+        }// If the source of the event was the "Italic" button
+        else if (e.getSource() == italicButton) {
+            if (textArea.getFont().getStyle() == Font.ITALIC){
+                textArea.setFont(textArea.getFont().deriveFont(Font.PLAIN));
+            } else {
+                textArea.setFont(textArea.getFont().deriveFont(Font.ITALIC));
+            }
         }
-
         // Clear File (Code)
         if (e.getSource() == clearFile || e.getSource() == clearButton) {
 
@@ -507,7 +536,6 @@ public class UI extends JFrame implements ActionListener {
         else if (e.getSource() == aboutSoftware || e.getSource() == aboutButton) {
             new About(this).software();
         }
-
     }
 
     class SelectAllAction extends AbstractAction {
@@ -555,4 +583,5 @@ public class UI extends JFrame implements ActionListener {
             }
         }
     }
+
 }
