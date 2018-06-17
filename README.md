@@ -2,6 +2,9 @@
 
 **PH NotePad** is a simple and light **text editor** (notepad) written in Java.
 
+![Programming Java Text Editor](Screenshots/text-editor-writing-icon.svg)
+
+
 - Search tool (to search text/keywords easily in the code) + highlighting the code found
 
 - Find/Replace text/code
