@@ -93,6 +93,14 @@ public class UI extends JFrame implements ActionListener {
     private boolean edit = false;
 
     public UI() {
+         try {
+            ImageIcon image = new ImageIcon("icons/ste.png");
+            super.setIconImage(image.getImage());
+        } // try
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
         // Set the initial size of the window
         setSize(800, 500);
 
