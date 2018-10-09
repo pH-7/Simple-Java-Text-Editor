@@ -96,7 +96,7 @@ public class UI extends JFrame implements ActionListener {
          try {
             ImageIcon image = new ImageIcon("icons/ste.png");
             super.setIconImage(image.getImage());
-        } // try
+        } 
         catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -132,9 +132,14 @@ public class UI extends JFrame implements ActionListener {
             }
         });
 
-        // This is why we didn't have to worry about the size of the TextArea!
+
+        JScrollPane scrollPane = new JScrollPane(textArea);
+        textArea.setWrapStyleWord(true);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         getContentPane().setLayout(new BorderLayout()); // the BorderLayout bit makes it fill it automatically
-        getContentPane().add(textArea);
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.add(scrollPane);
+        getContentPane().add(panel);
 
         // Set the Menus
         menuFile = new JMenu("File");
