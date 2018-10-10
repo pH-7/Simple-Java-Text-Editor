@@ -93,6 +93,14 @@ public class UI extends JFrame implements ActionListener {
     private boolean edit = false;
 
     public UI() {
+         try {
+            ImageIcon image = new ImageIcon("icons/ste.png");
+            super.setIconImage(image.getImage());
+        } 
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
         // Set the initial size of the window
         setSize(800, 500);
 
@@ -124,9 +132,14 @@ public class UI extends JFrame implements ActionListener {
             }
         });
 
-        // This is why we didn't have to worry about the size of the TextArea!
+
+        JScrollPane scrollPane = new JScrollPane(textArea);
+        textArea.setWrapStyleWord(true);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         getContentPane().setLayout(new BorderLayout()); // the BorderLayout bit makes it fill it automatically
-        getContentPane().add(textArea);
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.add(scrollPane);
+        getContentPane().add(panel);
 
         // Set the Menus
         menuFile = new JMenu("File");
