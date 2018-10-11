@@ -39,9 +39,17 @@ package simplejavatexteditor;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.dnd.DropTarget;
+import java.awt.dnd.DropTargetDragEvent;
+import java.awt.dnd.DropTargetDropEvent;
+import java.awt.dnd.DropTargetEvent;
+import java.awt.dnd.DropTargetListener;
 import java.awt.event.*;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
@@ -122,6 +130,7 @@ public class UI extends JFrame implements ActionListener {
 
         /* SETTING BY DEFAULT WORD WRAP ENABLED OR TRUE */
         textArea.setLineWrap(true);
+        DropTarget dropTarget = new DropTarget(textArea, dropTargetListener);
 
         // Set an higlighter to the JTextArea
         textArea.addKeyListener(new KeyAdapter() {
@@ -596,5 +605,53 @@ public class UI extends JFrame implements ActionListener {
             }
         }
     }
+     DropTargetListener dropTargetListener = new DropTargetListener() {
+
+        @Override
+        public void dragEnter(DropTargetDragEvent e) {
+        }
+
+        @Override
+        public void dragExit(DropTargetEvent e) {
+        }
+
+        @Override
+        public void dragOver(DropTargetDragEvent e) {
+        }
+
+        @Override
+        public void drop(DropTargetDropEvent e) {
+            try {
+                Transferable tr = e.getTransferable();
+                DataFlavor[] flavors = tr.getTransferDataFlavors();
+                for (int i = 0; i < flavors.length; i++) {
+                    if (flavors[i].isFlavorJavaFileListType()) {
+                        e.acceptDrop(e.getDropAction());
+
+                        try {
+                            String fileName = tr.getTransferData(flavors[i]).toString().replace("[", "").replace("]", "");
+                            FileInputStream fis = new FileInputStream(new File(fileName));
+                            byte[] ba = new byte[fis.available()];
+                            fis.read(ba);
+                            textArea.setText(new String(ba));
+                            fis.close();
+                        }
+                        catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                        e.dropComplete(true);
+                        return;
+                    }
+                }
+            } catch (Throwable t) {
+                t.printStackTrace();
+            }
+            e.rejectDrop();
+        }
+
+        @Override
+        public void dropActionChanged(DropTargetDragEvent e) {
+        }
+    };
 
 }
