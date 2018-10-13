@@ -472,7 +472,7 @@ public class UI extends JFrame implements ActionListener {
         else if (e.getSource() == newFile || e.getSource() == newButton) {
             if (edit) {
                 Object[] options = {"Save", "No Save", "Return"};
-                int n = JOptionPane.showOptionDialog(this, "Do you want to save the file at first ?", "Question",
+                int n = JOptionPane.showOptionDialog(this, "Do you want to save changes ?", "Question",
                         JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
                 if (n == 0) {// save
                     saveFile();
@@ -487,30 +487,23 @@ public class UI extends JFrame implements ActionListener {
 
         } // If the source was the "open" option
         else if (e.getSource() == openFile || e.getSource() == openButton) {
-            JFileChooser open = new JFileChooser(); // open up a file chooser (a dialog for the user to  browse files to open)
-            int option = open.showOpenDialog(this); // get the option that the user selected (approve or cancel)
-
-            /*
-             * NOTE: because we are OPENing a file, we call showOpenDialog~ if
-             * the user clicked OK, we have "APPROVE_OPTION" so we want to open
-             * the file
-             */
-            if (option == JFileChooser.APPROVE_OPTION) {
-                FEdit.clear(textArea); // clear the TextArea before applying the file contents
-                try {
-                    File openFile = open.getSelectedFile();
-                    setTitle(openFile.getName() + " | " + SimpleJavaTextEditor.NAME);
-                    Scanner scan = new Scanner(new FileReader(openFile.getPath()));
-                    while (scan.hasNext()) {
-                        textArea.append(scan.nextLine() + "\n");
-                    }
-
-                    enableAutoComplete(openFile);
-                } catch (Exception ex) { // catch any exceptions, and...
-                    // ...write to the debug console
-                    System.err.println(ex.getMessage());
-                }
-            }
+        	
+        	  if (edit) {
+                  Object[] options = {"Save", "No Save", "Return"};
+                  int n = JOptionPane.showOptionDialog(this, "Do you want to save changes ?", "Question",
+                          JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
+                  if (n == 0) {// save
+                      saveFile();
+                      edit = false;
+                  } else if (n == 1) {
+                      edit = false;
+                     openFile();
+                  }  
+        		  
+        	  }
+        	 else{
+           openFile();
+        }
         } // If the source of the event was the "save" option
         else if (e.getSource() == saveFile || e.getSource() == saveButton) {
             saveFile();
@@ -595,6 +588,32 @@ public class UI extends JFrame implements ActionListener {
                 System.err.println(ex.getMessage());
             }
         }
+    }
+    private void openFile(){
+    	 JFileChooser open = new JFileChooser(); // open up a file chooser (a dialog for the user to  browse files to open)
+         int option = open.showOpenDialog(this); // get the option that the user selected (approve or cancel)
+
+         /*
+          * NOTE: because we are OPENing a file, we call showOpenDialog~ if
+          * the user clicked OK, we have "APPROVE_OPTION" so we want to open
+          * the file
+          */
+         if (option == JFileChooser.APPROVE_OPTION) {
+             FEdit.clear(textArea); // clear the TextArea before applying the file contents
+             try {
+                 File openFile = open.getSelectedFile();
+                 setTitle(openFile.getName() + " | " + SimpleJavaTextEditor.NAME);
+                 Scanner scan = new Scanner(new FileReader(openFile.getPath()));
+                 while (scan.hasNext()) {
+                     textArea.append(scan.nextLine() + "\n");
+                 }
+
+                 enableAutoComplete(openFile);
+             } catch (Exception ex) { // catch any exceptions, and...
+                 // ...write to the debug console
+                 System.err.println(ex.getMessage());
+             }
+         }
     }
 
 }
