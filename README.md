@@ -11,6 +11,8 @@
 
 * Auto completion for Java and C++ keywords (files need to be saved as *.java*/*.cpp*). It can be easily expanded to support pretty much any number of languages.
 
+* Drag and Drop (drag files into the text area and they get loaded).
+
 * Nice image buttons for better UX.
 
 
