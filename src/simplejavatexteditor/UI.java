@@ -481,7 +481,7 @@ public class UI extends JFrame implements ActionListener {
         else if (e.getSource() == newFile || e.getSource() == newButton) {
             if (edit) {
                 Object[] options = {"Save", "No Save", "Return"};
-                int n = JOptionPane.showOptionDialog(this, "Do you want to save changes ?", "Question",
+                 int n = JOptionPane.showOptionDialog(this, "Do you want to save the changes ?", "Question",
                         JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
                 if (n == 0) {// save
                     saveFile();
@@ -499,7 +499,7 @@ public class UI extends JFrame implements ActionListener {
         	
         	  if (edit) {
                   Object[] options = {"Save", "No Save", "Return"};
-                  int n = JOptionPane.showOptionDialog(this, "Do you want to save changes ?", "Question",
+                  int n = JOptionPane.showOptionDialog(this, "Do you want to save changes?", "Question",
                           JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
                   if (n == 0) {// save
                       saveFile();
