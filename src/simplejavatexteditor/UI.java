@@ -70,8 +70,8 @@ public class UI extends JFrame implements ActionListener {
     private final Action selectAllAction;
 
     //setup icons - Bold and Italic
-     private final ImageIcon boldIcon = new ImageIcon("icons/bold.png");
-     private final ImageIcon italicIcon = new ImageIcon("icons/italic.png");
+    private final ImageIcon boldIcon = new ImageIcon("icons/bold.png");
+    private final ImageIcon italicIcon = new ImageIcon("icons/italic.png");
 
     // setup icons - File Menu
     private final ImageIcon newIcon = new ImageIcon("icons/new.png");
@@ -101,14 +101,13 @@ public class UI extends JFrame implements ActionListener {
     private boolean edit = false;
 
     public UI() {
-         try {
+        try {
             ImageIcon image = new ImageIcon("icons/ste.png");
             super.setIconImage(image.getImage());
-        } 
-        catch (Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
-        
+
         // Set the initial size of the window
         setSize(800, 500);
 
@@ -140,7 +139,6 @@ public class UI extends JFrame implements ActionListener {
                 languageHighlighter.highLight(textArea, kw.getJavaKeywords());
             }
         });
-
 
         JScrollPane scrollPane = new JScrollPane(textArea);
         textArea.setWrapStyleWord(true);
@@ -525,14 +523,14 @@ public class UI extends JFrame implements ActionListener {
             saveFile();
         }// If the source of the event was the "Bold" button
         else if (e.getSource() == boldButton) {
-            if (textArea.getFont().getStyle() == Font.BOLD){
+            if (textArea.getFont().getStyle() == Font.BOLD) {
                 textArea.setFont(textArea.getFont().deriveFont(Font.PLAIN));
             } else {
                 textArea.setFont(textArea.getFont().deriveFont(Font.BOLD));
             }
         }// If the source of the event was the "Italic" button
         else if (e.getSource() == italicButton) {
-            if (textArea.getFont().getStyle() == Font.ITALIC){
+            if (textArea.getFont().getStyle() == Font.ITALIC) {
                 textArea.setFont(textArea.getFont().deriveFont(Font.PLAIN));
             } else {
                 textArea.setFont(textArea.getFont().deriveFont(Font.ITALIC));
@@ -605,7 +603,7 @@ public class UI extends JFrame implements ActionListener {
             }
         }
     }
-     DropTargetListener dropTargetListener = new DropTargetListener() {
+    DropTargetListener dropTargetListener = new DropTargetListener() {
 
         @Override
         public void dragEnter(DropTargetDragEvent e) {
@@ -621,6 +619,21 @@ public class UI extends JFrame implements ActionListener {
 
         @Override
         public void drop(DropTargetDropEvent e) {
+            if (edit) {
+                Object[] options = {"Save", "No Save", "Return"};
+                int n = JOptionPane.showOptionDialog(UI.this, "Do you want to save the file at first ?", "Question",
+                        JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
+                if (n == 0) {// save
+                    UI.this.saveFile();
+                    edit = false;
+                } else if (n == 1) {
+                    edit = false;
+                    FEdit.clear(textArea);
+                } else if (n == 2) {
+                    e.rejectDrop();
+                    return;
+                }
+            }
             try {
                 Transferable tr = e.getTransferable();
                 DataFlavor[] flavors = tr.getTransferDataFlavors();
@@ -630,13 +643,25 @@ public class UI extends JFrame implements ActionListener {
 
                         try {
                             String fileName = tr.getTransferData(flavors[i]).toString().replace("[", "").replace("]", "");
-                            FileInputStream fis = new FileInputStream(new File(fileName));
-                            byte[] ba = new byte[fis.available()];
-                            fis.read(ba);
-                            textArea.setText(new String(ba));
-                            fis.close();
-                        }
-                        catch (Exception ex) {
+                            String[] extensionFilter = {".txt", ".dat", ".log", ".xml", ".mf", ".html"}; // allowed file filter extentions for drag and drop
+                            boolean extensionAllowed = false;
+                            for (int j = 0; j < extensionFilter.length; j++) {
+                                if (fileName.endsWith(extensionFilter[j])) {
+                                    extensionAllowed = true;
+                                    break;
+                                }
+                            }
+                            if (!extensionAllowed) {
+                                JOptionPane.showMessageDialog(UI.this, "This file is not allowed for drag & drop", "Error", JOptionPane.ERROR_MESSAGE);
+
+                            } else {
+                                FileInputStream fis = new FileInputStream(new File(fileName));
+                                byte[] ba = new byte[fis.available()];
+                                fis.read(ba);
+                                textArea.setText(new String(ba));
+                                fis.close();
+                            }
+                        } catch (Exception ex) {
                             ex.printStackTrace();
                         }
                         e.dropComplete(true);
