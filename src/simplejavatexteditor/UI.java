@@ -58,8 +58,8 @@ import javax.swing.text.DefaultEditorKit;
 
 public class UI extends JFrame implements ActionListener {
 
-    private final String[] dropDownExtensionFilter = {".txt", ".dat", ".log", ".xml", ".mf", ".html"};
-    private static final long serialVersionUID = 1L;
+    private final String[] dragDropExtensionFilter = {".txt", ".dat", ".log", ".xml", ".mf", ".html"};
+    private static long serialVersionUID = 1L;
     private final JTextArea textArea;
     private final JMenuBar menuBar;
     private final JComboBox fontSize, fontType;
@@ -647,8 +647,8 @@ public class UI extends JFrame implements ActionListener {
 
                             // Allowed file filter extentions for drag and drop
                             boolean extensionAllowed = false;
-                            for (int j = 0; j < dropDownExtensionFilter.length; j++) {
-                                if (fileName.endsWith(dropDownExtensionFilter[j])) {
+                            for (int j = 0; j < dragDropExtensionFilter.length; j++) {
+                                if (fileName.endsWith(dragDropExtensionFilter[j])) {
                                     extensionAllowed = true;
                                     break;
                                 }
