@@ -134,6 +134,14 @@ public class UI extends JFrame implements ActionListener {
 
         // Set an higlighter to the JTextArea
         textArea.addKeyListener(new KeyAdapter() {
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                setTitle("Untitled | " + SimpleJavaTextEditor.NAME + "     [ Length: " + textArea.getText().length()
+                        + "    Lines: " + (textArea.getText() + "|").split("\n").length  + " ]");
+            }
+
+            @Override
             public void keyPressed(KeyEvent ke) {
                 edit = true;
                 languageHighlighter.highLight(textArea, kw.getCppKeywords());
