@@ -138,7 +138,8 @@ public class UI extends JFrame implements ActionListener {
             @Override
             public void keyReleased(KeyEvent e) {
                 setTitle("Untitled | " + SimpleJavaTextEditor.NAME + "     [ Length: " + textArea.getText().length()
-                        + "    Lines: " + (textArea.getText() + "|").split("\n").length  + " ]");
+                        + "    Lines: " + (textArea.getText() + "|").split("\n").length
+                        + "    Words: " + textArea.getText().trim().split("\\s+").length + " ]");
             }
 
             @Override
