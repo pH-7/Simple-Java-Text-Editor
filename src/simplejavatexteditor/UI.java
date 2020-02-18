@@ -62,7 +62,8 @@ public class UI extends JFrame implements ActionListener {
     private static long serialVersionUID = 1L;
     private final JTextArea textArea;
     private final JMenuBar menuBar;
-    private final JComboBox fontSize, fontType;
+    private final JComboBox<String> fontType;
+    private final JComboBox<Integer> fontSize;
     private final JMenu menuFile, menuEdit, menuFind, menuAbout;
     private final JMenuItem newFile, openFile, saveFile, close, cut, copy, paste, clearFile, selectAll, quickFind,
             aboutMe, aboutSoftware, wordWrap;
@@ -363,7 +364,7 @@ public class UI extends JFrame implements ActionListener {
          * **************** FONT SETTINGS SECTION **********************
          */
         //FONT FAMILY SETTINGS SECTION START
-        fontType = new JComboBox();
+        fontType = new JComboBox<String>();
 
         //GETTING ALL AVAILABLE FONT FOMILY NAMES
         String[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
@@ -391,7 +392,7 @@ public class UI extends JFrame implements ActionListener {
 
         //FONT FAMILY SETTINGS SECTION END
         //FONT SIZE SETTINGS START
-        fontSize = new JComboBox();
+        fontSize = new JComboBox<Integer>();
 
         for (int i = 5; i <= 100; i++) {
             fontSize.addItem(i);
