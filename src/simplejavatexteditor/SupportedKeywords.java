@@ -45,14 +45,14 @@ public class SupportedKeywords {
     public String[] getCppKeywords() {
         return cpp;
     }
-    public ArrayList<String> getbracketCompletions() {
+    public ArrayList<String> getBracketCompletions() {
         ArrayList<String> al = new ArrayList<>();
         for(String completion : bCompletions) {
             al.add(completion);
         }
         return al;
     }
-    public ArrayList<String> getbrackets() {
+    public ArrayList<String> getBrackets() {
         ArrayList<String> al = new ArrayList<>();
         for(String completion : brackets) {
             al.add(completion);
