@@ -1,5 +1,7 @@
 # Simple Java Text Editor
 
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fph-7.github.io%2FSimple-Java-Text-Editor%2F&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=PAGE+VIEWS&edge_flat=false)](https://hits.seeyoufarm.com)
+
 **PH NotePad** is a simple and light **text editor** (notepad) written in Java.
 
 ![Programming Java Text Editor](Screenshots/text-editor-writing-icon.svg)
