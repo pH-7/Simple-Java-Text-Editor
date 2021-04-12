@@ -37,6 +37,7 @@
  */
 package simplejavatexteditor;
 
+import java.lang.reflect.Method;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
@@ -506,13 +507,17 @@ public class UI extends JFrame implements ActionListener {
         } // If the source was the "open" option
         else if (e.getSource() == openFile || e.getSource() == openButton) {
             JFileChooser open = new JFileChooser(); // open up a file chooser (a dialog for the user to  browse files to open)
+            if( !(textArea.getText().equals("")) ) {
+                saveFile();
+            }
+            // if true does normal operation
             int option = open.showOpenDialog(this); // get the option that the user selected (approve or cancel)
 
             /*
-             * NOTE: because we are OPENing a file, we call showOpenDialog~ if
-             * the user clicked OK, we have "APPROVE_OPTION" so we want to open
-             * the file
-             */
+            * NOTE: because we are OPENing a file, we call showOpenDialog~ if
+            * the user clicked OK, we have "APPROVE_OPTION" so we want to open
+            * the file
+            */
             if (option == JFileChooser.APPROVE_OPTION) {
                 FEdit.clear(textArea); // clear the TextArea before applying the file contents
                 try {
@@ -529,6 +534,7 @@ public class UI extends JFrame implements ActionListener {
                     System.err.println(ex.getMessage());
                 }
             }
+
         } // If the source of the event was the "save" option
         else if (e.getSource() == saveFile || e.getSource() == saveButton) {
             saveFile();
