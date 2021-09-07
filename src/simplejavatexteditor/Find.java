@@ -111,14 +111,14 @@ public class Find extends JFrame implements ActionListener {
     }
 
     public void find() {
-        select_start = txt.getText().toLowerCase().indexOf(textF.getText().toLowerCase());
+        select_start = txt.getText().indexOf(textF.getText().toLowerCase());
         if(select_start == -1)
         {
             startIndex = 0;
             JOptionPane.showMessageDialog(null, "Could not find \"" + textF.getText() + "\"!");
             return;
         }
-        if(select_start == txt.getText().toLowerCase().lastIndexOf(textF.getText().toLowerCase()))
+        if(select_start == txt.getText().lastIndexOf(textF.getText().toLowerCase()))
         {
             startIndex = 0;
         }
@@ -147,12 +147,12 @@ public class Find extends JFrame implements ActionListener {
         }
         try
         {
-            int select_start = txt.getText().toLowerCase().indexOf(selection.toLowerCase(), startIndex);
+            int select_start = txt.getText() .indexOf(selection , startIndex);
             int select_end = select_start+selection.length();
             txt.select(select_start, select_end);
             startIndex = select_end+1;
 
-            if(select_start == txt.getText().toLowerCase().lastIndexOf(selection.toLowerCase()))
+            if(select_start == txt.getText().lastIndexOf(selection.toLowerCase()))
             {
                 startIndex = 0;
             }
@@ -175,7 +175,7 @@ public class Find extends JFrame implements ActionListener {
     }
 
     public void replaceAll() {
-        txt.setText(txt.getText().toLowerCase().replaceAll(textF.getText().toLowerCase(), textR.getText()));
+        txt.setText(txt.getText().replaceAll(textF.getText() , textR.getText()));
     }
 
     public void actionPerformed(ActionEvent e) {
