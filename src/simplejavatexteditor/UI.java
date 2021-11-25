@@ -257,14 +257,10 @@ public class UI extends JFrame implements ActionListener {
         wordWrap.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
                 // If wrapping is false then after clicking on menuitem the word wrapping will be enabled
-                if (textArea.getLineWrap() == false) {
-                    /* Setting word wrapping to true */
-                    textArea.setLineWrap(true);
-                } else {
-                    // else  if wrapping is true then after clicking on menuitem the word wrapping will be disabled
-                    /* Setting word wrapping to false */
-                    textArea.setLineWrap(false);
-                }
+                /* Setting word wrapping to true */
+                // else  if wrapping is true then after clicking on menuitem the word wrapping will be disabled
+                /* Setting word wrapping to false */
+                textArea.setLineWrap(!textArea.getLineWrap());
             }
         });
 
@@ -370,9 +366,9 @@ public class UI extends JFrame implements ActionListener {
         //GETTING ALL AVAILABLE FONT FOMILY NAMES
         String[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
 
-        for (int i = 0; i < fonts.length; i++) {
+        for (String font : fonts) {
             //Adding font family names to font[] array
-            fontType.addItem(fonts[i]);
+            fontType.addItem(font);
         }
         //Setting maximize size of the fontType ComboBox
         fontType.setMaximumSize(new Dimension(170, 30));
@@ -452,20 +448,20 @@ public class UI extends JFrame implements ActionListener {
         for (int i = 0; i < list.length; i++) {
             if (file.getName().endsWith(list[i])) {
                 switch (i) {
-                    case 0:
+                    case 0 -> {
                         String[] jk = kw.getJavaKeywords();
                         arrayList = kw.setKeywords(jk);
                         autocomplete = new AutoComplete(this, arrayList);
                         textArea.getDocument().addDocumentListener(autocomplete);
                         hasListener = true;
-                        break;
-                    case 1:
+                    }
+                    case 1 -> {
                         String[] ck = kw.getCppKeywords();
                         arrayList = kw.setKeywords(ck);
                         autocomplete = new AutoComplete(this, arrayList);
                         textArea.getDocument().addDocumentListener(autocomplete);
                         hasListener = true;
-                        break;
+                    }
                 }
             }
         }
@@ -654,17 +650,17 @@ public class UI extends JFrame implements ActionListener {
             try {
                 Transferable tr = e.getTransferable();
                 DataFlavor[] flavors = tr.getTransferDataFlavors();
-                for (int i = 0; i < flavors.length; i++) {
-                    if (flavors[i].isFlavorJavaFileListType()) {
+                for (DataFlavor flavor : flavors) {
+                    if (flavor.isFlavorJavaFileListType()) {
                         e.acceptDrop(e.getDropAction());
 
                         try {
-                            String fileName = tr.getTransferData(flavors[i]).toString().replace("[", "").replace("]", "");
+                            String fileName = tr.getTransferData(flavor).toString().replace("[", "").replace("]", "");
 
                             // Allowed file filter extentions for drag and drop
                             boolean extensionAllowed = false;
-                            for (int j = 0; j < dragDropExtensionFilter.length; j++) {
-                                if (fileName.endsWith(dragDropExtensionFilter[j])) {
+                            for (String s : dragDropExtensionFilter) {
+                                if (fileName.endsWith(s)) {
                                     extensionAllowed = true;
                                     break;
                                 }
