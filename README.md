@@ -38,6 +38,7 @@
 
 * [xdvrx1](https://github.com/xdvrx1)
 
+* [Talha Tariq](https://github.com/TT-talhatariq)
 
 ## CONTACT
 
