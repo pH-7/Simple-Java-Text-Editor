@@ -31,7 +31,7 @@ public class SupportedKeywords {
                 "union", "while", "asm", "dynamic_cast", "namespace", "reinterpret_cast", "try",
                 "bool", "explicit", "new", "static_cast", "typeid", "catch", "false", "operator",
                 "template", "typename", "class", "friend", "private", "this", "using", "const_cast",
-                "inline", "public", "throw", "virtual", "delete", "mutable", "protected", "true", "wchar_t" };
+                "inline", "public", "throw", "virtual", "delete", "mutable", "protected", "true", "wchar_t , int_t , uint32_t , and , goto , char8_t , char16_t , char32_t" };
 
     public String[] getSupportedLanguages() {
         return supportedLanguages;
