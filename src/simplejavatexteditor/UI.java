@@ -1,40 +1,3 @@
-/**
- * @name        Simple Java NotePad
- * @package ph.notepad
- * @file UI.java
- *
- * @author Pierre-Henry Soria
- * @email pierrehenrysoria@gmail.com
- * @link        http://github.com/pH-7
- *
- * @copyright   Copyright Pierre-Henry SORIA, All Rights Reserved.
- * @license     Apache (http://www.apache.org/licenses/LICENSE-2.0)
- * @create      2012-04-05
- * @update      2017-02-18
- *
- * @modifiedby  Achintha Gunasekara
- * @modemail    contact@achinthagunasekara.com
- *
- * @modifiedby  Marcus Redgrave-Close
- * @modemail    marcusrc1@hotmail.co.uk
- *
- * @Modifiedby SidaDan
- * @modemail Fschultz@sinf.de
- * Added Tooltip Combobox Font type and Font size
- * Overwrite method processWindowEvent to detect window closing event.
- * Added safety query to save the file before exit
- * or the user select "newfile"
- * Only available if the user has pressed a key
- * Added safety query if user pressed the clearButton
- *
- * @Modifiedby SidaDan
- * @modemail Fschultz@sinf.de
- * Removed unuse objects like container,  Border emptyBorder
- * Removed unsused imports
- *
- * @Modifiedby Giorgos Pasentsis
- * @modemail gpasents@gmail.com
- */
 package simplejavatexteditor;
 
 import java.lang.reflect.Method;
@@ -73,29 +36,29 @@ public class UI extends JFrame implements ActionListener {
     private final Action selectAllAction;
 
     //setup icons - Bold and Italic
-    private final ImageIcon boldIcon = new ImageIcon("icons/bold.png");
+    private final ImageIcon boldIcon = new ImageIcon(UI.class.getResource("icons/bold.png"));
     private final ImageIcon italicIcon = new ImageIcon("icons/italic.png");
 
     // setup icons - File Menu
-    private final ImageIcon newIcon = new ImageIcon("icons/new.png");
-    private final ImageIcon openIcon = new ImageIcon("icons/open.png");
-    private final ImageIcon saveIcon = new ImageIcon("icons/save.png");
-    private final ImageIcon closeIcon = new ImageIcon("icons/close.png");
+    private final ImageIcon newIcon = new ImageIcon(UI.class.getResource("icons/new.png"));
+    private final ImageIcon openIcon = new ImageIcon(UI.class.getResource("icons/open.png"));
+    private final ImageIcon saveIcon = new ImageIcon(UI.class.getResource("icons/save.png"));
+    private final ImageIcon closeIcon = new ImageIcon(UI.class.getResource("icons/close.png"));
 
     // setup icons - Edit Menu
-    private final ImageIcon clearIcon = new ImageIcon("icons/clear.png");
-    private final ImageIcon cutIcon = new ImageIcon("icons/cut.png");
-    private final ImageIcon copyIcon = new ImageIcon("icons/copy.png");
-    private final ImageIcon pasteIcon = new ImageIcon("icons/paste.png");
-    private final ImageIcon selectAllIcon = new ImageIcon("icons/selectall.png");
-    private final ImageIcon wordwrapIcon = new ImageIcon("icons/wordwrap.png");
+    private final ImageIcon clearIcon = new ImageIcon(UI.class.getResource("icons/clear.png"));
+    private final ImageIcon cutIcon = new ImageIcon(UI.class.getResource("icons/cut.png"));
+    private final ImageIcon copyIcon = new ImageIcon(UI.class.getResource("icons/copy.png"));
+    private final ImageIcon pasteIcon = new ImageIcon(UI.class.getResource("icons/paste.png"));
+    private final ImageIcon selectAllIcon = new ImageIcon(UI.class.getResource("icons/selectall.png"));
+    private final ImageIcon wordwrapIcon = new ImageIcon(UI.class.getResource("icons/wordwrap.png"));
 
     // setup icons - Search Menu
-    private final ImageIcon searchIcon = new ImageIcon("icons/search.png");
+    private final ImageIcon searchIcon = new ImageIcon(UI.class.getResource("icons/search.png"));
 
     // setup icons - Help Menu
-    private final ImageIcon aboutMeIcon = new ImageIcon("icons/about_me.png");
-    private final ImageIcon aboutIcon = new ImageIcon("icons/about.png");
+    private final ImageIcon aboutMeIcon = new ImageIcon(UI.class.getResource("icons/about_me.png"));
+    private final ImageIcon aboutIcon = new ImageIcon(UI.class.getResource("icons/about.png"));
 
     private SupportedKeywords kw = new SupportedKeywords();
     private HighlightText languageHighlighter = new HighlightText(Color.GRAY);
@@ -103,9 +66,9 @@ public class UI extends JFrame implements ActionListener {
     private boolean hasListener = false;
     private boolean edit = false;
 
-    public UI() {
+    public UI() {		
         try {
-            ImageIcon image = new ImageIcon("icons/ste.png");
+            ImageIcon image = new ImageIcon(UI.class.getResource("icons/ste.png"));
             super.setIconImage(image.getImage());
         } catch (Exception ex) {
             ex.printStackTrace();
