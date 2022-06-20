@@ -1,3 +1,40 @@
+/**
+ * @name        Simple Java NotePad
+ * @package ph.notepad
+ * @file UI.java
+ *
+ * @author Pierre-Henry Soria
+ * @email pierrehenrysoria@gmail.com
+ * @link        http://github.com/pH-7
+ *
+ * @copyright   Copyright Pierre-Henry SORIA, All Rights Reserved.
+ * @license     Apache (http://www.apache.org/licenses/LICENSE-2.0)
+ * @create      2012-04-05
+ * @update      2017-02-18
+ *
+ * @modifiedby  Achintha Gunasekara
+ * @modemail    contact@achinthagunasekara.com
+ *
+ * @modifiedby  Marcus Redgrave-Close
+ * @modemail    marcusrc1@hotmail.co.uk
+ *
+ * @Modifiedby SidaDan
+ * @modemail Fschultz@sinf.de
+ * Added Tooltip Combobox Font type and Font size
+ * Overwrite method processWindowEvent to detect window closing event.
+ * Added safety query to save the file before exit
+ * or the user select "newfile"
+ * Only available if the user has pressed a key
+ * Added safety query if user pressed the clearButton
+ *
+ * @Modifiedby SidaDan
+ * @modemail Fschultz@sinf.de
+ * Removed unuse objects like container,  Border emptyBorder
+ * Removed unsused imports
+ *
+ * @Modifiedby Giorgos Pasentsis
+ * @modemail gpasents@gmail.com
+ */
 package simplejavatexteditor;
 
 import java.lang.reflect.Method;
