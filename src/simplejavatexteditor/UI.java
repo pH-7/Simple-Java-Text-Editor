@@ -103,7 +103,7 @@ public class UI extends JFrame implements ActionListener {
     private boolean hasListener = false;
     private boolean edit = false;
 
-    public UI() {		
+    public UI() {
         try {
             ImageIcon image = new ImageIcon(UI.class.getResource("icons/ste.png"));
             super.setIconImage(image.getImage());
