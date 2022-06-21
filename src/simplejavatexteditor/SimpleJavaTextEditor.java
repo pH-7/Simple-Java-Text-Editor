@@ -34,7 +34,6 @@ public class SimpleJavaTextEditor extends JTextPane {
      * @param args
      */
     public static void main(String[] args) {
-        //UIMANAGER
     	try {
     		UIManager.setLookAndFeel ("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
     	} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
