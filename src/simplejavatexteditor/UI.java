@@ -73,29 +73,29 @@ public class UI extends JFrame implements ActionListener {
     private final Action selectAllAction;
 
     //setup icons - Bold and Italic
-    private final ImageIcon boldIcon = new ImageIcon("icons/bold.png");
+    private final ImageIcon boldIcon = new ImageIcon(UI.class.getResource("icons/bold.png"));
     private final ImageIcon italicIcon = new ImageIcon("icons/italic.png");
 
     // setup icons - File Menu
-    private final ImageIcon newIcon = new ImageIcon("icons/new.png");
-    private final ImageIcon openIcon = new ImageIcon("icons/open.png");
-    private final ImageIcon saveIcon = new ImageIcon("icons/save.png");
-    private final ImageIcon closeIcon = new ImageIcon("icons/close.png");
+    private final ImageIcon newIcon = new ImageIcon(UI.class.getResource("icons/new.png"));
+    private final ImageIcon openIcon = new ImageIcon(UI.class.getResource("icons/open.png"));
+    private final ImageIcon saveIcon = new ImageIcon(UI.class.getResource("icons/save.png"));
+    private final ImageIcon closeIcon = new ImageIcon(UI.class.getResource("icons/close.png"));
 
     // setup icons - Edit Menu
-    private final ImageIcon clearIcon = new ImageIcon("icons/clear.png");
-    private final ImageIcon cutIcon = new ImageIcon("icons/cut.png");
-    private final ImageIcon copyIcon = new ImageIcon("icons/copy.png");
-    private final ImageIcon pasteIcon = new ImageIcon("icons/paste.png");
-    private final ImageIcon selectAllIcon = new ImageIcon("icons/selectall.png");
-    private final ImageIcon wordwrapIcon = new ImageIcon("icons/wordwrap.png");
+    private final ImageIcon clearIcon = new ImageIcon(UI.class.getResource("icons/clear.png"));
+    private final ImageIcon cutIcon = new ImageIcon(UI.class.getResource("icons/cut.png"));
+    private final ImageIcon copyIcon = new ImageIcon(UI.class.getResource("icons/copy.png"));
+    private final ImageIcon pasteIcon = new ImageIcon(UI.class.getResource("icons/paste.png"));
+    private final ImageIcon selectAllIcon = new ImageIcon(UI.class.getResource("icons/selectall.png"));
+    private final ImageIcon wordwrapIcon = new ImageIcon(UI.class.getResource("icons/wordwrap.png"));
 
     // setup icons - Search Menu
-    private final ImageIcon searchIcon = new ImageIcon("icons/search.png");
+    private final ImageIcon searchIcon = new ImageIcon(UI.class.getResource("icons/search.png"));
 
     // setup icons - Help Menu
-    private final ImageIcon aboutMeIcon = new ImageIcon("icons/about_me.png");
-    private final ImageIcon aboutIcon = new ImageIcon("icons/about.png");
+    private final ImageIcon aboutMeIcon = new ImageIcon(UI.class.getResource("icons/about_me.png"));
+    private final ImageIcon aboutIcon = new ImageIcon(UI.class.getResource("icons/about.png"));
 
     private SupportedKeywords kw = new SupportedKeywords();
     private HighlightText languageHighlighter = new HighlightText(Color.GRAY);
@@ -105,7 +105,7 @@ public class UI extends JFrame implements ActionListener {
 
     public UI() {
         try {
-            ImageIcon image = new ImageIcon("icons/ste.png");
+            ImageIcon image = new ImageIcon(UI.class.getResource("icons/ste.png"));
             super.setIconImage(image.getImage());
         } catch (Exception ex) {
             ex.printStackTrace();
